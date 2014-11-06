@@ -66,7 +66,7 @@ void Spacewar::initialize(HWND hwnd)
     ship1.setCurrentFrame(shipNS::SHIP1_START_FRAME);
     ship1.setX(GAME_WIDTH/4);
     ship1.setY(GAME_HEIGHT/4);
-    ship1.setVelocity(VECTOR2(shipNS::SPEED,-shipNS::SPEED)); // VECTOR2(X, Y)
+    ship1.setVelocity(VECTOR2(0,0)); // VECTOR2(X, Y)
 	ship1.setScale(ship1.getScale() * 2);
     // missile
 	for( int i =0; i < 50; i++)
@@ -137,7 +137,7 @@ void Spacewar::update()
 {
 	
 
-
+		
 
 	
 		if (ship1.getShipHealth() <= 0)
@@ -150,9 +150,9 @@ void Spacewar::update()
 		ship1.update(frameTime);
 		gameTimer += frameTime;
 		
-		
+		nebula.setX(nebula.getX() - frameTime * ship1.getVelocity().x);
 	
-		
+		nebula.setY(nebula.getY() - frameTime * ship1.getVelocity().y);
 		
 		
 		if ((input->isKeyDown(VK_SPACE)) && !fired )

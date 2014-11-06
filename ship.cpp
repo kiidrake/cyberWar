@@ -63,27 +63,28 @@ void Ship::draw()
 void Ship::update(float frameTime)
 {
     Entity::update(frameTime);
-
+	velocity.x = 0;
+	velocity.y = 0;
 	if (input->isKeyDown(VK_RIGHT))
 	{
-    spriteData.x += frameTime * velocity.x;  
+    velocity.x = shipNS::SPEED ;
 	}   
 	
 	if (input->isKeyDown(VK_LEFT))
 	{
-    spriteData.x -= frameTime * velocity.x;  
+     velocity.x = -shipNS::SPEED ;
 	} 
 	if (input->isKeyDown(VK_UP))
 	{
-    spriteData.y += frameTime * velocity.y;  
+     velocity.y = -shipNS::SPEED ;
 	}
 	if (input->isKeyDown(VK_DOWN))
 	{
-    spriteData.y -= frameTime * velocity.y;  
+     velocity.y = shipNS::SPEED ;  
 	} 
 	// move ship 
          
-
+	
     // Bounce off walls
     if (spriteData.x > GAME_WIDTH-shipNS::WIDTH)    // if hit right screen edge
     {

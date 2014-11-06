@@ -45,7 +45,7 @@ const float MIN_FRAME_TIME = 1.0f/FRAME_RATE;   // minimum desired time for 1 fr
 const float MAX_FRAME_TIME = 1.0f/MIN_FRAME_RATE; // maximum time used in calculations
 
 // graphic images
-const char NEBULA_IMAGE[] =   "pictures\\forest path.png";     // photo source NASA/courtesy of nasaimages.org 
+const char NEBULA_IMAGE[] =   "pictures\\cyberbackground.png";     // photo source NASA/courtesy of nasaimages.org 
 const char SHIP_IMAGE[] = "pictures\\defender_sheet.png";  // game textures
 const char SNAKE_IMAGE[] = "pictures\\snake_sheet.png";
 const char SPIDER_IMAGE[] = "pictures\\spider_sheet.png";
