@@ -64,10 +64,10 @@ void Spacewar::initialize(HWND hwnd)
         throw(GameError(gameErrorNS::FATAL_ERROR, "Error initializing ship1"));
     ship1.setFrames(shipNS::SHIP1_START_FRAME, shipNS::SHIP1_END_FRAME);
     ship1.setCurrentFrame(shipNS::SHIP1_START_FRAME);
-    ship1.setX(GAME_WIDTH/4);
-    ship1.setY(GAME_HEIGHT/4);
+    ship1.setX((GAME_WIDTH/2)-50);
+    ship1.setY(GAME_HEIGHT/2-50);
     ship1.setVelocity(VECTOR2(0,0)); // VECTOR2(X, Y)
-	ship1.setScale(ship1.getScale() * 2);
+	ship1.setScale(ship1.getScale() );
     // missile
 	for( int i =0; i < 50; i++)
 	{
@@ -149,7 +149,8 @@ void Spacewar::update()
     
 		ship1.update(frameTime);
 		gameTimer += frameTime;
-		
+
+		if (nebula.getX() < 
 		nebula.setX(nebula.getX() - frameTime * ship1.getVelocity().x);
 	
 		nebula.setY(nebula.getY() - frameTime * ship1.getVelocity().y);
