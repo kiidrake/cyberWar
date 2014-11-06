@@ -81,39 +81,12 @@ void Spacewar::initialize(HWND hwnd)
 		 missiles[i].setScale(missiles[i].getScale() * 2);
 	}
 
-	for( int i =0; i < 50; i++)
-	{
-		if (!armadillos[i].initialize(this, armadilloNS::WIDTH, armadilloNS::HEIGHT, armadilloNS::TEXTURE_COLS, &armadilloTexture))
-			throw(GameError(gameErrorNS::FATAL_ERROR, "Error initializing missile1"));
-		 armadillos[i].setFrames(armadilloNS::SHIP1_START_FRAME, armadilloNS::SHIP1_END_FRAME);
-		 armadillos[i].setCurrentFrame(armadilloNS::SHIP1_START_FRAME);
-		 armadillos[i].setX(GAME_WIDTH/4);
-		 armadillos[i].setY(GAME_HEIGHT/4);
-		 armadillos[i].setVelocity(VECTOR2(armadilloNS::SPEED,-armadilloNS::SPEED)); // VECTOR2(X, Y)
-	}
 
 
-	for( int i =0; i < 50; i++)
-	{
-		 if (!snakes[i].initialize(this, snakeNS::WIDTH, snakeNS::HEIGHT, snakeNS::TEXTURE_COLS, &snakeTexture))
-			throw(GameError(gameErrorNS::FATAL_ERROR, "Error initializing missile1"));
-		 snakes[i].setFrames(snakeNS::SHIP1_START_FRAME, snakeNS::SHIP1_END_FRAME);
-		 snakes[i].setCurrentFrame(snakeNS::SHIP1_START_FRAME);
-		 snakes[i].setX(GAME_WIDTH/4);
-		 snakes[i].setY(GAME_HEIGHT/4);
-		 snakes[i].setVelocity(VECTOR2(snakeNS::SPEED,-snakeNS::SPEED)); // VECTOR2(X, Y)
-	}
 
-	for( int i =0; i < 50; i++)
-	{
-		if (!spiders[i].initialize(this, spiderNS::WIDTH, spiderNS::HEIGHT, spiderNS::TEXTURE_COLS, &spiderTexture))
-			throw(GameError(gameErrorNS::FATAL_ERROR, "Error initializing missile1"));
-		 spiders[i].setFrames(spiderNS::SHIP1_START_FRAME, spiderNS::SHIP1_END_FRAME);
-		 spiders[i].setCurrentFrame(spiderNS::SHIP1_START_FRAME);
-		 spiders[i].setX(GAME_WIDTH/4);
-		 spiders[i].setY(GAME_HEIGHT/4);
-		 spiders[i].setVelocity(VECTOR2(spiderNS::SPEED,-spiderNS::SPEED)); // VECTOR2(X, Y)
-	}
+	
+
+	
 	
 	outString = "Score: ";
 	finalString = "Game Over \nFinalScore: ";
@@ -162,19 +135,11 @@ void Spacewar::initialize(HWND hwnd)
 //=============================================================================
 void Spacewar::update()
 {
-	if (preGame)
-	{
-		preGameTimer-= frameTime;
-		if (preGameTimer < 0)
-		{
-			preGame = false;
-		}
 	
 
 
-	}
-	if (gamePlaying && !preGame)
-	{
+
+	
 		if (ship1.getShipHealth() <= 0)
 		{
 			gamePlaying = false;
@@ -184,37 +149,12 @@ void Spacewar::update()
     
 		ship1.update(frameTime);
 		gameTimer += frameTime;
-		armadilloTimer-= frameTime;
-		spiderTimer -= frameTime;
-		snakeTimer -= frameTime;
-		swarmTimer -= frameTime;
-		if (swarmTimer <= 0)
-		{
-			swarmReady = true;
-			swarmTimer = 10.0;
-		}
-		if (armadilloTimer <= 0)
-		{
-			spawnArmadillo = true;
-			armadilloTimer = maxArmadillo;
-		}
-		if (spiderTimer <= 0)
-		{
-			spawnSpider = true;
-			spiderTimer = maxSpider;
-		}
-		if (snakeTimer <= 0)
-		{
-			spawnSnake = true;
-			snakeTimer = maxSnake;
-		}
-		if (gameTimer >= increaseTime)
-		{
-			increaseTime += 12.0;
-			maxArmadillo -= (maxArmadillo/10);
-			maxSpider -= (maxSpider/20);
-			maxSnake -= (maxSnake /12);
-		}
+		
+		
+	
+		
+		
+		
 		if ((input->isKeyDown(VK_SPACE)) && !fired )
 		{
 			audio->playCue(SHOOT);
@@ -234,90 +174,14 @@ void Spacewar::update()
 			fired = false;
 		}
 
-		if ((input->isKeyDown(VK_SHIFT)) && !swarmFired  )
-		{
-			if (swarmReady)
-			{
-			   audio->playCue(SHOOT);
-			   missiles[missileIndex].setX(ship1.getX());
-			   missiles[missileIndex].setY(ship1.getY());
-			   missiles[missileIndex].activate();
-			   missileIndex++;
-			   if (missileIndex >=50)
-				{
-					missileIndex = 0;
-				}
-			   for (int i =1; i < 5; i++)
-			   {
-			     missiles[missileIndex].setX(ship1.getX());
-			     missiles[missileIndex].setY(ship1.getY()+(10*i));
-			     missiles[missileIndex].activate();
-			     missileIndex++;
-			   if (missileIndex >=50)
-				{
-					missileIndex = 0;
-				}
-
-			    missiles[missileIndex].setX(ship1.getX());
-			    missiles[missileIndex].setY(ship1.getY()-(10*i));
-			    missiles[missileIndex].activate();
-			    missileIndex++;
-			   }
-			   swarmReady = false;
-			   swarmTimer = 20.0;
-			}
-		swarmFired = true;
-			
-		} 
-		else if ((input->isKeyDown(VK_SHIFT)) && swarmFired )
-		{
-    
-		} 
-		else
-		{
-			swarmFired = false;
-		}
-
-
-
-		if (spawnArmadillo )
-		{
-		 spawnLoc = rand() % 19 + 1;
-		 armadillos[armadilloIndex].setX(GAME_WIDTH);
-		 armadillos[armadilloIndex].setY(spawnLoc * GAME_HEIGHT/20);
-		 armadillos[armadilloIndex].activate();
-		 armadilloIndex++;
-		 spawnArmadillo = false;
-		} 
+		
 	
-
-		if (spawnSnake )
-		{
-		 spawnLoc = rand() % 4 + 1;
-		 snakes[snakeIndex].setX(GAME_WIDTH);
-		 snakes[snakeIndex].setY(spawnLoc * GAME_HEIGHT/5);
-	     snakes[snakeIndex].activate();
-		 snakeIndex++;
-		 spawnSnake = false;;
-		} 
-	
-
-		if (spawnSpider )
-		{
-		 spawnLoc = rand() % 3 + 1;
-		 spiders[spiderIndex].setX(GAME_WIDTH);
-		 spiders[spiderIndex].setY(spawnLoc *GAME_HEIGHT/4);
-	     spiders[spiderIndex].activate();
-		 spiderIndex++;
-		 spawnSpider = false;
-		} 
+		
 	
 		for( int i =0; i < 50; i++)
 		{
 		
-		  armadillos[i].update(frameTime);
-		  snakes[i].update(frameTime);
-		  spiders[i].update(frameTime);
+		  
 		  missiles[i].update(frameTime);
 		}
 	
@@ -325,19 +189,8 @@ void Spacewar::update()
 		{
 			missileIndex = 0;
 		}
-		if (armadilloIndex == 50)
-		{
-			armadilloIndex = 0;
-		}
-		if (spiderIndex == 50)
-		{
-			spiderIndex = 0;
-		}
-		if (snakeIndex == 50)
-		{
-			snakeIndex = 0;
-		}
-	}
+		
+	
 }
 
 //=============================================================================
@@ -353,56 +206,10 @@ void Spacewar::collisions()
 {
   VECTOR2 collisionVector;
 
-	for(int i = 0; i < 50;i++){
-		for(int j = 0; j < 50; j++){
-			if(missiles[i].collidesWith(armadillos[j],collisionVector)){
-				audio->playCue(HIT);
-				armadillos[j].setActive(false);
-				missiles[i].setActive(false);
-				score += 200;
-			}
-		}
-	} 
-	for(int i = 0; i < 50;i++){
-		for(int j = 0; j < 50; j++){
-			if(missiles[i].collidesWith(snakes[j],collisionVector)){
-				audio->playCue(HIT);
-				snakes[j].setActive(false);
-				missiles[i].setActive(false);
-				score += 300;
-			}
-		}
-	}
-		for(int i = 0; i < 50;i++){
-		for(int j = 0; j < 50; j++){
-			if(missiles[i].collidesWith(spiders[j],collisionVector)){
-				audio->playCue(HIT);
-				spiders[j].setActive(false);
-				missiles[i].setActive(false);
-				score += 500;
-			}
-		}
-	}
-		for(int i = 0;i < 50; i++){
-			if(ship1.collidesWith(armadillos[i],collisionVector)){
-				audio->playCue(DAMAGE);
-				armadillos[i].setActive(false);
-				ship1.damage();
-				health.setCurrentFrame(ship1.getShipHealth());
-			}
-			if(ship1.collidesWith(snakes[i],collisionVector)){
-				audio->playCue(DAMAGE);
-				snakes[i].setActive(false);
-				ship1.damage();
-				health.setCurrentFrame(ship1.getShipHealth());
-			}
-			if(ship1.collidesWith(spiders[i],collisionVector)){
-				audio->playCue(DAMAGE);
-				spiders[i].setActive(false);
-				ship1.damage();
-				health.setCurrentFrame(ship1.getShipHealth());
-			}
-		}
+	
+	
+		
+	
 }
 
 //=============================================================================
@@ -419,48 +226,27 @@ void Spacewar::render()
 	ss2 << score;
 	
     graphics->spriteBegin();                // begin drawing sprites
-	if (preGame)
-	{
-		output->print(introString1, 20,100);
-		outputHL->print(introString2, 20,200);
-		output->print(introString3, 20,300);
-	}
-	else
-	{
-		nebula.draw();                          // add the orion nebula to the scene
+	
+	nebula.draw();                          // add the orion nebula to the scene
 								  // add the planet to the scene
-		health.draw();
-		ship1.draw();  
-		for( int i =0; i < 50; i++)
-		{
+	health.draw();
+	ship1.draw();  
+	for( int i =0; i < 50; i++)
+	{
 	  
-		   if (armadillos[i].getActive())
-			{
-				armadillos[i].draw();
-			}
-			if (snakes[i].getActive())
-			{
-				snakes[i].draw();
-			}
-			 if (spiders[i].getActive())
-			{
-				spiders[i].draw();
-			}
-			 if (missiles[i].getActive())
-			{
-				missiles[i].draw();
-			}
-		}
-		output->print(ss.str(), 600,0);
-		if (!gamePlaying)
+		  
+		 if (missiles[i].getActive())
 		{
-			output->print(ss2.str(), 300,300);
-		}
-		if (swarmReady)
-		{
-			output->print(swarmString, 200,0);
+			missiles[i].draw();
 		}
 	}
+	output->print(ss.str(), 600,0);
+	if (!gamePlaying)
+	{
+		output->print(ss2.str(), 300,300);
+	}
+		
+	
     graphics->spriteEnd();                  // end drawing sprites
 }
 
