@@ -65,20 +65,20 @@ void Ship::update(float frameTime)
     Entity::update(frameTime);
 	velocity.x = 0;
 	velocity.y = 0;
-	if (input->isKeyDown(VK_RIGHT))
+	if (input->isKeyDown(0x44) || input->isKeyDown(VK_RIGHT))
 	{
     velocity.x = shipNS::SPEED ;
 	}   
 	
-	if (input->isKeyDown(VK_LEFT))
+	if (input->isKeyDown(0x41)|| input->isKeyDown(VK_LEFT))
 	{
      velocity.x = -shipNS::SPEED ;
 	} 
-	if (input->isKeyDown(VK_UP))
+	if (input->isKeyDown(0x57)|| input->isKeyDown(VK_UP))
 	{
      velocity.y = -shipNS::SPEED ;
 	}
-	if (input->isKeyDown(VK_DOWN))
+	if (input->isKeyDown(0x53)|| input->isKeyDown(VK_DOWN))
 	{
      velocity.y = shipNS::SPEED ;  
 	} 

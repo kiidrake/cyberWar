@@ -81,7 +81,7 @@ public:
 
     // Destructor
     virtual ~Spacewar();
-
+	float angle;
     // Initialize the game
     void initialize(HWND hwnd);
     void update();      // must override pure virtual from Game

@@ -6,7 +6,7 @@
 // This class is the core of the game
 
 #include "spaceWar.h"
-
+#include <cmath>
 //=============================================================================
 // Constructor
 //=============================================================================
@@ -135,62 +135,62 @@ void Spacewar::initialize(HWND hwnd)
 //=============================================================================
 void Spacewar::update()
 {
-	
+	//ROTATE SHIP WITH MOUSE USING CMATH FUNCTIONS
+	angle = atan2(input->getMouseY() - ship1.getY(), input->getMouseX() - ship1.getX());
+	angle *= (180/PI);
+	ship1.setDegrees(90 + angle);
 
-		// check
+	if (ship1.getShipHealth() <= 0)
+	{
+		gamePlaying = false;																								
+		audio->stopCue(BACKGROUND);
 
-	
-		if (ship1.getShipHealth() <= 0)
-		{
-			gamePlaying = false;
-			audio->stopCue(BACKGROUND);
-
-		}
+	}
     
-		ship1.update(frameTime);
-		gameTimer += frameTime;
+	ship1.update(frameTime);
+	gameTimer += frameTime;
 
-		
-		nebula.setX(nebula.getX() - frameTime * ship1.getVelocity().x);
 	
-		nebula.setY(nebula.getY() - frameTime * ship1.getVelocity().y);
-		
-		
-		if ((input->isKeyDown(VK_SPACE)) && !fired )
-		{
-			audio->playCue(SHOOT);
-		 missiles[missileIndex].setX(ship1.getX());
-		 missiles[missileIndex].setY(ship1.getY());
-		 missiles[missileIndex].activate();
-		 missileIndex++;
+	nebula.setX(nebula.getX() - frameTime * ship1.getVelocity().x);
+	
+	nebula.setY(nebula.getY() - frameTime * ship1.getVelocity().y);
+	
+	
+	if ((input->isKeyDown(VK_SPACE)) && !fired )
+	{
+		audio->playCue(SHOOT);
+	 missiles[missileIndex].setX(ship1.getX());
+	 missiles[missileIndex].setY(ship1.getY());
+	 missiles[missileIndex].activate();
+	 missileIndex++;
 	 
-		 fired = true;
-		} 
-		else if ((input->isKeyDown(VK_SPACE)) && fired )
-		{
+	 fired = true;
+	} 
+	else if ((input->isKeyDown(VK_SPACE)) && fired )
+	{
     
-		} 
-		else
-		{
-			fired = false;
-		}
+	} 
+	else
+	{
+		fired = false;
+	}
 
-		
 	
-		
 	
-		for( int i =0; i < 50; i++)
-		{
-		
-		  
-		  missiles[i].update(frameTime);
-		}
 	
-		if (missileIndex >=50)
-		{
-			missileIndex = 0;
-		}
-		
+	
+	for( int i =0; i < 50; i++)
+	{
+	
+	  
+	  missiles[i].update(frameTime);
+	}
+	
+	if (missileIndex >=50)
+	{
+		missileIndex = 0;
+	}
+	
 	
 }
 
