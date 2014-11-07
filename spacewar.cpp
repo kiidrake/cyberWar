@@ -150,7 +150,7 @@ void Spacewar::update()
 		ship1.update(frameTime);
 		gameTimer += frameTime;
 
-		if (nebula.getX() < 
+		
 		nebula.setX(nebula.getX() - frameTime * ship1.getVelocity().x);
 	
 		nebula.setY(nebula.getY() - frameTime * ship1.getVelocity().y);
