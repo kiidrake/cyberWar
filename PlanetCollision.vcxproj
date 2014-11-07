@@ -107,6 +107,7 @@
   <ItemGroup>
     <ClInclude Include="armadillo.h" />
     <ClInclude Include="audio.h" />
+    <ClInclude Include="baseTurret.h" />
     <ClInclude Include="constants.h" />
     <ClInclude Include="entity.h" />
     <ClInclude Include="game.h" />

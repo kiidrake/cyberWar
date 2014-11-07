@@ -116,5 +116,8 @@
     <ClInclude Include="textDX.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="baseTurret.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
 </Project>
