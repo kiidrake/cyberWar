@@ -137,7 +137,7 @@ void Spacewar::update()
 {
 	
 
-		
+		// check
 
 	
 		if (ship1.getShipHealth() <= 0)
