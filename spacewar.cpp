@@ -192,18 +192,19 @@ void Spacewar::update()
 	gameTimer += frameTime;
 
 
-	for(int i = 0; i < 5; i++){
-		turretBases[i].setX(turretBases[i].getX() - frameTime * ship1.getVelocity().x);
-		turretBases[i].setY(turretBases[i].getY() - frameTime * ship1.getVelocity().y);
-		baseTurrets[i].setX(baseTurrets[i].getX() - frameTime * ship1.getVelocity().x);
-		baseTurrets[i].setY(baseTurrets[i].getY() - frameTime * ship1.getVelocity().y);
-	}
+	
 
 	
 
 	if (nebula.getX() <= 0 && ship1.getCenterX() >= (GAME_WIDTH/2) - 10 && ship1.getCenterX() <= (GAME_WIDTH/2) + 10  && nebula.getX()  >= (int)GAME_WIDTH - (int)BACK_WIDTH )
 	{
+		for(int i = 0; i < 5; i++)
+		{
+			turretBases[i].setX(turretBases[i].getX() - frameTime * ship1.getVelocity().x);
+			
+			baseTurrets[i].setX(baseTurrets[i].getX() - frameTime * ship1.getVelocity().x);
 		
+		}
 		nebula.setX(nebula.getX() - frameTime * ship1.getVelocity().x);
 	}
 	
@@ -222,7 +223,13 @@ void Spacewar::update()
 	
 	if (nebula.getY() <= 0 && ship1.getCenterY() >= (GAME_HEIGHT/2) - 10 && ship1.getCenterY() <= (GAME_HEIGHT/2) + 10  && nebula.getY()  >= (int)GAME_HEIGHT - (int)BACK_HEIGHT )
 	{
-		
+		for(int i = 0; i < 5; i++)
+		{
+			
+			turretBases[i].setY(turretBases[i].getY() - frameTime * ship1.getVelocity().y);
+			
+			baseTurrets[i].setY(baseTurrets[i].getY() - frameTime * ship1.getVelocity().y);
+		}
 		nebula.setY(nebula.getY() - frameTime * ship1.getVelocity().y);
 	}
 
