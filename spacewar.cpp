@@ -71,8 +71,9 @@ void Spacewar::initialize(HWND hwnd)
         throw(GameError(gameErrorNS::FATAL_ERROR, "Error initializing ship1"));
     ship1.setFrames(shipNS::SHIP1_START_FRAME, shipNS::SHIP1_END_FRAME);
     ship1.setCurrentFrame(shipNS::SHIP1_START_FRAME);
-    ship1.setX((GAME_WIDTH/2)-50);
-    ship1.setY(GAME_HEIGHT/2-50);
+    ship1.setX((GAME_WIDTH/2)-32);
+	
+    ship1.setY((GAME_HEIGHT/2)-32);
     ship1.setVelocity(VECTOR2(0,0)); // VECTOR2(X, Y)
 	ship1.setScale(ship1.getScale() );
     // missile
@@ -121,28 +122,18 @@ void Spacewar::initialize(HWND hwnd)
 	turretBases[4].setY(110);
 
 	outputHL->setFontColor(graphicsNS::RED);
-	swarmReady = false;
+	
 	preGame = true;
     gamePlaying = true;
 	score = 0;
 	colCounter = 0;
 	missileIndex= 0;
-	snakeIndex = 0;
-	spiderIndex = 0;
-	armadilloIndex =0;
+	
 	fired = false;
-	maxArmadillo = 5.0;
-	maxSpider = 8.0;
-	maxSnake = 6.0;
-	spawnArmadillo= false;
-	spawnSnake = false;
-	spawnSpider= false;
+	
 	gameTimer = 0;
 	increaseTime = 2.0;
-	armadilloTimer = maxArmadillo;
-	snakeTimer = maxSnake;
-	spiderTimer = maxSpider;
-	swarmTimer = 20.0;
+	
 	preGameTimer = 8.0;
 	srand (time(NULL));
     return;
@@ -200,6 +191,7 @@ void Spacewar::update()
     
 	gameTimer += frameTime;
 
+
 	for(int i = 0; i < 5; i++){
 		turretBases[i].setX(turretBases[i].getX() - frameTime * ship1.getVelocity().x);
 		turretBases[i].setY(turretBases[i].getY() - frameTime * ship1.getVelocity().y);
@@ -207,9 +199,46 @@ void Spacewar::update()
 		baseTurrets[i].setY(baseTurrets[i].getY() - frameTime * ship1.getVelocity().y);
 	}
 
-	nebula.setX(nebula.getX() - frameTime * ship1.getVelocity().x);
 	
-	nebula.setY(nebula.getY() - frameTime * ship1.getVelocity().y);
+
+	if (nebula.getX() <= 0 && ship1.getCenterX() >= (GAME_WIDTH/2) - 10 && ship1.getCenterX() <= (GAME_WIDTH/2) + 10  && nebula.getX()  >= (int)GAME_WIDTH - (int)BACK_WIDTH )
+	{
+		
+		nebula.setX(nebula.getX() - frameTime * ship1.getVelocity().x);
+	}
+	
+	else 
+	{
+		if (nebula.getX() > 0 )
+		{
+			nebula.setX(0);
+		}
+		if (nebula.getX() < ((int)GAME_WIDTH - (int)BACK_WIDTH) )
+		{
+			nebula.setX(((int)GAME_WIDTH - (int)BACK_WIDTH));
+		}
+		ship1.setX(ship1.getX() + frameTime * ship1.getVelocity().x);
+	}
+	
+	if (nebula.getY() <= 0 && ship1.getCenterY() >= (GAME_HEIGHT/2) - 10 && ship1.getCenterY() <= (GAME_HEIGHT/2) + 10  && nebula.getY()  >= (int)GAME_HEIGHT - (int)BACK_HEIGHT )
+	{
+		
+		nebula.setY(nebula.getY() - frameTime * ship1.getVelocity().y);
+	}
+
+	
+	else 
+	{
+		if (nebula.getY() > 0 )
+		{
+			nebula.setY(0);
+		}
+		if (nebula.getY() < ((int)GAME_HEIGHT - (int)BACK_HEIGHT) )
+		{
+			nebula.setY(((int)GAME_HEIGHT - (int)BACK_HEIGHT));
+		}
+		ship1.setY(ship1.getY() + frameTime * ship1.getVelocity().y);
+	}
 	
 	if ((input->isKeyDown(VK_SPACE)) && !fired )
 	{

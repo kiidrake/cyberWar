@@ -36,7 +36,8 @@ const char GAME_TITLE[] = "Village Hero";
 const bool FULLSCREEN = false;              // windowed or fullscreen
 const UINT GAME_WIDTH =  800;               // width of game in pixels
 const UINT GAME_HEIGHT = 600;               // height of game in pixels
-
+const UINT BACK_HEIGHT = 1200;
+const UINT BACK_WIDTH = 1600;
 // game
 const double PI = 3.14159265;
 const float FRAME_RATE = 200.0f;                // the target frame rate (frames/sec)
@@ -76,5 +77,5 @@ const UCHAR ALT_KEY      = VK_MENU;     // Alt key
 const UCHAR ENTER_KEY    = VK_RETURN;   // Enter key
 
 enum WEAPON {TORPEDO, SHIP, PLANET};
-
+enum PATTERN_STEP_ACTION {NONE, UP, DOWN, LEFT, RIGHT, TRACK, EVADE,UPLEFT,UPRIGHT,DOWNRIGHT,DOWNLEFT};
 #endif
