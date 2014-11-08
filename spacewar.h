@@ -39,7 +39,7 @@ private:
 	TextureManager turretTextureOne;
     Ship    ship1;           // spaceships
 	Missile missiles[50];
-
+	BaseTurret baseTurrets[5];
 	
 
 	Health health;
