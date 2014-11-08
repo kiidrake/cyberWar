@@ -5,8 +5,9 @@
 
 #include "entity.h"
 #include "constants.h"
+#include "patternStep.h"
 
-namespace spiderNS
+namespace enemySPawnerNS
 {
     const int WIDTH = 64;                   // image width
     const int HEIGHT = 64;                  // image height
@@ -31,7 +32,7 @@ class EnemySpawner : public Entity
 private:
     bool    damaged;
 	float directionTime;
-    
+    int patternStepIndex;
 public:
     // constructor
     EnemySpawner();

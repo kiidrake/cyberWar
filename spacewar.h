@@ -37,33 +37,21 @@ private:
 	TextureManager missileTexture;
     Ship    ship1;           // spaceships
 	Missile missiles[50];
-	Snake snakes[50];
-	Armadillo armadillos[50];
-	Spider spiders[50];
+	
 	Health health;
     Image   nebula;         // backdrop image
 	int colCounter;
 	int missileIndex;
-	int spiderIndex;
-	int armadilloIndex;
-	int snakeIndex;
+	
 	int spawnLoc;
 	bool fired;
-	bool swarmFired;
+	
 	int score;
-	bool swarmReady;
-	float swarmTimer;
+	
+	
 	float gameTimer;
 	float increaseTime;
-	float armadilloTimer;
-	float spiderTimer;
-	float snakeTimer;
-	float maxArmadillo;
-	float maxSnake;
-	float maxSpider;
-	bool spawnArmadillo;
-	bool spawnSpider;
-	bool spawnSnake;
+
 	bool gamePlaying;
 	bool preGame;
 	float preGameTimer;
