@@ -13,7 +13,7 @@
 #include <cmath>
 #include <d3d9.h>
 #include <d3dx9.h>
-#include "bricks.h"
+#include "coreEnemy.h"
 
 namespace patternStepNS
 {
@@ -25,15 +25,15 @@ private:
  
     bool active;                  
 	float timeInStep; //accumulates the time step has executed
-	Brick *entity;
+	coreEnemy *entity;
 	float timeForStep; //limit on the time for the step
 	PATTERN_STEP_ACTION action;
 
 public:
     PatternStep();
-    void initialize(Brick *e);
+    void initialize(coreEnemy *e);
     void update(float frameTime);
-	void setEntity(Brick *e) {entity = e;}
+	void setEntity(coreEnemy *e) {entity = e;}
 	void setAction(PATTERN_STEP_ACTION a) {action = a;}
 	void setTimeForStep(float time) {timeForStep = time;}
 	bool isFinished() {return !active;}

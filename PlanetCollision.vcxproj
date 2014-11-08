@@ -89,6 +89,7 @@
   <ItemGroup>
     <ClCompile Include="armadillo.cpp" />
     <ClCompile Include="audio.cpp" />
+    <ClCompile Include="coreEnemy.cpp" />
     <ClCompile Include="enemySpawner.cpp" />
     <ClCompile Include="entity.cpp" />
     <ClCompile Include="game.cpp" />
@@ -111,6 +112,7 @@
     <ClInclude Include="audio.h" />
     <ClInclude Include="baseTurret.h" />
     <ClInclude Include="constants.h" />
+    <ClInclude Include="coreEnemy.h" />
     <ClInclude Include="enemySpawner.h" />
     <ClInclude Include="entity.h" />
     <ClInclude Include="game.h" />

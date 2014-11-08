@@ -103,28 +103,18 @@ void Spacewar::initialize(HWND hwnd)
         throw(GameError(gameErrorNS::FATAL_ERROR, "Error initializing output font"));
 
 	outputHL->setFontColor(graphicsNS::RED);
-	swarmReady = false;
+	
 	preGame = true;
     gamePlaying = true;
 	score = 0;
 	colCounter = 0;
 	missileIndex= 0;
-	snakeIndex = 0;
-	spiderIndex = 0;
-	armadilloIndex =0;
+	
 	fired = false;
-	maxArmadillo = 5.0;
-	maxSpider = 8.0;
-	maxSnake = 6.0;
-	spawnArmadillo= false;
-	spawnSnake = false;
-	spawnSpider= false;
+	
 	gameTimer = 0;
 	increaseTime = 2.0;
-	armadilloTimer = maxArmadillo;
-	snakeTimer = maxSnake;
-	spiderTimer = maxSpider;
-	swarmTimer = 20.0;
+	
 	preGameTimer = 8.0;
 	srand (time(NULL));
     return;
