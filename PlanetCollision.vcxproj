@@ -89,6 +89,7 @@
   <ItemGroup>
     <ClCompile Include="armadillo.cpp" />
     <ClCompile Include="audio.cpp" />
+    <ClCompile Include="baseTurret.cpp" />
     <ClCompile Include="entity.cpp" />
     <ClCompile Include="game.cpp" />
     <ClCompile Include="graphics.cpp" />

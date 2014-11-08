@@ -10,7 +10,7 @@
 #include "game.h"
 #include "textureManager.h"
 #include "image.h"
-
+#include "baseTurret.h"
 #include "ship.h"
 #include "missile.h"
 #include "healthbar.h"
@@ -35,19 +35,25 @@ private:
 	TextureManager spiderTexture;
 	TextureManager healthTexture;
 	TextureManager missileTexture;
+	TextureManager turretBaseTexture;
+	TextureManager turretTextureOne;
     Ship    ship1;           // spaceships
 	Missile missiles[50];
 	Snake snakes[50];
 	Armadillo armadillos[50];
 	Spider spiders[50];
+	BaseTurret baseTurrets[5];
 	Health health;
     Image   nebula;         // backdrop image
+	Image turretBases[5];
 	int colCounter;
 	int missileIndex;
 	int spiderIndex;
 	int armadilloIndex;
 	int snakeIndex;
 	int spawnLoc;
+	VECTOR2* fireVector;
+	VECTOR2* forward;
 	bool fired;
 	bool swarmFired;
 	int score;

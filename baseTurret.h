@@ -1,11 +1,11 @@
-#ifndef _LOWTURRET_H                 // Prevent multiple definitions if this 
-#define _LOWTURRET_H                 // file is included in more than one place
+#ifndef _BASETURRET_H                 // Prevent multiple definitions if this 
+#define _BASETURRET_H                 // file is included in more than one place
 #define WIN32_LEAN_AND_MEAN
 
 #include "entity.h"
 #include "constants.h"
 
-namespace lowTurretNS
+namespace BaseTurretNS
 {
     const int WIDTH = 32;                   // image width
     const int HEIGHT = 32;                  // image height
@@ -15,14 +15,15 @@ namespace lowTurretNS
 }
 
 // inherits from Entity class
-class lowTurret : public Entity
+class BaseTurret : public Entity
 {
 private:
 	int health;
 	bool mouseActive;
+	bool done;
 public:
     // constructor
-    lowTurret();
+    BaseTurret();
 
     // inherited member functions
     virtual void draw();
@@ -33,6 +34,8 @@ public:
 	bool getMouseActive();
 	void setMouseActive(bool);
 	void shoot();
+	bool getDone() {return done;}
+	void setDone(bool val) {done = val;}
 };
 #endif
 
