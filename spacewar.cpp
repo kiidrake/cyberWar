@@ -154,7 +154,34 @@ void Spacewar::initialize(HWND hwnd)
 	
 	gameTimer = 0;
 	increaseTime = 2.0;
-	
+	turretTimer = 1.5;
+	turretMax= 1.5;
+	roundStart = false;
+    S1WaveMax =  20;
+    S2WaveMax = 20;
+    S3WaveMax = 20;
+	S4WaveMax = 20;
+	S1InWaveMax = 0.5;
+	S2InWaveMax = 0.5;
+	S3InWaveMax = 0.5;
+	S4InWaveMax = 0.5;
+	S1WaveTimer = 5;
+	S2WaveTimer = 15;
+	S3WaveTimer = 25;
+	S4WaveTimer = 35;
+	S1InWaveTimer = 0.5;
+	S2InWaveTimer = 0.5;
+	S3InWaveTimer = 0.5;
+	S4InWaveTimer = 0.5;
+	turretPoints = 10;
+    S1PerWave = 5;
+	S2PerWave = 5;
+	S3PerWave = 5;
+	S4PerWave = 5;
+	damageincrease = 1;
+	healthincrease = 1;
+	turretCost = 10;
+	upgradeCost = 5;
 	preGameTimer = 8.0;
 	srand (time(NULL));
     return;

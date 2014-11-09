@@ -43,7 +43,7 @@ private:
 	Missile missiles[50];
 	BaseTurret baseTurrets[5];
 	Image spawners[4];
-	coreEnemy enemies[100];
+	coreEnemy enemies[150];
 	Missile turretMissiles1[50];
 	
 
@@ -59,14 +59,36 @@ private:
 	bool fired;
 	bool turretFired1;
 	int score;
-	
+	int turretPoints;
+	float turretTimer;
+	float turretMax;
+	bool roundStart;
+	float S1WaveMax;
+	float S2WaveMax;
+	float S3WaveMax;
+	float S4WaveMax;
+	float S1InWaveMax;
+	float S2InWaveMax;
+	float S3InWaveMax;
+	float S4InWaveMax;
 	float S1WaveTimer;
 	float S2WaveTimer;
 	float S3WaveTimer;
 	float S4WaveTimer;
+	float S1InWaveTimer;
+	float S2InWaveTimer;
+	float S3InWaveTimer;
+	float S4InWaveTimer;
 	float gameTimer;
 	float increaseTime;
-
+	int S1PerWave;
+	int S2PerWave;
+	int S3PerWave;
+	int S4PerWave;
+	int damageincrease;
+	int healthincrease;
+	int turretCost;
+	int upgradeCost;
 	bool gamePlaying;
 	bool preGame;
 	float preGameTimer;
