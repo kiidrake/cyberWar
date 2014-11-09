@@ -161,6 +161,7 @@ void Spacewar::update()
 		baseTurrets[0].setDone(false);
 		baseTurrets[0].setX(turretBases[0].getX());
 		baseTurrets[0].setY(turretBases[0].getY());
+
 	}
 	if(input->isKeyDown(0x32)){
 		baseTurrets[1].setActive(true);
@@ -218,6 +219,7 @@ void Spacewar::update()
 		}
 				for(int i = 0; i < 50; i++){
 			missiles[i].setX(missiles[i].getX() - frameTime * ship1.getVelocity().x);
+			turretMissiles1[i].setX(turretMissiles1[i].getX() - frameTime * ship1.getVelocity().x);
 		}
 		nebula.setX(nebula.getX() - frameTime * ship1.getVelocity().x);
 	}
@@ -246,6 +248,7 @@ void Spacewar::update()
 		}
 		for(int i = 0; i < 50; i++){
 			missiles[i].setY(missiles[i].getY() - frameTime * ship1.getVelocity().y);
+			turretMissiles1[i].setY(turretMissiles1[i].getY() - frameTime * ship1.getVelocity().y);
 		}
 		nebula.setY(nebula.getY() - frameTime * ship1.getVelocity().y);
 	}
@@ -303,13 +306,12 @@ void Spacewar::update()
 	//TURRET MISSILES
 	if ((input->isKeyDown(VK_RETURN)) && !turretFired1 )
 	{
-		for(int i = 0; i < 5; i++){
-			if(baseTurrets[i].getActive()){
+			if(baseTurrets[0].getActive()){
 		audio->playCue(SHOOT);
 		turretMissiles1[turretMissileIndex1].setDegrees(angle);
-		turretMissiles1[turretMissileIndex1].setX(ship1.getX());
-		turretMissiles1[turretMissileIndex1].setY(ship1.getY());
-		VECTOR2 fVec(input->getMouseX() - baseTurrets[i].getX(), input->getMouseY() - baseTurrets[i].getY());
+		turretMissiles1[turretMissileIndex1].setX(baseTurrets[0].getX());
+		turretMissiles1[turretMissileIndex1].setY(baseTurrets[0].getY());
+		VECTOR2 fVec(input->getMouseX() - baseTurrets[0].getX(), input->getMouseY() - baseTurrets[0].getY());
 	 D3DXVec2Normalize(&fVec, &fVec); 
 	 turretMissiles1[turretMissileIndex1].setVelocity(fVec);
 	 turretMissiles1[turretMissileIndex1].activate();
@@ -318,8 +320,7 @@ void Spacewar::update()
 	 turretFired1 = true;
 			}
 	} 
-	}
-		else if ((input->isKeyDown(VK_RETURN)) && fired )
+		else if ((input->isKeyDown(VK_RETURN)) && turretFired1 )
 	{
     
 	} 
@@ -328,6 +329,7 @@ void Spacewar::update()
 		turretFired1 = false;
 	}
 
+		
 	for( int i =0; i < 50; i++)
 	{
 	
@@ -340,10 +342,6 @@ void Spacewar::update()
 		turretMissileIndex1 = 0;
 	}
 
-	for(int i = 0; i < 5; i++){
-		turretBases[i].update(frameTime);
-			baseTurrets[i].update(frameTime);
-	}
 	ship1.update(frameTime);
 	
 }
@@ -394,6 +392,9 @@ void Spacewar::render()
 		{
 			missiles[i].draw();
 		}
+		 if(turretMissiles1[i].getActive()){
+			 turretMissiles1[i].draw();
+		 }
 	}
 	output->print(ss.str(), 600,0);
 	if (!gamePlaying)
