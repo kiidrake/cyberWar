@@ -84,7 +84,6 @@ void Ship::update(float frameTime)
 	} 
 	// move ship 
          
-	
     // Bounce off walls
     if (spriteData.x > GAME_WIDTH-shipNS::WIDTH)    // if hit right screen edge
     {

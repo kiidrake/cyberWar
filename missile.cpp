@@ -43,7 +43,8 @@ void Missile::update(float frameTime)
 	
 	if ( active)
 	{
-    spriteData.x += frameTime * velocity.x;  
+		spriteData.x += frameTime * velocity.x * missileNS::SPEED;  
+		spriteData.y += frameTime * velocity.y * missileNS::SPEED;
 	} 
 
 	

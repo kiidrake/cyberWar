@@ -88,6 +88,17 @@ void Spacewar::initialize(HWND hwnd)
 		 missiles[i].setVelocity(VECTOR2(missileNS::SPEED,-missileNS::SPEED)); // VECTOR2(X, Y)
 		 missiles[i].setScale(missiles[i].getScale() * 2);
 	}	
+		for( int i =0; i < 50; i++)
+	{
+		if (!turretMissiles1[i].initialize(this, missileNS::WIDTH, missileNS::HEIGHT, missileNS::TEXTURE_COLS, &missileTexture))
+			throw(GameError(gameErrorNS::FATAL_ERROR, "Error initializing turret missile1"));
+		 turretMissiles1[i].setFrames(missileNS::SHIP1_START_FRAME, missileNS::SHIP1_END_FRAME);
+		 turretMissiles1[i].setCurrentFrame(missileNS::SHIP1_START_FRAME);
+		 turretMissiles1[i].setX(GAME_WIDTH/4);
+		 turretMissiles1[i].setY(GAME_HEIGHT/4);
+		 turretMissiles1[i].setVelocity(VECTOR2(missileNS::SPEED,-missileNS::SPEED)); // VECTOR2(X, Y)
+		 turretMissiles1[i].setScale(missiles[i].getScale() * 2);
+	}	
 	for(int i = 0;i < 5; i++){
 		if (!baseTurrets[i].initialize(this, BaseTurretNS::WIDTH, BaseTurretNS::HEIGHT, 0, &turretTextureOne))
 			throw(GameError(gameErrorNS::FATAL_ERROR, "Error initializing base turrets"));	
@@ -128,7 +139,7 @@ void Spacewar::initialize(HWND hwnd)
 	score = 0;
 	colCounter = 0;
 	missileIndex= 0;
-	
+	turretMissileIndex1 = 0;
 	fired = false;
 	
 	gameTimer = 0;
@@ -250,11 +261,13 @@ void Spacewar::update()
 	if ((input->isKeyDown(VK_SPACE)) && !fired )
 	{
 		audio->playCue(SHOOT);
-		missiles[missileIndex].setDegrees(90 + angle);
+		missiles[missileIndex].setDegrees(angle);
 	 missiles[missileIndex].setX(ship1.getX());
 	 missiles[missileIndex].setY(ship1.getY());
-	//missiles[missileIndex].setVelocity(VECTOR2(missiles[missileIndex].getVelocity().x * cos(angle),missiles[missileIndex].getVelocity().y) * sin(angle));
-	 missiles[missileIndex].setVelocity(VECTOR2(0,1));
+	 VECTOR2 fVec(input->getMouseX() - ship1.getX(), input->getMouseY() - ship1.getY());
+	 D3DXVec2Normalize(&fVec, &fVec); 
+	 missiles[missileIndex].setVelocity(fVec);
+	
 	 missiles[missileIndex].activate();
 	 missileIndex++;
 	 
@@ -279,6 +292,43 @@ void Spacewar::update()
 	if (missileIndex >=50)
 	{
 		missileIndex = 0;
+	}
+
+	//TURRET MISSILES
+	if ((input->isKeyDown(VK_RETURN)) && !turretFired1 )
+	{
+		audio->playCue(SHOOT);
+		turretMissiles1[turretMissileIndex1].setDegrees(angle);
+		turretMissiles1[turretMissileIndex1].setX(ship1.getX());
+		turretMissiles1[turretMissileIndex1].setY(ship1.getY());
+	 VECTOR2 fVec(input->getMouseX() - ship1.getX(), input->getMouseY() - ship1.getY());
+	 D3DXVec2Normalize(&fVec, &fVec); 
+	 turretMissiles1[turretMissileIndex1].setVelocity(fVec);
+	
+	 turretMissiles1[turretMissileIndex1].activate();
+	 turretMissileIndex1++;
+	 
+	 turretFired1 = true;
+	} 
+		else if ((input->isKeyDown(VK_RETURN)) && fired )
+	{
+    
+	} 
+	else
+	{
+		turretFired1 = false;
+	}
+
+	for( int i =0; i < 50; i++)
+	{
+	
+	  
+		turretMissiles1[i].update(frameTime);
+	}
+	
+	if (turretMissileIndex1 >=50)
+	{
+		turretMissileIndex1 = 0;
 	}
 
 	for(int i = 0; i < 5; i++){

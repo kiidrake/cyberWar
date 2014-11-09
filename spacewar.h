@@ -40,6 +40,7 @@ private:
     Ship    ship1;           // spaceships
 	Missile missiles[50];
 	BaseTurret baseTurrets[5];
+	Missile turretMissiles1[50];
 	
 
 	Health health;
@@ -47,12 +48,12 @@ private:
 	Image turretBases[5];
 	int colCounter;
 	int missileIndex;
-	
+	int turretMissileIndex1;
 	int spawnLoc;
 	VECTOR2* fireVector;
 	VECTOR2* forward;
 	bool fired;
-	
+	bool turretFired1;
 	int score;
 	
 	
