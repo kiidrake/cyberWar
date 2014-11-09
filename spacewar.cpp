@@ -146,6 +146,8 @@ void Spacewar::initialize(HWND hwnd)
 	
 	preGame = true;
     gamePlaying = true;
+	roundsLeft = 3;
+	maxRounds = 3;
 	score = 0;
 	colCounter = 0;
 	missileIndex= 0;
@@ -390,8 +392,8 @@ void Spacewar::update()
 	{
 		S1WaveTimer -= frameTime;
 		S2WaveTimer -= frameTime;
-		S2WaveTimer -= frameTime;
-		S2WaveTimer -= frameTime;
+		S3WaveTimer -= frameTime;
+		S4WaveTimer -= frameTime;
 		if (S1WaveTimer <= 0)
 		{
 			S1InWaveTimer -= frameTime;
@@ -408,6 +410,7 @@ void Spacewar::update()
 				{
 					S1PerWave = S1PerWaveMax;
 					S1WaveTimer = S1WaveMax;
+					wavesLeft -= 1;
 
 				}
 
@@ -415,8 +418,99 @@ void Spacewar::update()
 			}
 
 		}
+		if (S2WaveTimer <= 0)
+		{
+			S2InWaveTimer -= frameTime;
+			if (S2InWaveTimer <= 0)
+			{
+				enemies[enemyIndex].setX(spawners[1].getCenterX());
+				enemies[enemyIndex].setY(spawners[1].getCenterY());
+				enemies[enemyIndex].setPattern(RIGHT,DOWN,DOWNRIGHT,TRACK);
+				enemies[enemyIndex].setPatternTime(2,3,2.5,30);
+			    enemies[enemyIndex].activate();
+				S2InWaveTimer = S2InWaveMax;
+				S2PerWave -= 1;
+				if (S2PerWave == 0)
+				{
+					S2PerWave = S2PerWaveMax;
+					S2WaveTimer = S2WaveMax;
+					wavesLeft -= 1;
 
+				}
+
+
+			}
+
+		}
+		if (S3WaveTimer <= 0)
+		{
+			S3InWaveTimer -= frameTime;
+			if (S3InWaveTimer <= 0)
+			{
+				enemies[enemyIndex].setX(spawners[2].getCenterX());
+				enemies[enemyIndex].setY(spawners[2].getCenterY());
+				enemies[enemyIndex].setPattern(DOWN,RIGHT,DOWNRIGHT,TRACK);
+				enemies[enemyIndex].setPatternTime(2,3,2.5,30);
+			    enemies[enemyIndex].activate();
+				S3InWaveTimer = S3InWaveMax;
+				S3PerWave -= 1;
+				if (S3PerWave == 0)
+				{
+					S3PerWave = S3PerWaveMax;
+					S3WaveTimer = S3WaveMax;
+					wavesLeft -= 1;
+
+				}
+
+
+			}
+
+		}
+		if (S4WaveTimer <= 0)
+		{
+			S4InWaveTimer -= frameTime;
+			if (S4InWaveTimer <= 0)
+			{
+				enemies[enemyIndex].setX(spawners[3].getCenterX());
+				enemies[enemyIndex].setY(spawners[3].getCenterY());
+				enemies[enemyIndex].setPattern(DOWN,RIGHT,DOWNRIGHT,TRACK);
+				enemies[enemyIndex].setPatternTime(2,3,2.5,30);
+			    enemies[enemyIndex].activate();
+				S4InWaveTimer = S4InWaveMax;
+				S4PerWave -= 1;
+				if (S4PerWave == 0)
+				{
+					S4PerWave = S4PerWaveMax;
+					S4WaveTimer = S4WaveMax;
+					wavesLeft -= 1;
+
+				}
+
+
+			}
+
+		}
+		if (wavesLeft <= 0)
+		{
+			wavesLeft = maxWaves;
+			roundStart = false;
+			roundsLeft -= 1;
+			// add enemy heath +
+			// add enemy spawn # +
+			S1WaveTimer = 5;
+			S2WaveTimer = 15;
+			S3WaveTimer = 25;
+			S4WaveTimer = 35;
+		}
 	}
+	if (roundsLeft == 0)
+	{
+		roundsLeft = maxRounds;
+		// win screen game state
+		//reset everything to play again
+	}
+
+
 	
 }
 

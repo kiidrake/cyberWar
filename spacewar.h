@@ -92,6 +92,8 @@ private:
 	int S4PerWaveMax;
 	int wavesLeft;
 	int maxWaves;
+	int roundsLeft;
+	int maxRounds;
 	int damageincrease;
 	int healthincrease;
 	int turretCost;
