@@ -103,3 +103,19 @@ void coreEnemy::ai(float time, Entity &t)
 	//evade();
 	return;
 }
+
+void coreEnemy::setPattern(PATTERN_STEP_ACTION first,PATTERN_STEP_ACTION second,PATTERN_STEP_ACTION third,PATTERN_STEP_ACTION fourth)
+{
+	patternSteps[0].setAction(first);
+	patternSteps[1].setAction(second);
+	patternSteps[2].setAction(third);
+	patternSteps[3].setAction(fourth);
+}
+
+void coreEnemy::setPatternTime(float first, float second, float third, float fourth)
+{
+	patternSteps[0].setTimeForStep(first);
+	patternSteps[1].setTimeForStep(second);
+	patternSteps[2].setTimeForStep(third);
+	patternSteps[3].setTimeForStep(fourth);
+}

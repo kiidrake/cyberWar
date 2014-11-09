@@ -11,6 +11,8 @@
 #include "textureManager.h"
 #include "image.h"
 #include "baseTurret.h"
+#include "enemySpawner.h"
+#include "coreEnemy.h"
 #include "ship.h"
 #include "missile.h"
 #include "healthbar.h"
@@ -40,6 +42,8 @@ private:
     Ship    ship1;           // spaceships
 	Missile missiles[50];
 	BaseTurret baseTurrets[5];
+	EnemySpawner spawners[8];
+	coreEnemy enemies[100];
 	Missile turretMissiles1[50];
 	
 

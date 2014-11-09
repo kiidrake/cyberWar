@@ -32,7 +32,7 @@ class EnemySpawner : public Entity
 private:
     bool    damaged;
 	float directionTime;
-    int patternStepIndex;
+    
 public:
     // constructor
     EnemySpawner();
@@ -42,7 +42,7 @@ public:
     virtual bool initialize(Game *gamePtr, int width, int height, int ncols,
                             TextureManager *textureM);
     void update(float frameTime);
-	void setPattern(coreEnemy*);
+	
     void damage();
 	bool getDamage();
 };

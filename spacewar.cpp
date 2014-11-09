@@ -106,7 +106,17 @@ void Spacewar::initialize(HWND hwnd)
 		baseTurrets[i].setDone(true);
 		baseTurrets[i].setScale(baseTurrets[i].getScale() * 3);
 	}
-	
+	for( int i =0; i < 50; i++)
+	{
+		 if (!enemies[i].initialize(this, coreEnemyNS::WIDTH, coreEnemyNS::HEIGHT, coreEnemyNS::TEXTURE_COLS, &snakeTexture))
+			throw(GameError(gameErrorNS::FATAL_ERROR, "Error initializing missile1"));
+		 enemies[i].setFrames(coreEnemyNS::SHIP1_START_FRAME, coreEnemyNS::SHIP1_END_FRAME);
+		 enemies[i].setCurrentFrame(coreEnemyNS::SHIP1_START_FRAME);
+		 enemies[i].setX(GAME_WIDTH/4);
+		 enemies[i].setY(GAME_HEIGHT/4);
+		 enemies[i].setVelocity(VECTOR2(coreEnemyNS::SPEED,-coreEnemyNS::SPEED)); // VECTOR2(X, Y)
+	}
+
 	outString = "Score: ";
 	finalString = "Game Over \nFinalScore: ";
 	swarmString = "Swarm Ready, Press Shift to Fire";
