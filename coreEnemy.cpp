@@ -20,6 +20,7 @@ coreEnemy::coreEnemy() : Entity()
     mass = coreEnemyNS::MASS;
     collisionType = entityNS::CIRCLE;
 	damaged = false;
+	patternStepIndex = 0;
 }
 
 
@@ -44,9 +45,49 @@ void coreEnemy::update(float frameTime)
 	
 	if ( active)
 	{
-	spriteData.angle -= frameTime * coreEnemyNS::ROTATION_RATE;  // rotate the ship
-
-    spriteData.x -= frameTime * velocity.x;  
+		patternTime[patternStepIndex] -= frameTime;
+	    if (patternTime[patternStepIndex] <= 0)
+	    {
+			patternStepIndex += 1;
+	
+	    }
+		switch (patternSteps[patternStepIndex])
+		{
+		case NONE:
+			break;
+		case UP:
+			setVelocity(D3DXVECTOR2(0, -1));
+			break;
+		case DOWN:
+			setVelocity(D3DXVECTOR2(0, 1));
+			break;
+		case RIGHT:
+			setVelocity(D3DXVECTOR2(1,0));
+			break;
+		case LEFT:
+			setVelocity(D3DXVECTOR2(-1,0));
+			break;
+		case TRACK:
+			vectorTrack();
+			break;
+		case UPLEFT:
+			setVelocity(D3DXVECTOR2(-1,-1));
+			break;
+		case UPRIGHT:
+			setVelocity(D3DXVECTOR2(1,-1));
+			break;
+		case DOWNLEFT:
+			setVelocity(D3DXVECTOR2(-1,1));
+			break;
+		case DOWNRIGHT:
+			setVelocity(D3DXVECTOR2(1,1));
+			break;
+		}
+		D3DXVec2Normalize(&velocity, &velocity);
+		spriteData.x += frameTime * velocity.x * coreEnemyNS::SPEED;  
+		spriteData.y += frameTime * velocity.y * coreEnemyNS::SPEED;
+		
+		
 	} 
 
 	
@@ -106,16 +147,16 @@ void coreEnemy::ai(float time, Entity &t)
 
 void coreEnemy::setPattern(PATTERN_STEP_ACTION first,PATTERN_STEP_ACTION second,PATTERN_STEP_ACTION third,PATTERN_STEP_ACTION fourth)
 {
-	patternSteps[0].setAction(first);
-	patternSteps[1].setAction(second);
-	patternSteps[2].setAction(third);
-	patternSteps[3].setAction(fourth);
+	patternSteps[0] = first;
+	patternSteps[1] = second;
+	patternSteps[2] = third;
+	patternSteps[3] = fourth;
 }
 
 void coreEnemy::setPatternTime(float first, float second, float third, float fourth)
 {
-	patternSteps[0].setTimeForStep(first);
-	patternSteps[1].setTimeForStep(second);
-	patternSteps[2].setTimeForStep(third);
-	patternSteps[3].setTimeForStep(fourth);
+	patternTime[0] =first;
+	patternTime[1] =second;
+	patternTime[2] =third;
+	patternTime[3] =fourth;
 }

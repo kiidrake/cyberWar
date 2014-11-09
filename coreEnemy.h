@@ -5,7 +5,7 @@
 
 #include "entity.h"
 #include "constants.h"
-#include "patternStep.h"
+
 
 namespace coreEnemyNS
 {
@@ -34,7 +34,8 @@ private:
     bool    damaged;
     Entity targetEntity;
 	bool track;
-	PatternStep patternSteps[4];
+	PATTERN_STEP_ACTION patternSteps[4];
+	float patternTime[4];
 	int patternStepIndex;
 public:
     // constructor
@@ -46,6 +47,7 @@ public:
                             TextureManager *textureM);
     void update(float frameTime);
     void damage();
+	
 	void ai(float time, Entity &t);
 	void vectorTrack();
 	bool getDamage();

@@ -99,7 +99,6 @@
     <ClCompile Include="image.cpp" />
     <ClCompile Include="input.cpp" />
     <ClCompile Include="missile.cpp" />
-    <ClCompile Include="patternStep.cpp" />
     <ClCompile Include="ship.cpp" />
     <ClCompile Include="snake.cpp" />
     <ClCompile Include="spacewar.cpp" />
@@ -123,7 +122,6 @@
     <ClInclude Include="image.h" />
     <ClInclude Include="input.h" />
     <ClInclude Include="missile.h" />
-    <ClInclude Include="patternStep.h" />
     <ClInclude Include="ship.h" />
     <ClInclude Include="snake.h" />
     <ClInclude Include="spacewar.h" />
