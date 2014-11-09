@@ -42,7 +42,7 @@ private:
     Ship    ship1;           // spaceships
 	Missile missiles[50];
 	BaseTurret baseTurrets[5];
-	EnemySpawner spawners[8];
+	Image spawners[4];
 	coreEnemy enemies[100];
 	Missile turretMissiles1[50];
 	
@@ -60,7 +60,10 @@ private:
 	bool turretFired1;
 	int score;
 	
-	
+	float S1WaveTimer;
+	float S2WaveTimer;
+	float S3WaveTimer;
+	float S4WaveTimer;
 	float gameTimer;
 	float increaseTime;
 

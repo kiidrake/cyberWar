@@ -131,7 +131,7 @@ void Spacewar::initialize(HWND hwnd)
 	if(outputHL->initialize(graphics, 20, true, true, "Arial") == false)
         throw(GameError(gameErrorNS::FATAL_ERROR, "Error initializing output font"));
 
-		turretBases[0].setX(210);
+	turretBases[0].setX(210);
 	turretBases[0].setY(110);
 	turretBases[1].setX(300);
 	turretBases[1].setY(200);
