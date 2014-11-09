@@ -151,7 +151,7 @@ void Spacewar::initialize(HWND hwnd)
 	missileIndex= 0;
 	turretMissileIndex1 = 0;
 	fired = false;
-	
+	enemyIndex = 0;
 	gameTimer = 0;
 	increaseTime = 2.0;
 	turretTimer = 1.5;
@@ -178,6 +178,12 @@ void Spacewar::initialize(HWND hwnd)
 	S2PerWave = 5;
 	S3PerWave = 5;
 	S4PerWave = 5;
+	S1PerWaveMax = 5;
+	S2PerWaveMax = 5;
+	S3PerWaveMax = 5;
+	S4PerWaveMax = 5;
+	wavesLeft = 12;
+	maxWaves = 12;
 	damageincrease = 1;
 	healthincrease = 1;
 	turretCost = 10;
@@ -380,6 +386,37 @@ void Spacewar::update()
 	}
 
 	ship1.update(frameTime);
+	if (roundStart)
+	{
+		S1WaveTimer -= frameTime;
+		S2WaveTimer -= frameTime;
+		S2WaveTimer -= frameTime;
+		S2WaveTimer -= frameTime;
+		if (S1WaveTimer <= 0)
+		{
+			S1InWaveTimer -= frameTime;
+			if (S1InWaveTimer <= 0)
+			{
+				enemies[enemyIndex].setX(spawners[0].getCenterX());
+				enemies[enemyIndex].setY(spawners[0].getCenterY());
+				enemies[enemyIndex].setPattern(RIGHT,DOWN,DOWNRIGHT,TRACK);
+				enemies[enemyIndex].setPatternTime(3,2,2.5,30);
+			    enemies[enemyIndex].activate();
+				S1InWaveTimer = S1InWaveMax;
+				S1PerWave -= 1;
+				if (S1PerWave == 0)
+				{
+					S1PerWave = S1PerWaveMax;
+					S1WaveTimer = S1WaveMax;
+
+				}
+
+
+			}
+
+		}
+
+	}
 	
 }
 

@@ -52,6 +52,7 @@ private:
 	Image turretBases[5];
 	int colCounter;
 	int missileIndex;
+	int enemyIndex;
 	int turretMissileIndex1;
 	int spawnLoc;
 	VECTOR2* fireVector;
@@ -85,6 +86,12 @@ private:
 	int S2PerWave;
 	int S3PerWave;
 	int S4PerWave;
+	int S1PerWaveMax;
+	int S2PerWaveMax;
+	int S3PerWaveMax;
+	int S4PerWaveMax;
+	int wavesLeft;
+	int maxWaves;
 	int damageincrease;
 	int healthincrease;
 	int turretCost;
