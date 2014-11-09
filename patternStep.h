@@ -1,8 +1,12 @@
 
               
 #define WIN32_LEAN_AND_MEAN
-#ifndef PATTERN_STEP_H                 // Prevent multiple definitions if this 
-#define PATTERN_STEP_H   
+#ifndef PATTERN_STEM_H                 // Prevent multiple definitions if this 
+#define PATTERN_STEM_H   
+
+
+
+class PatternStep;
 
 #include "constants.h"
 #include "entity.h"
