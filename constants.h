@@ -63,7 +63,7 @@ const char SOUND_BANK[] = "audio\\Win\\Sound Bank.xsb";
 
 // audio cues
 const char HIT[]   = "hit";
-const char SHOOT[] = "shoot";
+const char FIRE[] = "fire";
 const char DAMAGE[] = "damage";
 const char WIN[] = "win";
 const char LOSE[] = "lose";
