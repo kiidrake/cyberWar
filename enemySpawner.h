@@ -5,7 +5,7 @@
 
 #include "entity.h"
 #include "constants.h"
-#include "patternStep.h"
+
 
 namespace enemySPawnerNS
 {
