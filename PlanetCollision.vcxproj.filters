@@ -69,6 +69,12 @@
     <ClCompile Include="patternStep.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="coreEnemy.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="enemySpawner.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="constants.h">
@@ -126,6 +132,12 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="patternStep.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="coreEnemy.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="enemySpawner.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>
