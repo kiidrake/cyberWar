@@ -216,6 +216,9 @@ void Spacewar::update()
 			baseTurrets[i].setX(baseTurrets[i].getX() - frameTime * ship1.getVelocity().x);
 		
 		}
+				for(int i = 0; i < 50; i++){
+			missiles[i].setX(missiles[i].getX() - frameTime * ship1.getVelocity().x);
+		}
 		nebula.setX(nebula.getX() - frameTime * ship1.getVelocity().x);
 	}
 	
@@ -240,6 +243,9 @@ void Spacewar::update()
 			turretBases[i].setY(turretBases[i].getY() - frameTime * ship1.getVelocity().y);
 			
 			baseTurrets[i].setY(baseTurrets[i].getY() - frameTime * ship1.getVelocity().y);
+		}
+		for(int i = 0; i < 50; i++){
+			missiles[i].setY(missiles[i].getY() - frameTime * ship1.getVelocity().y);
 		}
 		nebula.setY(nebula.getY() - frameTime * ship1.getVelocity().y);
 	}
@@ -288,7 +294,7 @@ void Spacewar::update()
 	  
 	  missiles[i].update(frameTime);
 	}
-	
+
 	if (missileIndex >=50)
 	{
 		missileIndex = 0;
