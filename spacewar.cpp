@@ -303,19 +303,22 @@ void Spacewar::update()
 	//TURRET MISSILES
 	if ((input->isKeyDown(VK_RETURN)) && !turretFired1 )
 	{
+		for(int i = 0; i < 5; i++){
+			if(baseTurrets[i].getActive()){
 		audio->playCue(SHOOT);
 		turretMissiles1[turretMissileIndex1].setDegrees(angle);
 		turretMissiles1[turretMissileIndex1].setX(ship1.getX());
 		turretMissiles1[turretMissileIndex1].setY(ship1.getY());
-	 VECTOR2 fVec(input->getMouseX() - ship1.getX(), input->getMouseY() - ship1.getY());
+		VECTOR2 fVec(input->getMouseX() - baseTurrets[i].getX(), input->getMouseY() - baseTurrets[i].getY());
 	 D3DXVec2Normalize(&fVec, &fVec); 
 	 turretMissiles1[turretMissileIndex1].setVelocity(fVec);
-	
 	 turretMissiles1[turretMissileIndex1].activate();
 	 turretMissileIndex1++;
 	 
 	 turretFired1 = true;
+			}
 	} 
+	}
 		else if ((input->isKeyDown(VK_RETURN)) && fired )
 	{
     
