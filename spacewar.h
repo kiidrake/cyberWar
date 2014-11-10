@@ -39,10 +39,13 @@ private:
 	TextureManager armadilloTexture;
 	TextureManager spiderTexture;
 	TextureManager healthTexture;
+	TextureManager splashTexture;
 	TextureManager missileTexture;
 	TextureManager turretBaseTexture;
 	TextureManager turretTextureOne;
 	TextureManager coreTexture;
+	TextureManager menuTexture;
+	Image menu;
 	Core core;
     Ship    ship1;           // spaceships
 	Missile missiles[50];
@@ -57,22 +60,53 @@ private:
 	int enemyIndex;
 	int roundsLeft;
 	int maxRounds;
+	bool pressed1;
+	bool pressed2;
+	bool pressed3;
+	bool pressed4;
+	bool pressed5;
 	coreEnemy enemies[150];
 	Missile turretMissiles1[50];
+	Missile turretMissiles2[50];
+	Missile turretMissiles3[50];
+	Missile turretMissiles4[50];
+	Missile turretMissiles5[50];
 	Health health;
     Image   nebula;         // backdrop image
 	Image turretBases[5];
 	int colCounter;
 	int missileIndex;
 	int turretMissileIndex1;
+	int turretMissileIndex2;
+	int turretMissileIndex3;
+	int turretMissileIndex4;
+	int turretMissileIndex5;
+	float turretTimer1;
+	float turretTimer2;
+	float turretTimer3;
+	float turretTimer4;
+	float turretTimer5;
 	int spawnLoc;
 	VECTOR2* fireVector;
 	VECTOR2* forward;
+
+	GAME_STATES gameState;
+
 	bool fired;
 	bool turretFired1;
+	bool turretFired2;
+	bool turretFired3;
+	bool turretFired4;
+	bool turretFired5;
 	int score;
 	int turretPoints;
-	float turretTimer;
+	bool level2;
+	int turretAngle1;
+	int turretAngle2;
+	int turretAngle3;
+	int turretAngle4;
+	int turretAngle5;
+	int EhealthMax;
 	float turretMax;
 	bool roundStart;
 	float S1WaveMax;
@@ -106,12 +140,14 @@ private:
 	float preGameTimer;
 	TextDX *output;
 	TextDX *outputHL;
+	Image splash;
 	std::string outString;
 	std::string finalString;
 	std::string swarmString;
 	std::string introString1;
 	std::string introString2;
 	std::string introString3;
+	std::string endString;
 public:
     // Constructor
     Spacewar();

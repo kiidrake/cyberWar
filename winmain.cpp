@@ -19,7 +19,6 @@ LRESULT WINAPI WinProc(HWND, UINT, WPARAM, LPARAM);
 // Game pointer
 Spacewar *game = NULL;
 HWND hwnd = NULL;
-
 //=============================================================================
 // Starting point for a Windows application
 //=============================================================================

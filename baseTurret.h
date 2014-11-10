@@ -11,7 +11,10 @@ namespace BaseTurretNS
     const int HEIGHT = 64;                  // image height
     const int X = GAME_WIDTH/2 - WIDTH/2;   // location on screen
     const int Y = GAME_HEIGHT/2 - HEIGHT/2;
-
+	    const int   TEXTURE_COLS = 3;           // texture has 8 columns
+    const int   SHIP1_START_FRAME = 0;      // ship1 starts at frame 0
+    const int   SHIP1_END_FRAME = 2;        // ship1 animation frames 0,1,2,3
+	 const float SHIP_ANIMATION_DELAY = 0.1f;    // time between frame
 }
 
 // inherits from Entity class
@@ -21,6 +24,7 @@ private:
 	int health;
 	bool mouseActive;
 	bool done;
+	int damage;
 public:
     // constructor
     BaseTurret();
@@ -36,6 +40,8 @@ public:
 	void shoot();
 	bool getDone() {return done;}
 	void setDone(bool val) {done = val;}
+	int getDamage() { return damage;}
+	void setDamage( int newDamage) { damage = newDamage;}
 };
 #endif
 

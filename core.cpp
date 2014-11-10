@@ -15,7 +15,7 @@ Core::Core() : Entity()
     startFrame = CoreNS::SHIP1_START_FRAME;     // first frame of ship animation
     endFrame     = CoreNS::SHIP1_END_FRAME;     // last frame of ship animation
     currentFrame = startFrame;              
-    radius = CoreNS::WIDTH/4.0;
+    radius = CoreNS::WIDTH/2;
     active = false;
     mass = CoreNS::MASS;
     collisionType = entityNS::CIRCLE;

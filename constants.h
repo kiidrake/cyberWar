@@ -31,8 +31,8 @@
 //-----------------------------------------------
 
 // window
-const char CLASS_NAME[] = "Village Hero";
-const char GAME_TITLE[] = "Village Hero";
+const char CLASS_NAME[] = "Viral Barrier";
+const char GAME_TITLE[] = "Viral Barrier";
 const bool FULLSCREEN = false;              // windowed or fullscreen
 const UINT GAME_WIDTH =  800;               // width of game in pixels
 const UINT GAME_HEIGHT = 600;               // height of game in pixels
@@ -58,6 +58,8 @@ const char TURRET_IMAGE_ONE[] = "pictures\\turret_sheet.png";
 const char ENEMY_IMAGE[] = "pictures\\enemy_sheet.png";
 const char ENEMY_SPAWNER_IMG[] = "pictures\\spawner.png";
 const char CORE_IMG[] = "pictures\\core.png";
+const char MENU_IMG[] = "pictures\\menu.png";
+const char SPLASH_SCREEN[] = "pictures\\splash.png";
 // audio files required by audio.cpp
 // WAVE_BANK must be location of .xwb file.
 const char WAVE_BANK[]  = "audio\\Win\\Wave Bank.xwb";
@@ -80,5 +82,6 @@ const UCHAR ALT_KEY      = VK_MENU;     // Alt key
 const UCHAR ENTER_KEY    = VK_RETURN;   // Enter key
 
 enum WEAPON {TORPEDO, SHIP, PLANET};
-enum PATTERN_STEP_ACTION {NONE, UP, DOWN, LEFT, RIGHT, TRACK, EVADE,UPLEFT,UPRIGHT,DOWNRIGHT,DOWNLEFT};
+enum PATTERN_STEP_ACTION {NONE, UP, DOWN, LEFT, RIGHT, TRACK, EVADE,UPLEFT,UPRIGHT,DOWNRIGHT,DOWNLEFT, DEAC};
+enum GAME_STATES {MENU,GAMEPLAY,TITLESCREEN,GAMEOVER};
 #endif

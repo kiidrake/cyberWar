@@ -12,8 +12,9 @@ BaseTurret::BaseTurret() : Entity()
     velocity.x = 0;                             // velocity X
     velocity.y = 0;                             // velocity Y
     currentFrame = startFrame;              
-    radius = BaseTurretNS::WIDTH/4.0;
+    radius = 250;
     active = false;
+	damage = 1;
 
 }
 

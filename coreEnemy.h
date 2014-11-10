@@ -31,11 +31,12 @@ namespace coreEnemyNS
 class coreEnemy : public Entity
 {
 private:
+	int enemyHealth;
     bool    damaged;
     Entity targetEntity;
 	bool track;
-	PATTERN_STEP_ACTION patternSteps[4];
-	float patternTime[4];
+	PATTERN_STEP_ACTION patternSteps[5];
+	float patternTime[5];
 	int patternStepIndex;
 public:
     // constructor
@@ -53,5 +54,7 @@ public:
 	bool getDamage();
 	void setPattern(PATTERN_STEP_ACTION,PATTERN_STEP_ACTION,PATTERN_STEP_ACTION,PATTERN_STEP_ACTION);
 	void setPatternTime(float, float, float, float);
+	int getEnemyHealth() { return enemyHealth;}
+	void setEnemyHealth( int newHealth) { enemyHealth = newHealth;}
 };
 #endif

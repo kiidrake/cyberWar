@@ -21,6 +21,7 @@ coreEnemy::coreEnemy() : Entity()
     collisionType = entityNS::CIRCLE;
 	damaged = false;
 	patternStepIndex = 0;
+	enemyHealth = 1;
 }
 
 
@@ -41,7 +42,11 @@ void coreEnemy::draw()
 void coreEnemy::update(float frameTime)
 {
     Entity::update(frameTime);
-    
+    if(!active)
+	{
+		patternStepIndex = 0;
+
+	}
 	
 	if ( active)
 	{
@@ -82,6 +87,9 @@ void coreEnemy::update(float frameTime)
 		case DOWNRIGHT:
 			setVelocity(D3DXVECTOR2(1,1));
 			break;
+		case DEAC:
+			active = false;
+			break;
 		}
 		D3DXVec2Normalize(&velocity, &velocity);
 		spriteData.x += frameTime * velocity.x * coreEnemyNS::SPEED;  
@@ -96,12 +104,7 @@ void coreEnemy::update(float frameTime)
 
 
     // Bounce off walls
-    if ((spriteData.x < 0)   && active)    // if hit right screen edge
-    {
-		active = false;
-        spriteData.x = 0;    // position at right screen edge
-                           // reverse X direction
-    } 
+   
    
 }
 
@@ -151,6 +154,7 @@ void coreEnemy::setPattern(PATTERN_STEP_ACTION first,PATTERN_STEP_ACTION second,
 	patternSteps[1] = second;
 	patternSteps[2] = third;
 	patternSteps[3] = fourth;
+	patternSteps[4] = DEAC;
 }
 
 void coreEnemy::setPatternTime(float first, float second, float third, float fourth)
@@ -159,4 +163,5 @@ void coreEnemy::setPatternTime(float first, float second, float third, float fou
 	patternTime[1] =second;
 	patternTime[2] =third;
 	patternTime[3] =fourth;
+	patternTime[4] = 0.2;
 }
