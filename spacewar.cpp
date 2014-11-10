@@ -437,6 +437,10 @@ void Spacewar::update()
 				enemies[enemyIndex].setPatternTime(3,2,2.5,30);
 			    enemies[enemyIndex].activate();
 				enemyIndex++;
+				if (enemyIndex >=50)
+				{
+					enemyIndex = 0;
+				}
 				// loop enemies
 				S1InWaveTimer = S1InWaveMax;
 				S1PerWave -= 1;
@@ -461,6 +465,10 @@ void Spacewar::update()
 				enemies[enemyIndex].setPatternTime(2,3,2.5,30);
 			    enemies[enemyIndex].activate();
 				enemyIndex++;
+				if (enemyIndex >=50)
+				{
+					enemyIndex = 0;
+				}
 				S2InWaveTimer = S2InWaveMax;
 				S2PerWave -= 1;
 				if (S2PerWave == 0)
@@ -485,6 +493,10 @@ void Spacewar::update()
 				enemies[enemyIndex].setPatternTime(2,3,2.5,30);
 			    enemies[enemyIndex].activate();
 				enemyIndex++;
+				if (enemyIndex >=50)
+				{
+					enemyIndex = 0;
+				}
 				S3InWaveTimer = S3InWaveMax;
 				S3PerWave -= 1;
 				if (S3PerWave == 0)
@@ -507,6 +519,10 @@ void Spacewar::update()
 				enemies[enemyIndex].setPatternTime(2,3,2.5,30);
 			    enemies[enemyIndex].activate();
 				enemyIndex++;
+				if (enemyIndex >=50)
+				{
+					enemyIndex = 0;
+				}
 				S4InWaveTimer = S4InWaveMax;
 				S4PerWave -= 1;
 				if (S4PerWave == 0)
