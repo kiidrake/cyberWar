@@ -53,8 +53,10 @@ const char SPIDER_IMAGE[] = "pictures\\spider_sheet.png";
 const char ARMADILLO_IMAGE[] = "pictures\\armadillo_sheet.png";
 const char HEALTHBAR[] = "pictures\\health_sheet.png";
 const char MISSILE_IMAGE[] = "pictures\\missile_sheet.png";
-const char TURRET_BASE[] = "pictures\\defender2.png";
-const char TURRET_IMAGE_ONE[] = "pictures\\Untitled.png";
+const char TURRET_BASE[] = "pictures\\base.png";
+const char TURRET_IMAGE_ONE[] = "pictures\\turret_sheet.png";
+const char ENEMY_IMAGE[] = "pictures\\enemy_sheet.png";
+const char ENEMY_SPAWNER_IMG[] = "pictures\\spawner.png";
 // audio files required by audio.cpp
 // WAVE_BANK must be location of .xwb file.
 const char WAVE_BANK[]  = "audio\\Win\\Wave Bank.xwb";

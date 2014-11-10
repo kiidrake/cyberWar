@@ -41,10 +41,18 @@ void Spacewar::initialize(HWND hwnd)
         throw(GameError(gameErrorNS::FATAL_ERROR, "Error initializing game textures"));
 	if (!snakeTexture.initialize(graphics,SNAKE_IMAGE))
 		  throw(GameError(gameErrorNS::FATAL_ERROR, "Error initializing snake textures"));
+	if(!spawnerTexture.initialize(graphics,ENEMY_SPAWNER_IMG))
+		  throw(GameError(gameErrorNS::FATAL_ERROR, "Error initializing spawner texture"));
+	if(!enemyTexture.initialize(graphics,ENEMY_IMAGE))
+		  throw(GameError(gameErrorNS::FATAL_ERROR, "Error initializing enemy texture"));
     // nebula image
 	for(int i = 0; i < 5; i++){
 		if(!turretBases[i].initialize(graphics,0,0,0,&turretBaseTexture))
 			throw(GameError(gameErrorNS::FATAL_ERROR, "Error initializing turret base"));
+	}
+	for(int i = 0; i < 4; i++){
+		if(!spawners[i].initialize(graphics,0,0,0,&spawnerTexture))
+			throw(GameError(gameErrorNS::FATAL_ERROR, "Error initializing spawners"));
 	}
     if (!nebula.initialize(graphics,0,0,0,&nebulaTexture))
         throw(GameError(gameErrorNS::FATAL_ERROR, "Error initializing nebula"));
@@ -104,7 +112,7 @@ void Spacewar::initialize(HWND hwnd)
 			throw(GameError(gameErrorNS::FATAL_ERROR, "Error initializing base turrets"));	
 		baseTurrets[i].setActive(false);
 		baseTurrets[i].setDone(true);
-		baseTurrets[i].setScale(baseTurrets[i].getScale() * 3);
+		//baseTurrets[i].setScale(baseTurrets[i].getScale() * 3);
 	}
 	for( int i =0; i < 50; i++)
 	{
@@ -131,16 +139,26 @@ void Spacewar::initialize(HWND hwnd)
 	if(outputHL->initialize(graphics, 20, true, true, "Arial") == false)
         throw(GameError(gameErrorNS::FATAL_ERROR, "Error initializing output font"));
 
-	turretBases[0].setX(210);
-	turretBases[0].setY(110);
-	turretBases[1].setX(300);
-	turretBases[1].setY(200);
-	turretBases[2].setX(400);
-	turretBases[2].setY(200);
-	turretBases[3].setX(500);
-	turretBases[3].setY(200);
-	turretBases[4].setX(600);
-	turretBases[4].setY(110);
+	turretBases[0].setX(500);
+	turretBases[0].setY(1000);
+	turretBases[1].setX(700);
+	turretBases[1].setY(700);
+	turretBases[2].setX(900);
+	turretBases[2].setY(500);
+	turretBases[3].setX(1100);
+	turretBases[3].setY(300);
+	turretBases[4].setX(1300);
+	turretBases[4].setY(100);
+	
+	spawners[0].setX(100);
+	spawners[0].setY(200);
+	spawners[1].setX(100);
+	spawners[1].setY(700);
+	spawners[2].setX(600);
+	spawners[2].setY(100);
+	spawners[3].setX(1000);
+	spawners[3].setY(100);
+
 
 	outputHL->setFontColor(graphicsNS::RED);
 	
@@ -151,7 +169,13 @@ void Spacewar::initialize(HWND hwnd)
 	missileIndex= 0;
 	turretMissileIndex1 = 0;
 	fired = false;
-	
+	enemyIndex = 0;
+	S1PerWaveMax = 5;
+	S2PerWaveMax = 5;
+	S3PerWaveMax = 5;
+	S4PerWaveMax = 5;
+	wavesLeft = 12;
+	maxWaves = 12;
 	gameTimer = 0;
 	increaseTime = 2.0;
 	turretTimer = 1.5;
@@ -180,6 +204,8 @@ void Spacewar::initialize(HWND hwnd)
 	S4PerWave = 5;
 	damageincrease = 1;
 	healthincrease = 1;
+	roundsLeft = 3;
+	maxRounds = 3;
 	turretCost = 10;
 	upgradeCost = 5;
 	preGameTimer = 8.0;
@@ -224,8 +250,6 @@ void Spacewar::update()
 		baseTurrets[4].setX(turretBases[4].getX());
 		baseTurrets[4].setY(turretBases[4].getY());
 	}
-
-
 	//ROTATE SHIP WITH MOUSE USING CMATH FUNCTIONS
 	angle = atan2(input->getMouseY() - ship1.getY(), input->getMouseX() - ship1.getX());
 	angle *= (180/PI);
@@ -241,7 +265,11 @@ void Spacewar::update()
 	gameTimer += frameTime;
 
 
-	
+	//	for(int i = 0; i < 5; i++){
+	//		if(baseTurrets[i].getActive()){
+	//			baseTurrets[i].setDegrees(angle);
+	//		}
+	//}
 
 	
 
@@ -258,6 +286,9 @@ void Spacewar::update()
 			missiles[i].setX(missiles[i].getX() - frameTime * ship1.getVelocity().x);
 			turretMissiles1[i].setX(turretMissiles1[i].getX() - frameTime * ship1.getVelocity().x);
 		}
+				for(int i = 0; i < 4; i++){
+					spawners[i].setX(spawners[i].getX() - frameTime * ship1.getVelocity().x);
+				}
 		nebula.setX(nebula.getX() - frameTime * ship1.getVelocity().x);
 	}
 	
@@ -287,6 +318,9 @@ void Spacewar::update()
 			missiles[i].setY(missiles[i].getY() - frameTime * ship1.getVelocity().y);
 			turretMissiles1[i].setY(turretMissiles1[i].getY() - frameTime * ship1.getVelocity().y);
 		}
+		for(int i = 0; i < 4; i++){
+			spawners[i].setY(spawners[i].getY() - frameTime * ship1.getVelocity().y);
+		}
 		nebula.setY(nebula.getY() - frameTime * ship1.getVelocity().y);
 	}
 
@@ -306,7 +340,7 @@ void Spacewar::update()
 	
 	if ((input->isKeyDown(VK_SPACE)) && !fired )
 	{
-		audio->playCue(SHOOT);
+		audio->playCue(FIRE);
 		missiles[missileIndex].setDegrees(angle);
 	 missiles[missileIndex].setX(ship1.getX());
 	 missiles[missileIndex].setY(ship1.getY());
@@ -344,7 +378,7 @@ void Spacewar::update()
 	if ((input->isKeyDown(VK_RETURN)) && !turretFired1 )
 	{
 			if(baseTurrets[0].getActive()){
-		audio->playCue(SHOOT);
+		audio->playCue(FIRE);
 		turretMissiles1[turretMissileIndex1].setDegrees(angle);
 		turretMissiles1[turretMissileIndex1].setX(baseTurrets[0].getX());
 		turretMissiles1[turretMissileIndex1].setY(baseTurrets[0].getY());
@@ -380,7 +414,121 @@ void Spacewar::update()
 	}
 
 	ship1.update(frameTime);
+	if (roundStart)
+	{
+		S1WaveTimer -= frameTime;
+		S2WaveTimer -= frameTime;
+		S3WaveTimer -= frameTime;
+		S4WaveTimer -= frameTime;
+		if (S1WaveTimer <= 0)
+		{
+			S1InWaveTimer -= frameTime;
+			if (S1InWaveTimer <= 0)
+			{
+				enemies[enemyIndex].setX(spawners[0].getCenterX());
+				enemies[enemyIndex].setY(spawners[0].getCenterY());
+				enemies[enemyIndex].setPattern(RIGHT,DOWN,DOWNRIGHT,TRACK);
+				enemies[enemyIndex].setPatternTime(3,2,2.5,30);
+			    enemies[enemyIndex].activate();
+				S1InWaveTimer = S1InWaveMax;
+				S1PerWave -= 1;
+				if (S1PerWave == 0)
+				{
+					S1PerWave = S1PerWaveMax;
+					S1WaveTimer = S1WaveMax;
+					wavesLeft -= 1;
+				}
+
+
+			}
+		}
+			if (S2WaveTimer <= 0)
+		{
+			S2InWaveTimer -= frameTime;
+			if (S2InWaveTimer <= 0)
+			{
+				enemies[enemyIndex].setX(spawners[1].getCenterX());
+				enemies[enemyIndex].setY(spawners[1].getCenterY());
+				enemies[enemyIndex].setPattern(RIGHT,DOWN,DOWNRIGHT,TRACK);
+				enemies[enemyIndex].setPatternTime(2,3,2.5,30);
+			    enemies[enemyIndex].activate();
+				S2InWaveTimer = S2InWaveMax;
+				S2PerWave -= 1;
+				if (S2PerWave == 0)
+				{
+					S2PerWave = S2PerWaveMax;
+					S2WaveTimer = S2WaveMax;
+					wavesLeft -= 1;
+
+				}
+
+
+			}
+		  }
+			if (S3WaveTimer <= 0)
+		{
+			S3InWaveTimer -= frameTime;
+			if (S3InWaveTimer <= 0)
+			{
+				enemies[enemyIndex].setX(spawners[2].getCenterX());
+				enemies[enemyIndex].setY(spawners[2].getCenterY());
+				enemies[enemyIndex].setPattern(DOWN,RIGHT,DOWNRIGHT,TRACK);
+				enemies[enemyIndex].setPatternTime(2,3,2.5,30);
+			    enemies[enemyIndex].activate();
+				S3InWaveTimer = S3InWaveMax;
+				S3PerWave -= 1;
+				if (S3PerWave == 0)
+				{
+					S3PerWave = S3PerWaveMax;
+					S3WaveTimer = S3WaveMax;
+					wavesLeft -= 1;
+
+				}
+			}
+		}
+		if (S4WaveTimer <= 0)
+		{
+			S4InWaveTimer -= frameTime;
+			if (S4InWaveTimer <= 0)
+			{
+				enemies[enemyIndex].setX(spawners[3].getCenterX());
+				enemies[enemyIndex].setY(spawners[3].getCenterY());
+				enemies[enemyIndex].setPattern(DOWN,RIGHT,DOWNRIGHT,TRACK);
+				enemies[enemyIndex].setPatternTime(2,3,2.5,30);
+			    enemies[enemyIndex].activate();
+				S4InWaveTimer = S4InWaveMax;
+				S4PerWave -= 1;
+				if (S4PerWave == 0)
+				{
+					S4PerWave = S4PerWaveMax;
+					S4WaveTimer = S4WaveMax;
+					wavesLeft -= 1;
+
+				}
+
+
+			}
+		}
+		if (wavesLeft <= 0)
+		{
+			wavesLeft = maxWaves;
+			roundStart = false;
+			roundsLeft -= 1;
+			// add enemy heath +
+			// add enemy spawn # +
+			S1WaveTimer = 5;
+			S2WaveTimer = 15;
+			S3WaveTimer = 25;
+			S4WaveTimer = 35;
+		}
 	
+		if (roundsLeft == 0)
+		{
+			roundsLeft = maxRounds;
+			// win screen game state
+			//reset everything to play again
+		}
+	}
 }
 
 //=============================================================================
@@ -441,6 +589,9 @@ void Spacewar::render()
 	for(int i = 0; i < 5; i++) {
 		turretBases[i].draw();
 		if(baseTurrets[i].getActive()) baseTurrets[i].draw();
+	}
+	for(int i = 0; i < 4; i++) {
+		spawners[i].draw();
 	}
     graphics->spriteEnd();                  // end drawing sprites
 }

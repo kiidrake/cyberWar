@@ -30,7 +30,9 @@ class Spacewar : public Game
 {
 private:
     // game items
-    TextureManager nebulaTexture;   // nebula texture
+    TextureManager nebulaTexture;
+	TextureManager spawnerTexture;
+	TextureManager enemyTexture;
 	TextureManager snakeTexture;
     TextureManager gameTextures;    // game texture
 	TextureManager armadilloTexture;
@@ -43,10 +45,17 @@ private:
 	Missile missiles[50];
 	BaseTurret baseTurrets[5];
 	Image spawners[4];
+	int S1PerWaveMax;
+	int S2PerWaveMax;
+	int S3PerWaveMax;
+	int S4PerWaveMax;
+	int wavesLeft;
+	int maxWaves;
+	int enemyIndex;
+	int roundsLeft;
+	int maxRounds;
 	coreEnemy enemies[150];
 	Missile turretMissiles1[50];
-	
-
 	Health health;
     Image   nebula;         // backdrop image
 	Image turretBases[5];
