@@ -32,6 +32,8 @@ void Spacewar::initialize(HWND hwnd)
     // nebula texture
     if (!nebulaTexture.initialize(graphics,NEBULA_IMAGE))
         throw(GameError(gameErrorNS::FATAL_ERROR, "Error initializing nebula texture"));
+	if(!coreTexture.initialize(graphics,CORE_IMG))
+		throw(GameError(gameErrorNS::FATAL_ERROR, "Error initializing core texture"));
     // main game textures
 	if(!turretBaseTexture.initialize(graphics,TURRET_BASE))
 		throw(GameError(gameErrorNS::FATAL_ERROR, "Error initializing turret base texture"));
@@ -124,6 +126,13 @@ void Spacewar::initialize(HWND hwnd)
 		 enemies[i].setY(GAME_HEIGHT/4);
 		 enemies[i].setVelocity(VECTOR2(coreEnemyNS::SPEED,-coreEnemyNS::SPEED)); // VECTOR2(X, Y)
 	}
+	if(!core.initialize(this,CoreNS::WIDTH,CoreNS::HEIGHT,0,&coreTexture))
+		throw(GameError(gameErrorNS::FATAL_ERROR, "Error initializing core"));
+	core.setFrames(0,0);
+    core.setCurrentFrame(0);
+    core.setX(1500);
+    core.setY(1100);
+	core.setScale(core.getScale() * 2);
 
 	outString = "Score: ";
 	finalString = "Game Over \nFinalScore: ";
@@ -159,6 +168,8 @@ void Spacewar::initialize(HWND hwnd)
 	spawners[3].setX(1000);
 	spawners[3].setY(100);
 
+	core.setX(1300);
+	core.setY(900);
 
 	outputHL->setFontColor(graphicsNS::RED);
 	
@@ -294,6 +305,7 @@ void Spacewar::update()
 				for(int i = 0; i < 4; i++){
 					spawners[i].setX(spawners[i].getX() - frameTime * ship1.getVelocity().x);
 				}
+				core.setX(core.getX() - frameTime * ship1.getVelocity().x);
 		nebula.setX(nebula.getX() - frameTime * ship1.getVelocity().x);
 	}
 	
@@ -327,6 +339,7 @@ void Spacewar::update()
 		for(int i = 0; i < 4; i++){
 			spawners[i].setY(spawners[i].getY() - frameTime * ship1.getVelocity().y);
 		}
+		core.setY(core.getY() - frameTime * ship1.getVelocity().y);
 		nebula.setY(nebula.getY() - frameTime * ship1.getVelocity().y);
 	}
 
@@ -559,13 +572,18 @@ void Spacewar::update()
 		enemies[i].update(frameTime);
 	}
 	}
+	core.update(frameTime);
 }
 
 //=============================================================================
 // Artificial Intelligence
 //=============================================================================
 void Spacewar::ai()
-{}
+{
+	for(int i = 0; i < 50; i++){
+		enemies[i].ai(frameTime,core);
+	}
+}
 
 //=============================================================================
 // Handle collisions
@@ -628,6 +646,7 @@ void Spacewar::render()
 			enemies[i].draw();
 		}
 	}
+	core.draw();
     graphics->spriteEnd();                  // end drawing sprites
 }
 

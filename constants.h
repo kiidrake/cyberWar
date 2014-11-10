@@ -57,6 +57,7 @@ const char TURRET_BASE[] = "pictures\\base.png";
 const char TURRET_IMAGE_ONE[] = "pictures\\turret_sheet.png";
 const char ENEMY_IMAGE[] = "pictures\\enemy_sheet.png";
 const char ENEMY_SPAWNER_IMG[] = "pictures\\spawner.png";
+const char CORE_IMG[] = "pictures\\core.png";
 // audio files required by audio.cpp
 // WAVE_BANK must be location of .xwb file.
 const char WAVE_BANK[]  = "audio\\Win\\Wave Bank.xwb";
@@ -69,7 +70,7 @@ const char FIRE[] = "fire";
 const char DAMAGE[] = "damage";
 const char WIN[] = "win";
 const char LOSE[] = "lose";
-const char BACKGROUND[] = "background";
+const char BACKGROUND[] = "background 2";
 
 // key mappings
 // In this game simple constants are used for key mappings. If variables were used

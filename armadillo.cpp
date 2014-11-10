@@ -40,27 +40,6 @@ void Armadillo::draw()
 void Armadillo::update(float frameTime)
 {
     Entity::update(frameTime);
-    
-	
-	if ( active)
-	{
-	spriteData.angle -= frameTime * armadilloNS::ROTATION_RATE;  // rotate the ship
-
-    spriteData.x -= frameTime * velocity.x;  
-	} 
-
-	
-
-
-
-
-    // Bounce off walls
-    if ((spriteData.x < 0)   && active)    // if hit right screen edge
-    {
-		active = false;
-        spriteData.x = 0;    // position at right screen edge
-                           // reverse X direction
-    } 
    
 }
 

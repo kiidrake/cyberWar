@@ -20,6 +20,7 @@
 #include "armadillo.h"
 #include "spider.h"
 #include "textDX.h"
+#include "core.h"
 #include <sstream>
 #include <string>
 
@@ -41,6 +42,8 @@ private:
 	TextureManager missileTexture;
 	TextureManager turretBaseTexture;
 	TextureManager turretTextureOne;
+	TextureManager coreTexture;
+	Core core;
     Ship    ship1;           // spaceships
 	Missile missiles[50];
 	BaseTurret baseTurrets[5];
