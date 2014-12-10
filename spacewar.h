@@ -137,6 +137,8 @@ private:
 	int upgradeCost;
 	bool gamePlaying;
 	bool preGame;
+	float tutTime;
+	float realTime;
 	float preGameTimer;
 	TextDX *output;
 	TextDX *outputHL;
@@ -148,6 +150,7 @@ private:
 	std::string introString2;
 	std::string introString3;
 	std::string endString;
+	std::string tutString;
 public:
     // Constructor
     Spacewar();

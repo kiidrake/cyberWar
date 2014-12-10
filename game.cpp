@@ -18,6 +18,7 @@ Game::Game()
     graphics = NULL;
     audio = NULL;
     initialized = false;
+	ShowCursor(false);
 }
 
 //=============================================================================
@@ -26,7 +27,7 @@ Game::Game()
 Game::~Game()
 {
     deleteAll();                // free all reserved memory
-    ShowCursor(true);           // show cursor
+    ShowCursor(true);           // show 
 }
 
 //=============================================================================

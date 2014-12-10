@@ -38,7 +38,7 @@ int WINAPI WinMain( HINSTANCE hInstance, HINSTANCE hPrevInstance,
     // Create the window
     if (!CreateMainWindow(hwnd, hInstance, nCmdShow))
         return 1;
-
+	
     try{
         game->initialize(hwnd);     // throws GameError
 
