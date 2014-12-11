@@ -377,6 +377,7 @@ void Spacewar::update()
 
 	case(GAMEPLAY):
 	if(roundStart == false)	begin.update(frameTime);
+	if(roundStart == false && input->isKeyDown(VK_ESCAPE)) gameState = PAUSE;
 	if (input->isKeyDown(VK_RETURN))
 	{
 		roundStart = true;
@@ -582,9 +583,10 @@ void Spacewar::update()
 	//}
 	
 
-	if (nebula.getX() <= 0 && ((ship1.getX() + ship1.getWidth())*ship1.getScale()) >= (GAME_WIDTH) - 10 && ((ship1.getX()+ship1.getWidth())*ship1.getScale()) <= (GAME_WIDTH) + 10  && nebula.getX()  >= (int)GAME_WIDTH - (int)BACK_WIDTH && ship1.getX() < BACK_WIDTH)
+	if (nebula.getX() <= 0 && ((ship1.getX())*ship1.getScale()) >= (GAME_WIDTH) - 10 && ((ship1.getX())*ship1.getScale()) <= (GAME_WIDTH) + 10  && nebula.getX()  >= (int)GAME_WIDTH - (int)BACK_WIDTH && ship1.getX() < BACK_WIDTH)
 	{
 		if(ship1.getVelocity() < 0) ship1.setVelocity(VECTOR2(ship1.getVelocity().x*-1,ship1.getVelocity().y*-1));
+		if(ship1.getX() >=0){
 		for(int i = 0; i < 5; i++)
 		{
 			turretBases[i].setX(turretBases[i].getX() - frameTime * ship1.getVelocity().x);
@@ -606,6 +608,7 @@ void Spacewar::update()
 				}
 				core.setX(core.getX() - frameTime * ship1.getVelocity().x);
 		nebula.setX(nebula.getX() - frameTime * ship1.getVelocity().x);
+		}
 		
 	}	
 	
@@ -622,7 +625,7 @@ void Spacewar::update()
 		ship1.setX(ship1.getX() + frameTime * ship1.getVelocity().x);
 	}
 	
-	if (nebula.getY() <= 0 && (ship1.getY() + ship1.getHeight())*ship1.getScale() >= (GAME_HEIGHT) - 10 && (ship1.getY() + ship1.getHeight())*ship1.getScale() <= (GAME_HEIGHT) + 10  && nebula.getY()  >= (int)GAME_HEIGHT - (int)BACK_HEIGHT && ship1.getY() < BACK_HEIGHT)
+	if (nebula.getY() <= 0 && (ship1.getY())*ship1.getScale() >= (GAME_HEIGHT) - 10 && (ship1.getY())*ship1.getScale() <= (GAME_HEIGHT) + 10  && nebula.getY()  >= (int)GAME_HEIGHT - (int)BACK_HEIGHT && ship1.getY() < BACK_HEIGHT)
 	{
 		for(int i = 0; i < 5; i++)
 		{
