@@ -123,7 +123,9 @@ private:
 	bool turretFired5;
 	int score;
 	int turretPoints;
+	bool level1;
 	bool level2;
+	bool level3;
 	int turretAngle1;
 	int turretAngle2;
 	int turretAngle3;

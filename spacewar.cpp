@@ -292,7 +292,9 @@ void Spacewar::initialize(HWND hwnd)
 
 	outputHL->setFontColor(graphicsNS::RED);
 	gameState = TITLESCREEN;
+	level1 = false;
 	level2 = false;
+	level3 = false;
 	preGame = true;
     gamePlaying = true;
 	score = 0;
@@ -1054,8 +1056,20 @@ if (nebula.getX() <= 0 && ((ship1.getX()*ship1.getScale())) <= 10 && ((ship1.get
 		if (roundsLeft <= 0)
 		{
 			roundsLeft = maxRounds;
-			gameState = GAMEOVER;
-			endString = "YOU WIN";
+			if (level1 == true)
+			{
+				gameState = TRAN1;
+			}
+			if (level2 == true)
+			{
+				gameState = TRAN2;
+			}
+			if (level3 == true)
+			{
+				gameState = GAMEOVER;
+				endString = "YOU WIN";
+			}
+			
 		}
 			for(int i = 0; i < 50; i++){
 		enemies[i].update(frameTime);
@@ -1100,58 +1114,77 @@ if (nebula.getX() <= 0 && ((ship1.getX()*ship1.getScale())) <= 10 && ((ship1.get
 			gameState = RULES;
 		}
 		if(input->isKeyDown(0x31)){
-			level2 = false;
-				turretBases[0].setX(500);
-				turretBases[0].setY(1000);
-				turretBases[1].setX(700);
-				turretBases[1].setY(700);
-				turretBases[2].setX(900);
-				turretBases[2].setY(500);
-				turretBases[3].setX(1100);
-				turretBases[3].setY(300);
-				turretBases[4].setX(1300);
-				turretBases[4].setY(100);
-	
-				spawners[0].setX(100);
-				spawners[0].setY(200);
-				spawners[1].setX(100);
-				spawners[1].setY(700);
-				spawners[2].setX(600);
-				spawners[2].setY(100);
-			spawners[3].setX(1000);
-			spawners[3].setY(100);
-
-			core.setX(1300);
-			core.setY(900);
-			gameState = GAMEPLAY;
+			
+			gameState = LVL1;
 		}
 		if(input->isKeyDown(0x32)){
-			level2 = true;
-
-			turretBases[0].setX(1000);
-			turretBases[0].setY(800);
-			turretBases[1].setX(500);
-			turretBases[1].setY(800);
-			turretBases[2].setX(400);
-			turretBases[2].setY(500);
-			turretBases[3].setX(800);
-			turretBases[3].setY(300);
-			turretBases[4].setX(1200);
-			turretBases[4].setY(500);
-	
-			spawners[0].setX(BACK_WIDTH/2 - 32);
-			spawners[0].setY(100);
-			spawners[1].setX(100);
-			spawners[1].setY(BACK_HEIGHT/2 - 32);
-			spawners[2].setX(BACK_WIDTH/2 - 32);
-			spawners[2].setY(BACK_HEIGHT - 100 - 32);
-			spawners[3].setX(BACK_WIDTH - 100 - 32);
-			spawners[3].setY(BACK_HEIGHT/2 - 32);
-
-			core.setX(BACK_WIDTH/2 - 32);
-			core.setY(BACK_HEIGHT/2 - 32);
-			gameState = GAMEPLAY;
+			
+			gameState = LVL2;
 		}
+		break;
+	case LVL1:
+		level1 = true;
+		level2 = false;
+		level3 = false;
+
+		turretBases[0].setX(500);
+		turretBases[0].setY(1000);
+		turretBases[1].setX(700);
+		turretBases[1].setY(700);
+		turretBases[2].setX(900);
+		turretBases[2].setY(500);
+		turretBases[3].setX(1100);
+		turretBases[3].setY(300);
+		turretBases[4].setX(1300);
+		turretBases[4].setY(100);
+	
+		spawners[0].setX(100);
+		spawners[0].setY(200);
+		spawners[1].setX(100);
+		spawners[1].setY(700);
+		spawners[2].setX(600);
+		spawners[2].setY(100);
+		spawners[3].setX(1000);
+		spawners[3].setY(100);
+
+		core.setX(1300);
+		core.setY(900);
+		gameState = GAMEPLAY;
+		break;
+	case LVL2:
+		level1 = false;
+		level2 = true;
+		level3 = false;
+
+		turretBases[0].setX(1000);
+		turretBases[0].setY(800);
+		turretBases[1].setX(500);
+		turretBases[1].setY(800);
+		turretBases[2].setX(400);
+		turretBases[2].setY(500);
+		turretBases[3].setX(800);
+		turretBases[3].setY(300);
+		turretBases[4].setX(1200);
+		turretBases[4].setY(500);
+	
+		spawners[0].setX(BACK_WIDTH/2 - 32);
+		spawners[0].setY(100);
+		spawners[1].setX(100);
+		spawners[1].setY(BACK_HEIGHT/2 - 32);
+		spawners[2].setX(BACK_WIDTH/2 - 32);
+		spawners[2].setY(BACK_HEIGHT - 100 - 32);
+		spawners[3].setX(BACK_WIDTH - 100 - 32);
+		spawners[3].setY(BACK_HEIGHT/2 - 32);
+
+		core.setX(BACK_WIDTH/2 - 32);
+		core.setY(BACK_HEIGHT/2 - 32);
+		gameState = GAMEPLAY;
+		break;
+	case TRAN1:
+		gameState = LVL2;
+		break;
+	case TRAN2:
+		gameState = LVL3;
 		break;
 	case GAMEOVER:
 		if (input->isKeyDown(VK_RETURN))
