@@ -9,7 +9,9 @@
 
 #include "game.h"
 #include "textureManager.h"
-#include "image.h"
+#include "image.h";
+#include "sniperTurret.h"
+#include "triTurret.h"
 #include "baseTurret.h"
 #include "enemySpawner.h"
 #include "coreEnemy.h"
@@ -21,6 +23,7 @@
 #include "spider.h"
 #include "textDX.h"
 #include "core.h"
+#include "walsh.h"
 #include <sstream>
 #include <string>
 
@@ -45,11 +48,30 @@ private:
 	TextureManager turretTextureOne;
 	TextureManager coreTexture;
 	TextureManager menuTexture;
+	TextureManager turretSelectionMgr;
+	TextureManager rulesMgr;
+	TextureManager beginMgr;
+	TextureManager info1mgr;
+	TextureManager arrowMgr;
+	TextureManager redMgr;
+	TextureManager burstMgr;
+	TextureManager sniperMgr;
+	TextureManager triMgr;
+	TextureManager pauseMgr;
+	TriTurret triTurrets[5];
+	SniperTurret sniperTurrets[5];
+	Image red;
+	Image pause;
+	Image arrow;
+	Image info1;
+	Image rules;
 	Image menu;
 	Core core;
+	Health begin;
     Ship    ship1;           // spaceships
 	Missile missiles[50];
 	BaseTurret baseTurrets[5];
+	BurstTurret burstTurrets[5];
 	Image spawners[4];
 	int S1PerWaveMax;
 	int S2PerWaveMax;
@@ -74,6 +96,7 @@ private:
 	Health health;
     Image   nebula;         // backdrop image
 	Image turretBases[5];
+	Image turret_selection;
 	int colCounter;
 	int missileIndex;
 	int turretMissileIndex1;
@@ -151,6 +174,7 @@ private:
 	std::string introString3;
 	std::string endString;
 	std::string tutString;
+	bool firstClick;
 public:
     // Constructor
     Spacewar();

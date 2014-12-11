@@ -60,6 +60,16 @@ const char ENEMY_SPAWNER_IMG[] = "pictures\\spawner.png";
 const char CORE_IMG[] = "pictures\\core.png";
 const char MENU_IMG[] = "pictures\\menu.png";
 const char SPLASH_SCREEN[] = "pictures\\splash.png";
+const char TURRET_SELECTION[] = "pictures\\hud.png";
+const char RULES_PAGE[] = "pictures\\rules.png";
+const char BEGIN[] = "pictures\\begin_sheet.png";
+const char INFO1[] = "pictures\\info1.png";
+const char ARROW[] = "pictures\\arrow.png";
+const char RED[] = "pictures\\red.png";
+const char BURST_TURRET_IMG[] = "pictures\\burst_turret_sheet.png";
+const char SNIPER_TURRET_IMG[] = "pictures\\sniper_turret_sheet.png";
+const char TRI_TURRET_IMG[] = "pictures\\tri_turret_sheet.png";
+const char PAUSE_IMG[] = "pictures\\pause.png";
 // audio files required by audio.cpp
 // WAVE_BANK must be location of .xwb file.
 const char WAVE_BANK[]  = "audio\\Win\\Wave Bank.xwb";
@@ -83,5 +93,5 @@ const UCHAR ENTER_KEY    = VK_RETURN;   // Enter key
 
 enum WEAPON {TORPEDO, SHIP, PLANET};
 enum PATTERN_STEP_ACTION {NONE, UP, DOWN, LEFT, RIGHT, TRACK, EVADE,UPLEFT,UPRIGHT,DOWNRIGHT,DOWNLEFT, DEAC};
-enum GAME_STATES {MENU,GAMEPLAY,TITLESCREEN,GAMEOVER};
+enum GAME_STATES {MENU,GAMEPLAY,TITLESCREEN,GAMEOVER,RULES,PAUSE};
 #endif

@@ -30,9 +30,27 @@ void Spacewar::initialize(HWND hwnd)
     Game::initialize(hwnd); // throws GameError
 	audio->playCue(BACKGROUND);
     // nebula texture
+	if(!pauseMgr.initialize(graphics,PAUSE_IMG))
+		throw(GameError(gameErrorNS::FATAL_ERROR, "Error initializing splash texture"));
 	if(!splashTexture.initialize(graphics,SPLASH_SCREEN))
 		throw(GameError(gameErrorNS::FATAL_ERROR, "Error initializing splash texture"));
+	if(!triMgr.initialize(graphics,TRI_TURRET_IMG))
+		throw(GameError(gameErrorNS::FATAL_ERROR, "Error initializing splash texture"));
+	if(!sniperMgr.initialize(graphics,SNIPER_TURRET_IMG))
+		throw(GameError(gameErrorNS::FATAL_ERROR, "Error initializing splash texture"));
+	if(!burstMgr.initialize(graphics,BURST_TURRET_IMG))
+		throw(GameError(gameErrorNS::FATAL_ERROR, "Error initializing splash texture"));
+	//if(!redMgr.initialize(graphics,RED))
+		//throw(GameError(gameErrorNS::FATAL_ERROR, "Error initializing splash texture"));
+	if(!arrowMgr.initialize(graphics,ARROW))
+		throw(GameError(gameErrorNS::FATAL_ERROR, "Error initializing splash texture"));
+	if(!info1mgr.initialize(graphics,INFO1))
+		throw(GameError(gameErrorNS::FATAL_ERROR, "Error initializing splash texture"));
+	if(!beginMgr.initialize(graphics,BEGIN))
+		throw(GameError(gameErrorNS::FATAL_ERROR, "Error initializing splash texture"));
 	if(!menuTexture.initialize(graphics,MENU_IMG))
+		throw(GameError(gameErrorNS::FATAL_ERROR, "Error initializing menu texture"));
+	if(!rulesMgr.initialize(graphics,RULES_PAGE))
 		throw(GameError(gameErrorNS::FATAL_ERROR, "Error initializing menu texture"));
     if (!nebulaTexture.initialize(graphics,NEBULA_IMAGE))
         throw(GameError(gameErrorNS::FATAL_ERROR, "Error initializing nebula texture"));
@@ -53,6 +71,9 @@ void Spacewar::initialize(HWND hwnd)
 		  throw(GameError(gameErrorNS::FATAL_ERROR, "Error initializing enemy texture"));
 	if(!splash.initialize(graphics,0,0,0,&splashTexture))
 		throw(GameError(gameErrorNS::FATAL_ERROR, "Error initializing splash"));
+	if(!turretSelectionMgr.initialize(graphics,TURRET_SELECTION))
+		throw(GameError(gameErrorNS::FATAL_ERROR, "Error initializing turret base texture"));
+
     // nebula image
 	for(int i = 0; i < 5; i++){
 		if(!turretBases[i].initialize(graphics,0,0,0,&turretBaseTexture))
@@ -63,6 +84,18 @@ void Spacewar::initialize(HWND hwnd)
 			throw(GameError(gameErrorNS::FATAL_ERROR, "Error initializing spawners"));
 	}
 	if(!menu.initialize(graphics,0,0,0,&menuTexture))
+		throw(GameError(gameErrorNS::FATAL_ERROR, "Error initializing menu"));
+	if(!rules.initialize(graphics,0,0,0,&rulesMgr))
+		throw(GameError(gameErrorNS::FATAL_ERROR, "Error initializing menu"));
+	if(!turret_selection.initialize(graphics,0,0,0,&turretSelectionMgr))
+		throw(GameError(gameErrorNS::FATAL_ERROR, "Error initializing menu"));
+	if(!pause.initialize(graphics,0,0,0,&pauseMgr))
+		throw(GameError(gameErrorNS::FATAL_ERROR, "Error initializing menu"));
+	if(!arrow.initialize(graphics,0,0,0,&arrowMgr))
+		throw(GameError(gameErrorNS::FATAL_ERROR, "Error initializing menu"));
+	if(!info1.initialize(graphics,0,0,0,&info1mgr))
+		throw(GameError(gameErrorNS::FATAL_ERROR, "Error initializing menu"));
+	if(!red.initialize(graphics,0,0,0,&redMgr))
 		throw(GameError(gameErrorNS::FATAL_ERROR, "Error initializing menu"));
     if (!nebula.initialize(graphics,0,0,0,&nebulaTexture))
         throw(GameError(gameErrorNS::FATAL_ERROR, "Error initializing nebula"));
@@ -77,10 +110,17 @@ void Spacewar::initialize(HWND hwnd)
 
 	if (!health.initialize(this, healthNS::WIDTH, healthNS::HEIGHT, healthNS::TEXTURE_COLS, &healthTexture))
         throw(GameError(gameErrorNS::FATAL_ERROR, "Error initializing ship1"));
+	if (!begin.initialize(this,800,600,2, &beginMgr))
+        throw(GameError(gameErrorNS::FATAL_ERROR, "Error initializing ship1"));
+	begin.setFrames(0,1);
+	begin.setFrameDelay(0.5f);
+	begin.setCurrentFrame(healthNS::SHIP1_START_FRAME);
+	begin.setX(0);
+	begin.setY(0);
     health.setFrames(healthNS::SHIP1_START_FRAME, healthNS::SHIP1_START_FRAME);
 	health.setCurrentFrame(ship1.getShipHealth());
-    health.setX(10);
-    health.setY(10);
+    health.setX(375);
+    health.setY(540);
 	health.setVelocity(VECTOR2(healthNS::SPEED,-healthNS::SPEED)); // VECTOR2(X, Y)
 	health.setScale(health.getScale() * 6);
 
@@ -169,6 +209,30 @@ void Spacewar::initialize(HWND hwnd)
 		baseTurrets[i].setActive(false);
 		baseTurrets[i].setDone(true);
 	}
+	for(int i = 0;i < 5; i++){
+		if (!burstTurrets[i].initialize(this, BurstTurretNS::WIDTH, BurstTurretNS::HEIGHT, BurstTurretNS::TEXTURE_COLS, &burstMgr))
+			throw(GameError(gameErrorNS::FATAL_ERROR, "Error initializing base turrets"));	
+		burstTurrets[i].setFrames(BurstTurretNS::SHIP1_START_FRAME,BurstTurretNS::SHIP1_END_FRAME);
+		burstTurrets[i].setCurrentFrame(BaseTurretNS::SHIP1_START_FRAME);
+		burstTurrets[i].setActive(false);
+		burstTurrets[i].setDone(true);
+	}
+	for(int i = 0;i < 5; i++){
+		if (!sniperTurrets[i].initialize(this, SniperTurretNS::WIDTH, SniperTurretNS::HEIGHT, SniperTurretNS::TEXTURE_COLS, &sniperMgr))
+			throw(GameError(gameErrorNS::FATAL_ERROR, "Error initializing base turrets"));	
+		sniperTurrets[i].setFrames(SniperTurretNS::SHIP1_START_FRAME,SniperTurretNS::SHIP1_END_FRAME);
+		sniperTurrets[i].setCurrentFrame(SniperTurretNS::SHIP1_START_FRAME);
+		sniperTurrets[i].setActive(false);
+		sniperTurrets[i].setDone(true);
+	}
+	for(int i = 0;i < 5; i++){
+		if (!triTurrets[i].initialize(this, TriTurretNS::WIDTH, TriTurretNS::HEIGHT, TriTurretNS::TEXTURE_COLS, &triMgr))
+			throw(GameError(gameErrorNS::FATAL_ERROR, "Error initializing base turrets"));	
+		triTurrets[i].setFrames(TriTurretNS::SHIP1_START_FRAME,TriTurretNS::SHIP1_END_FRAME);
+		triTurrets[i].setCurrentFrame(TriTurretNS::SHIP1_START_FRAME);
+		triTurrets[i].setActive(false);
+		triTurrets[i].setDone(true);
+	}
 	for( int i =0; i < 50; i++)
 	{
 		if (!enemies[i].initialize(this, coreEnemyNS::WIDTH, coreEnemyNS::HEIGHT, coreEnemyNS::TEXTURE_COLS, &enemyTexture))
@@ -184,7 +248,7 @@ void Spacewar::initialize(HWND hwnd)
 	core.setFrames(0,0);
     core.setCurrentFrame(0);
     core.setX(1500);
-    core.setY(1100);
+    core.setY(1100);                        
 	core.setActive(true);
 	core.setScale(core.getScale() *2);
 
@@ -212,7 +276,7 @@ void Spacewar::initialize(HWND hwnd)
 	turretBases[3].setY(300);
 	turretBases[4].setX(1300);
 	turretBases[4].setY(100);
-	
+
 	spawners[0].setX(100);
 	spawners[0].setY(200);
 	spawners[1].setX(100);
@@ -221,7 +285,8 @@ void Spacewar::initialize(HWND hwnd)
 	spawners[2].setY(100);
 	spawners[3].setX(1000);
 	spawners[3].setY(100);
-
+		turret_selection.setX(140);
+	turret_selection.setY(500);
 	core.setX(1300);
 	core.setY(900);
 
@@ -249,6 +314,7 @@ void Spacewar::initialize(HWND hwnd)
 	S2PerWaveMax = 5;
 	S3PerWaveMax = 5;
 	S4PerWaveMax = 5;
+	firstClick = false;
 	wavesLeft = 12;
 	maxWaves = 12;
 	gameTimer = 0;
@@ -290,6 +356,10 @@ void Spacewar::initialize(HWND hwnd)
 	pressed4 = false;
 	pressed5 = false;
 	srand (time(NULL));
+	info1.setX(285);
+	info1.setY(440);
+	arrow.setX(385);
+	arrow.setY(440);
     return;
 }
 
@@ -304,128 +374,174 @@ void Spacewar::update()
 			gameState = MENU;
 		}
 		break;
-	case(GAMEPLAY):
 
+	case(GAMEPLAY):
+	if(roundStart == false)	begin.update(frameTime);
 	if (input->isKeyDown(VK_RETURN))
 	{
 		roundStart = true;
 	}
 	tutTime = gameTimer;
-	if(input->isKeyDown(0x31) && !pressed1){
-		
-		if(!(baseTurrets[0].getActive()) && turretPoints >= 10){
-			baseTurrets[0].setActive(true);
-		baseTurrets[0].setDone(false);
-		baseTurrets[0].setX(input->getMouseX());
-		baseTurrets[0].setY(input->getMouseY());
-
-		turretPoints -= 10;
-		}
-		else if( (baseTurrets[0].getActive()) && turretPoints >= 5)
+	//TURRET 1 CLICK & DRAG
+	if(input->getMouseX() > 282 && input->getMouseX() < 282+64 && input->getMouseY() < 520 && input->getMouseY() > 460 && input->getMouseLButton())
+	{
+		 firstClick = true; 
+		for(int i = 0; i < 5; i++)
 		{
-			baseTurrets[0].setDamage(baseTurrets[0].getDamage() +1);
-			turretPoints -= 5;
-		
-		}
-		else
+			if(!(baseTurrets[i].getActive()) && turretPoints >= 10)
+			{
+				baseTurrets[i].setActive(true);
+				baseTurrets[i].setDone(false);
+				baseTurrets[i].setX(input->getMouseX());
+				baseTurrets[i].setY(input->getMouseY());
+				turretPoints -= 10;
+			}
+	}
+	}
+	if(firstClick == true)
+	{
+		for(int i = 0; i < 5; i++)
 		{
-
+			if(!baseTurrets[i].getDone())
+			{
+				baseTurrets[i].setX(input->getMouseX());
+				baseTurrets[i].setY(input->getMouseY());
+			}
 		}
-	}
-	else if(input->isKeyDown(0x31) && pressed1)
-	{
-	}
-	else
-	{
-		pressed1 = false;
-	}
-	if(input->isKeyDown(0x32) && !pressed2){
-		if(!(baseTurrets[1].getActive()) && turretPoints >= 10){
-		baseTurrets[1].setActive(true);
-		baseTurrets[1].setDone(false);
-		baseTurrets[1].setX(input->getMouseY());
-		baseTurrets[1].setY(input->getMouseY());
-		turretPoints -= 10;
+		if(input->getMouseRButton())
+		{
+			for(int i = 0; i < 5; i++)
+			{
+				if(!baseTurrets[i].getDone())
+				{
+					baseTurrets[i].setX(input->getMouseX());
+					baseTurrets[i].setY(input->getMouseY());
+					baseTurrets[i].setDone(true);
+					firstClick = false;
+				}
+			}
 		}
-		else if(baseTurrets[1].getActive() && turretPoints >= 5){
-			baseTurrets[1].setDamage(baseTurrets[1].getDamage() + 1);
-			turretPoints -= 5;
-		}
-		else {}
-	}
-		else if(input->isKeyDown(0x32) && pressed2)
-	{
-	}
-	else
-	{
-		pressed2 = false;
 	}
 
-	if(input->isKeyDown(0x33) && !pressed3){
-		if(!(baseTurrets[2].getActive()) && turretPoints >= 10){
-		baseTurrets[2].setActive(true);
-		baseTurrets[2].setDone(false);
-		baseTurrets[2].setX(input->getMouseY());
-		baseTurrets[2].setY(input->getMouseY());
-		turretPoints -= 10;
-	}
-				else if(baseTurrets[2].getActive() && turretPoints >= 5){
-			baseTurrets[2].setDamage(baseTurrets[2].getDamage() + 1);
-			turretPoints -= 5;
+	//TURRET 2 CLICK & DRAG
+	if(input->getMouseX() > 282+64 && input->getMouseX() < 282+128 && input->getMouseY() < 520 && input->getMouseY() > 460 && input->getMouseLButton())
+	{
+		firstClick = true; 
+		for(int i = 0; i < 5; i++)
+		{
+			if(!(burstTurrets[i].getActive()) && turretPoints >= 15)
+			{
+				burstTurrets[i].setActive(true);
+				burstTurrets[i].setDone(false);
+				burstTurrets[i].setX(input->getMouseX());
+				burstTurrets[i].setY(input->getMouseY());
+				turretPoints -= 15;
+			}
 		}
-		else {}
 	}
-		else if(input->isKeyDown(0x33) && pressed3)
+	if(firstClick == true)
 	{
-	}
-	else
-	{
-		pressed3 = false;
-	}
-	if(input->isKeyDown(0x34) && !pressed4){
-		if(!(baseTurrets[3].getActive()) && turretPoints >= 10){
-		baseTurrets[3].setActive(true);
-		baseTurrets[3].setDone(false);
-		baseTurrets[3].setX(input->getMouseY());
-		baseTurrets[3].setY(input->getMouseY());
-		turretPoints -= 10;
-	}
-	else if(baseTurrets[3].getActive() && turretPoints >= 5){
-			baseTurrets[3].setDamage(baseTurrets[3].getDamage() + 1);
-			turretPoints -= 5;
+		for(int i = 0; i < 5; i++)
+		{
+			if(!burstTurrets[i].getDone())
+			{
+				burstTurrets[i].setX(input->getMouseX());
+				burstTurrets[i].setY(input->getMouseY());
+			}
 		}
-		else {}
-	}
-		else if(input->isKeyDown(0x34) && pressed4)
-	{
-	}
-	else
-	{
-		pressed4 = false;
-	}
-	if(input->isKeyDown(0x35) && !pressed5){
-		if(!baseTurrets[4].getActive() && turretPoints >= 10){
-		baseTurrets[4].setActive(true);
-		baseTurrets[4].setDone(false);
-		baseTurrets[4].setX(input->getMouseY());
-		baseTurrets[4].setY(input->getMouseY());
-		turretPoints -= 10;
-	}
-	else if(baseTurrets[4].getActive() && turretPoints >= 5){
-			baseTurrets[4].setDamage(baseTurrets[4].getDamage() + 1);
-			turretPoints -= 5;
+		if(input->getMouseRButton())
+		{
+			for(int i = 0; i < 5; i++)
+			{
+				if(!burstTurrets[i].getDone())
+				{
+					burstTurrets[i].setX(input->getMouseX());
+					burstTurrets[i].setY(input->getMouseY());
+					burstTurrets[i].setDone(true);
+					firstClick = false;
+				}
+			}
 		}
-		else {}
 	}
-		else if(input->isKeyDown(0x35) && pressed5)
+	//TURRET 3 CLICK & DRAG
+	if(input->getMouseX() > 282+128 && input->getMouseX() < 282+256 && input->getMouseY() < 520 && input->getMouseY() > 460 && input->getMouseLButton()) 
 	{
+		firstClick = true; 
+		for(int i = 0; i < 5; i++)
+		{
+			if(!(sniperTurrets[i].getActive()) && turretPoints >= 20)
+			{
+				sniperTurrets[i].setActive(true);
+				sniperTurrets[i].setDone(false);
+				sniperTurrets[i].setX(input->getMouseX());
+				sniperTurrets[i].setY(input->getMouseY());
+				turretPoints -= 20;
+			}
+		}
 	}
-	else
+	if(firstClick == true)
 	{
-		pressed5 = false;
+		for(int i = 0; i < 5; i++)
+		{
+			if(!sniperTurrets[i].getDone())
+			{
+				sniperTurrets[i].setX(input->getMouseX());
+				sniperTurrets[i].setY(input->getMouseY());
+			}
+		}
+		if(input->getMouseRButton())
+		{
+			for(int i = 0; i < 5; i++)
+			{
+				if(!sniperTurrets[i].getDone())
+				{
+					sniperTurrets[i].setX(input->getMouseX());
+					sniperTurrets[i].setY(input->getMouseY());
+					sniperTurrets[i].setDone(true);
+					firstClick = false;
+				}
+			}
+		}
 	}
-	for(int i = 0; i < 5; i++){
-		baseTurrets[i].update(frameTime);
+	//TURRET 4 CLICK & DRAG
+	if(input->getMouseX() > 282+256 && input->getMouseX() < (282+64+256) && input->getMouseY() < 520 && input->getMouseY() > 460 && input->getMouseLButton()) 
+	{
+		firstClick = true; 
+		for(int i = 0; i < 5; i++)
+		{
+			if(!(triTurrets[i].getActive()) && turretPoints >= 25)
+			{
+				triTurrets[i].setActive(true);
+				triTurrets[i].setDone(false);
+				triTurrets[i].setX(input->getMouseX());
+				triTurrets[i].setY(input->getMouseY());
+				turretPoints -= 25;
+			}
+		}
+	}
+	if(firstClick == true)
+	{
+		for(int i = 0; i < 5; i++)
+		{
+			if(!triTurrets[i].getDone())
+			{
+				triTurrets[i].setX(input->getMouseX());
+				triTurrets[i].setY(input->getMouseY());
+			}
+		}
+		if(input->getMouseRButton())
+		{
+			for(int i = 0; i < 5; i++)
+			{
+				if(!triTurrets[i].getDone())
+				{
+					triTurrets[i].setX(input->getMouseX());
+					triTurrets[i].setY(input->getMouseY());
+					triTurrets[i].setDone(true);
+					firstClick = false;
+				}
+			}
+		}
 	}
 
 	if (input-> isKeyDown(0x39))
@@ -436,11 +552,11 @@ void Spacewar::update()
 	{
 		turretPoints = 1000;
 	}
-
-	//ROTATE SHIP WITH MOUSE USING CMATH FUNCTIONS
-	//angle = atan2(input->getMouseY() - ship1.getY(), input->getMouseX() - ship1.getX());
-	//angle *= (180/PI);
-	//ship1.setDegrees(90 + angle);
+	
+	angle = atan2(core.getY() - arrow.getY(), core.getX() - arrow.getX());
+	angle *= (180/PI);
+	arrow.setDegrees(90 + angle);
+	arrow.update(frameTime);
 	ship1.setX(input->getMouseX());
 	ship1.setY(input->getMouseY());
 
@@ -448,7 +564,6 @@ void Spacewar::update()
 	{
 		gamePlaying = false;																								
 		audio->stopCue(BACKGROUND);
-
 	}
     
 	gameTimer += frameTime;
@@ -466,17 +581,8 @@ void Spacewar::update()
 	//		}
 	//}
 	
-	for(int i = 150; i < 170;i++){
-		for(int j = 1050;j < 1070;j++){
-			if(ship1.getX() == i) {
-				core.setCoreHealthe(core.getCoreHealth() + 1);
-			}
-			else if(ship1.getY() == j) {
-				core.setCoreHealthe(core.getCoreHealth() + 1);
-			}
-		}
-	}
-	if (nebula.getX() <= 0 && ((ship1.getX() + ship1.getWidth())*ship1.getScale()) >= (GAME_WIDTH) - 10 && ((ship1.getX()+ship1.getWidth())*ship1.getScale()) <= (GAME_WIDTH) + 10  && nebula.getX()  >= (int)GAME_WIDTH - (int)BACK_WIDTH )
+
+	if (nebula.getX() <= 0 && ((ship1.getX() + ship1.getWidth())*ship1.getScale()) >= (GAME_WIDTH) - 10 && ((ship1.getX()+ship1.getWidth())*ship1.getScale()) <= (GAME_WIDTH) + 10  && nebula.getX()  >= (int)GAME_WIDTH - (int)BACK_WIDTH && ship1.getX() < BACK_WIDTH)
 	{
 		if(ship1.getVelocity() < 0) ship1.setVelocity(VECTOR2(ship1.getVelocity().x*-1,ship1.getVelocity().y*-1));
 		for(int i = 0; i < 5; i++)
@@ -500,7 +606,8 @@ void Spacewar::update()
 				}
 				core.setX(core.getX() - frameTime * ship1.getVelocity().x);
 		nebula.setX(nebula.getX() - frameTime * ship1.getVelocity().x);
-	}
+		
+	}	
 	
 	else 
 	{
@@ -515,7 +622,7 @@ void Spacewar::update()
 		ship1.setX(ship1.getX() + frameTime * ship1.getVelocity().x);
 	}
 	
-	if (nebula.getY() <= 0 && (ship1.getY() + ship1.getHeight())*ship1.getScale() >= (GAME_HEIGHT) - 10 && (ship1.getY() + ship1.getHeight())*ship1.getScale() <= (GAME_HEIGHT) + 10  && nebula.getY()  >= (int)GAME_HEIGHT - (int)BACK_HEIGHT )
+	if (nebula.getY() <= 0 && (ship1.getY() + ship1.getHeight())*ship1.getScale() >= (GAME_HEIGHT) - 10 && (ship1.getY() + ship1.getHeight())*ship1.getScale() <= (GAME_HEIGHT) + 10  && nebula.getY()  >= (int)GAME_HEIGHT - (int)BACK_HEIGHT && ship1.getY() < BACK_HEIGHT)
 	{
 		for(int i = 0; i < 5; i++)
 		{
@@ -538,10 +645,8 @@ void Spacewar::update()
 		}
 		core.setY(core.getY() - frameTime * ship1.getVelocity().y);
 		nebula.setY(nebula.getY() - frameTime * ship1.getVelocity().y);
+		
 	}
-	////////////////////////////////////////////////
-
-	///////////////////////////////////////////////////
 	
 	else 
 	{
@@ -555,11 +660,91 @@ void Spacewar::update()
 		}
 		ship1.setY(ship1.getY() + frameTime * ship1.getVelocity().y);
 	}
+	////////////////////////////////////////////////
+if (nebula.getX() <= 0 && ((ship1.getX()*ship1.getScale())) <= 10 && ((ship1.getX())*ship1.getScale()) <= 10  && nebula.getX()  >= (int)GAME_WIDTH - (int)BACK_WIDTH && ship1.getX() < BACK_WIDTH)
+	{
+		ship1.setVelocity(VECTOR2(ship1.getVelocity().x*-1,ship1.getVelocity().y*-1));
 	
+		for(int i = 0; i < 5; i++)
+		{
+			turretBases[i].setX(turretBases[i].getX() - frameTime * ship1.getVelocity().x);
+			
+			baseTurrets[i].setX(baseTurrets[i].getX() - frameTime * ship1.getVelocity().x);
+		
+		}
+				for(int i = 0; i < 50; i++){
+			missiles[i].setX(missiles[i].getX() - frameTime * ship1.getVelocity().x);
+			turretMissiles1[i].setX(turretMissiles1[i].getX() - frameTime * ship1.getVelocity().x);
+			turretMissiles2[i].setX(turretMissiles2[i].getX() - frameTime * ship1.getVelocity().x);
+			turretMissiles3[i].setX(turretMissiles3[i].getX() - frameTime * ship1.getVelocity().x);
+			turretMissiles4[i].setX(turretMissiles4[i].getX() - frameTime * ship1.getVelocity().x);
+			turretMissiles5[i].setX(turretMissiles5[i].getX() - frameTime * ship1.getVelocity().x);
+			enemies[i].setX(enemies[i].getX() - frameTime * ship1.getVelocity().x);
+		}
+				for(int i = 0; i < 4; i++){
+					spawners[i].setX(spawners[i].getX() - frameTime * ship1.getVelocity().x);
+				}
+				core.setX(core.getX() - frameTime * ship1.getVelocity().x);
+		nebula.setX(nebula.getX() - frameTime * ship1.getVelocity().x);
+		
+	}	
+	
+	else 
+	{
+		if (nebula.getX() > 0 )
+		{
+			nebula.setX(0);
+		}
+		if (nebula.getX() < ((int)GAME_WIDTH - (int)BACK_WIDTH))
+		{
+			nebula.setX(((int)GAME_WIDTH - (int)BACK_WIDTH));
+		}
+		ship1.setX(ship1.getX() + frameTime * ship1.getVelocity().x);
+	}
+	if (nebula.getY() <= 0 && (ship1.getY() *ship1.getScale()) <= 10 && (ship1.getY())*ship1.getScale() <= 10  && nebula.getY()  >= (int)GAME_HEIGHT - (int)BACK_HEIGHT && ship1.getY() < BACK_HEIGHT)
+	{
+		ship1.setVelocity(VECTOR2(ship1.getVelocity().x*-1,ship1.getVelocity().y*-1));
+		for(int i = 0; i < 5; i++)
+		{
+			
+			turretBases[i].setY(turretBases[i].getY() - frameTime * ship1.getVelocity().y);
+			
+			baseTurrets[i].setY(baseTurrets[i].getY() - frameTime * ship1.getVelocity().y);
+		}
+		for(int i = 0; i < 50; i++){
+			missiles[i].setY(missiles[i].getY() - frameTime * ship1.getVelocity().y);
+			turretMissiles1[i].setY(turretMissiles1[i].getY() - frameTime * ship1.getVelocity().y);
+			turretMissiles2[i].setY(turretMissiles2[i].getY() - frameTime * ship1.getVelocity().y);
+			turretMissiles3[i].setY(turretMissiles3[i].getY() - frameTime * ship1.getVelocity().y);
+			turretMissiles4[i].setY(turretMissiles4[i].getY() - frameTime * ship1.getVelocity().y);
+			turretMissiles5[i].setY(turretMissiles5[i].getY() - frameTime * ship1.getVelocity().y);
+			enemies[i].setY(enemies[i].getY() - frameTime * ship1.getVelocity().y);
+		}
+		for(int i = 0; i < 4; i++){
+			spawners[i].setY(spawners[i].getY() - frameTime * ship1.getVelocity().y);
+		}
+		core.setY(core.getY() - frameTime * ship1.getVelocity().y);
+		nebula.setY(nebula.getY() - frameTime * ship1.getVelocity().y);
+		
+	}
+	
+	else 
+	{
+		if (nebula.getY() > 0 )
+		{
+			nebula.setY(0);
+		}
+		if (nebula.getY() < ((int)GAME_HEIGHT - (int)BACK_HEIGHT) )
+		{
+			nebula.setY(((int)GAME_HEIGHT - (int)BACK_HEIGHT));
+		}
+		ship1.setY(ship1.getY() + frameTime * ship1.getVelocity().y);
+	}
+	///////////////////////////////////////////////////
 	if ((input->isKeyDown(VK_SPACE)) && !fired )
 	{
 		audio->playCue(FIRE);
-		missiles[missileIndex].setDegrees(angle);
+		//missiles[missileIndex].setDegrees(angle);
 	 missiles[missileIndex].setX(ship1.getX());
 	 missiles[missileIndex].setY(ship1.getY());
 	 VECTOR2 fVec(input->getMouseX() - ship1.getX(), input->getMouseY() - ship1.getY());
@@ -662,7 +847,7 @@ void Spacewar::update()
 	if(core.getCoreHealth() == 4 || core.getCoreHealth() == 3) health.setCurrentFrame(2);
 	if(core.getCoreHealth() == 2 || core.getCoreHealth() == 1) health.setCurrentFrame(1);
 	if(core.getCoreHealth() == 0) health.setCurrentFrame(0);
-
+	
 	core.update(frameTime);
 	//TURRET MISSILES
 	
@@ -872,6 +1057,9 @@ void Spacewar::update()
 			for(int i = 0; i < 50; i++){
 		enemies[i].update(frameTime);
 	}
+				if(input->isKeyDown(ESC_KEY)){
+					gameState = PAUSE;
+	}
 	}
 	
 	break;
@@ -905,7 +1093,10 @@ void Spacewar::update()
 		gameTimer = 0;
 		wavesLeft = 12;
 		EhealthMax = 1;
-		if(input->isKeyDown(0x51)){
+		if(input->isKeyDown(0x52)){
+			gameState = RULES;
+		}
+		if(input->isKeyDown(0x31)){
 			level2 = false;
 				turretBases[0].setX(500);
 				turretBases[0].setY(1000);
@@ -931,7 +1122,7 @@ void Spacewar::update()
 			core.setY(900);
 			gameState = GAMEPLAY;
 		}
-		if(input->isKeyDown(0x45)){
+		if(input->isKeyDown(0x32)){
 			level2 = true;
 
 			turretBases[0].setX(1000);
@@ -966,12 +1157,24 @@ void Spacewar::update()
 
 		}
 		break;
+	case RULES:
+		if(input->isKeyDown(VK_BACK)){
+			gameState = MENU;
+		}
+		break;
+	case PAUSE:
+		if(input->isKeyDown(0x53)){
+			//save
+		}
+		if(input->isKeyDown(VK_BACK)){
+			gameState = GAMEPLAY;
+		}
+		if(input->isKeyDown(VK_ESCAPE)){
+			exitGame();
+		}
 	}
 
 
-	if(input->isKeyDown(ESC_KEY)){
-		exitGame();
-	}
 }
 
 //=============================================================================
@@ -994,6 +1197,7 @@ void Spacewar::collisions()
   for(int i = 0; i < 50; i++){
 	  if(core.collidesWith(enemies[i],collisionVector)){
 		  core.setCoreHealthe(core.getCoreHealth() - 1);
+		  red.setVisible(true);
 		  enemies[i].setActive(false);
 	  }
   }
@@ -1182,13 +1386,12 @@ void Spacewar::render()
 	std::stringstream ss3;
 	std::stringstream ss4;
 
-	ss << outString;
 	ss << score;
 	ss2 << finalString;
 	ss2 << score;
-	ss3 << "Turret Points: ";
+	//ss3 << "Turret Points: ";
 	ss3 << turretPoints;
-	
+	output->setFontColor(graphicsNS::GREEN);
     graphics->spriteBegin(); // begin drawing sprites
 	if(gameState == TITLESCREEN){
 		splash.draw();
@@ -1197,11 +1400,8 @@ void Spacewar::render()
 		menu.draw();
 	}
 	if(gameState == GAMEPLAY){
-
 	nebula.draw();                          // add the orion nebula to the scene
-								  // add the planet to the scene
-	health.draw();
-	ship1.draw();  
+	health.draw(); 
 	for( int i =0; i < 50; i++)
 	{
 	  
@@ -1229,19 +1429,18 @@ void Spacewar::render()
 			 turretMissiles5[i].draw();
 		 }
 	}
-	if (!roundStart)
-	{
-		output->print("Press Enter to start round", 300,500);
-	}
-	output->print(ss.str(), 600,0);
-	output->print(ss3.str(), 600,20);
 	if (!gamePlaying)
 	{
 		output->print(ss2.str(), 300,300);
 	}
 	for(int i = 0; i < 5; i++) {
-		turretBases[i].draw();
 		if(baseTurrets[i].getActive()) baseTurrets[i].draw();
+	}
+		for(int i = 0; i < 5; i++) {
+			if(burstTurrets[i].getActive()) burstTurrets[i].draw();
+	}
+		for(int i = 0; i < 5; i++) {
+			if(sniperTurrets[i].getActive()) sniperTurrets[i].draw();
 	}
 	for(int i = 0; i < 4; i++) {
 		spawners[i].draw();
@@ -1251,9 +1450,20 @@ void Spacewar::render()
 			enemies[i].draw();
 		}
 	}
-	
-	if(core.getActive()) core.draw();
+
+		if (!roundStart)
+	{
+		begin.draw();
+		info1.draw();
 	}
+	if(core.getActive()) core.draw();
+	turret_selection.draw();
+	output->print(ss.str(), 250,510);
+	output->print(ss3.str(), 650,510);
+	if(roundStart) arrow.draw();
+	ship1.draw();
+	}
+
 	if (gameState == GAMEOVER)
 	{
 		nebula.draw();
@@ -1264,6 +1474,8 @@ void Spacewar::render()
 
 
 	}
+	if(gameState == PAUSE) pause.draw();
+	if(gameState == RULES) rules.draw();
     graphics->spriteEnd();                  // end drawing sprites
 }
 

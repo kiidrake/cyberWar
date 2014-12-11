@@ -44,7 +44,7 @@ public:
     void damage();
 	bool getDamage();
 	int getCoreHealth() {return coreHealth;}
-	void setCoreHealthe(int val) { coreHealth = val;}
+	void setCoreHealthe(float val) { coreHealth = val;}
 	
 };
 #endif

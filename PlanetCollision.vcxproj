@@ -102,10 +102,13 @@
     <ClCompile Include="missile.cpp" />
     <ClCompile Include="ship.cpp" />
     <ClCompile Include="snake.cpp" />
+    <ClCompile Include="sniperTurret.cpp" />
     <ClCompile Include="spacewar.cpp" />
     <ClCompile Include="spider.cpp" />
     <ClCompile Include="textDX.cpp" />
     <ClCompile Include="textureManager.cpp" />
+    <ClCompile Include="triTurret.cpp" />
+    <ClCompile Include="walsh.cpp" />
     <ClCompile Include="winmain.cpp" />
   </ItemGroup>
   <ItemGroup>
@@ -126,10 +129,13 @@
     <ClInclude Include="missile.h" />
     <ClInclude Include="ship.h" />
     <ClInclude Include="snake.h" />
+    <ClInclude Include="sniperTurret.h" />
     <ClInclude Include="spacewar.h" />
     <ClInclude Include="spider.h" />
     <ClInclude Include="textDX.h" />
     <ClInclude Include="textureManager.h" />
+    <ClInclude Include="triTurret.h" />
+    <ClInclude Include="walsh.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
