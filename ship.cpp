@@ -85,6 +85,7 @@ void Ship::update(float frameTime)
 	// move ship 
          
     // Bounce off walls
+	/*
     if (spriteData.x > GAME_WIDTH-shipNS::WIDTH)    // if hit right screen edge
     {
         spriteData.x = GAME_WIDTH-shipNS::WIDTH;    // position at right screen edge
@@ -103,6 +104,7 @@ void Ship::update(float frameTime)
         spriteData.y = 0;                           // position at top screen edge
                            // reverse Y direction
     }
+	*/
     if(shieldOn)
     {
         shield.update(frameTime);

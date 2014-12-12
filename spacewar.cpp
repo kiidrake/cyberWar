@@ -596,31 +596,39 @@ void Spacewar::update()
 	//}
 	
 
-	if (nebula.getX() <= 0 && ((ship1.getX())*ship1.getScale()) >= (GAME_WIDTH) - 10 && ((ship1.getX())*ship1.getScale()) <= (GAME_WIDTH) + 10  && nebula.getX()  >= (int)GAME_WIDTH - (int)BACK_WIDTH && ship1.getX() < BACK_WIDTH)
+	if (((ship1.getX())) >= (GAME_WIDTH) - 10)
 	{
-		if(ship1.getVelocity() < 0) ship1.setVelocity(VECTOR2(ship1.getVelocity().x*-1,ship1.getVelocity().y*-1));
-		if(ship1.getX() >=0){
-		for(int i = 0; i < 5; i++)
+		if (nebula.getX() > ((int)GAME_WIDTH - (int)BACK_WIDTH))
 		{
-			turretBases[i].setX(turretBases[i].getX() - frameTime * ship1.getVelocity().x);
-			
-			baseTurrets[i].setX(baseTurrets[i].getX() - frameTime * ship1.getVelocity().x);
 		
-		}
-				for(int i = 0; i < 50; i++){
-			missiles[i].setX(missiles[i].getX() - frameTime * ship1.getVelocity().x);
-			turretMissiles1[i].setX(turretMissiles1[i].getX() - frameTime * ship1.getVelocity().x);
-			turretMissiles2[i].setX(turretMissiles2[i].getX() - frameTime * ship1.getVelocity().x);
-			turretMissiles3[i].setX(turretMissiles3[i].getX() - frameTime * ship1.getVelocity().x);
-			turretMissiles4[i].setX(turretMissiles4[i].getX() - frameTime * ship1.getVelocity().x);
-			turretMissiles5[i].setX(turretMissiles5[i].getX() - frameTime * ship1.getVelocity().x);
-			enemies[i].setX(enemies[i].getX() - frameTime * ship1.getVelocity().x);
-		}
-				for(int i = 0; i < 4; i++){
-					spawners[i].setX(spawners[i].getX() - frameTime * ship1.getVelocity().x);
-				}
-				core.setX(core.getX() - frameTime * ship1.getVelocity().x);
-		nebula.setX(nebula.getX() - frameTime * ship1.getVelocity().x);
+			if(ship1.getVelocity() < 0) ship1.setVelocity(VECTOR2(ship1.getVelocity().x*-1,ship1.getVelocity().y*-1));
+			if(ship1.getX() >=0){
+			for(int i = 0; i < 5; i++)
+			{
+		
+				turretBases[i].setX(turretBases[i].getX() - frameTime * ship1.getVelocity().x);
+			
+				baseTurrets[i].setX(baseTurrets[i].getX() - frameTime * ship1.getVelocity().x);
+				burstTurrets[i].setX(burstTurrets[i].getX() - frameTime * ship1.getVelocity().x);
+				sniperTurrets[i].setX(sniperTurrets[i].getX() - frameTime * ship1.getVelocity().x);
+				triTurrets[i].setX(triTurrets[i].getX() - frameTime * ship1.getVelocity().x);
+		
+			}
+					for(int i = 0; i < 50; i++){
+				missiles[i].setX(missiles[i].getX() - frameTime * ship1.getVelocity().x);
+				turretMissiles1[i].setX(turretMissiles1[i].getX() - frameTime * ship1.getVelocity().x);
+				turretMissiles2[i].setX(turretMissiles2[i].getX() - frameTime * ship1.getVelocity().x);
+				turretMissiles3[i].setX(turretMissiles3[i].getX() - frameTime * ship1.getVelocity().x);
+				turretMissiles4[i].setX(turretMissiles4[i].getX() - frameTime * ship1.getVelocity().x);
+				turretMissiles5[i].setX(turretMissiles5[i].getX() - frameTime * ship1.getVelocity().x);
+				enemies[i].setX(enemies[i].getX() - frameTime * ship1.getVelocity().x);
+			}
+					for(int i = 0; i < 4; i++){
+						spawners[i].setX(spawners[i].getX() - frameTime * ship1.getVelocity().x);
+					}
+					core.setX(core.getX() - frameTime * ship1.getVelocity().x);
+			nebula.setX(nebula.getX() - frameTime * ship1.getVelocity().x);
+			}
 		}
 		
 	}	
@@ -638,29 +646,35 @@ void Spacewar::update()
 		ship1.setX(ship1.getX() + frameTime * ship1.getVelocity().x);
 	}
 	
-	if (nebula.getY() <= 0 && (ship1.getY())*ship1.getScale() >= (GAME_HEIGHT) - 10 && (ship1.getY())*ship1.getScale() <= (GAME_HEIGHT) + 10  && nebula.getY()  >= (int)GAME_HEIGHT - (int)BACK_HEIGHT && ship1.getY() < BACK_HEIGHT)
+	if ((ship1.getY()) >= (GAME_HEIGHT) - 10 )
 	{
-		for(int i = 0; i < 5; i++)
+		if (nebula.getY() > ((int)GAME_HEIGHT - (int)BACK_HEIGHT) )
 		{
+			for(int i = 0; i < 5; i++)
+			{
 			
-			turretBases[i].setY(turretBases[i].getY() - frameTime * ship1.getVelocity().y);
+				turretBases[i].setY(turretBases[i].getY() - frameTime * ship1.getVelocity().y);
 			
-			baseTurrets[i].setY(baseTurrets[i].getY() - frameTime * ship1.getVelocity().y);
+				baseTurrets[i].setY(baseTurrets[i].getY() - frameTime * ship1.getVelocity().y);
+				burstTurrets[i].setY(burstTurrets[i].getY() - frameTime * ship1.getVelocity().y);
+				sniperTurrets[i].setY(sniperTurrets[i].getY() - frameTime * ship1.getVelocity().y);
+				triTurrets[i].setY(triTurrets[i].getY() - frameTime * ship1.getVelocity().y);
+			}
+			for(int i = 0; i < 50; i++){
+				missiles[i].setY(missiles[i].getY() - frameTime * ship1.getVelocity().y);
+				turretMissiles1[i].setY(turretMissiles1[i].getY() - frameTime * ship1.getVelocity().y);
+				turretMissiles2[i].setY(turretMissiles2[i].getY() - frameTime * ship1.getVelocity().y);
+				turretMissiles3[i].setY(turretMissiles3[i].getY() - frameTime * ship1.getVelocity().y);
+				turretMissiles4[i].setY(turretMissiles4[i].getY() - frameTime * ship1.getVelocity().y);
+				turretMissiles5[i].setY(turretMissiles5[i].getY() - frameTime * ship1.getVelocity().y);
+				enemies[i].setY(enemies[i].getY() - frameTime * ship1.getVelocity().y);
+			}
+			for(int i = 0; i < 4; i++){
+				spawners[i].setY(spawners[i].getY() - frameTime * ship1.getVelocity().y);
+			}
+			core.setY(core.getY() - frameTime * ship1.getVelocity().y);
+			nebula.setY(nebula.getY() - frameTime * ship1.getVelocity().y);
 		}
-		for(int i = 0; i < 50; i++){
-			missiles[i].setY(missiles[i].getY() - frameTime * ship1.getVelocity().y);
-			turretMissiles1[i].setY(turretMissiles1[i].getY() - frameTime * ship1.getVelocity().y);
-			turretMissiles2[i].setY(turretMissiles2[i].getY() - frameTime * ship1.getVelocity().y);
-			turretMissiles3[i].setY(turretMissiles3[i].getY() - frameTime * ship1.getVelocity().y);
-			turretMissiles4[i].setY(turretMissiles4[i].getY() - frameTime * ship1.getVelocity().y);
-			turretMissiles5[i].setY(turretMissiles5[i].getY() - frameTime * ship1.getVelocity().y);
-			enemies[i].setY(enemies[i].getY() - frameTime * ship1.getVelocity().y);
-		}
-		for(int i = 0; i < 4; i++){
-			spawners[i].setY(spawners[i].getY() - frameTime * ship1.getVelocity().y);
-		}
-		core.setY(core.getY() - frameTime * ship1.getVelocity().y);
-		nebula.setY(nebula.getY() - frameTime * ship1.getVelocity().y);
 		
 	}
 	
@@ -677,31 +691,38 @@ void Spacewar::update()
 		ship1.setY(ship1.getY() + frameTime * ship1.getVelocity().y);
 	}
 	////////////////////////////////////////////////
-if (nebula.getX() <= 0 && ((ship1.getX()*ship1.getScale())) <= 10 && ((ship1.getX())*ship1.getScale()) <= 10  && nebula.getX()  >= (int)GAME_WIDTH - (int)BACK_WIDTH && ship1.getX() < BACK_WIDTH)
+if (ship1.getX() <= 10 )
 	{
-		ship1.setVelocity(VECTOR2(ship1.getVelocity().x*-1,ship1.getVelocity().y*-1));
-	
-		for(int i = 0; i < 5; i++)
+		if (nebula.getX() < 0 )
 		{
-			turretBases[i].setX(turretBases[i].getX() - frameTime * ship1.getVelocity().x);
+
+			ship1.setVelocity(VECTOR2(ship1.getVelocity().x*-1,ship1.getVelocity().y*-1));
+	
+			for(int i = 0; i < 5; i++)
+			{
+				turretBases[i].setX(turretBases[i].getX() - frameTime * ship1.getVelocity().x);
 			
-			baseTurrets[i].setX(baseTurrets[i].getX() - frameTime * ship1.getVelocity().x);
+				baseTurrets[i].setX(baseTurrets[i].getX() - frameTime * ship1.getVelocity().x);
+				burstTurrets[i].setX(burstTurrets[i].getX() - frameTime * ship1.getVelocity().x);
+				sniperTurrets[i].setX(sniperTurrets[i].getX() - frameTime * ship1.getVelocity().x);
+				triTurrets[i].setX(triTurrets[i].getX() - frameTime * ship1.getVelocity().x);
 		
+			}
+					for(int i = 0; i < 50; i++){
+				missiles[i].setX(missiles[i].getX() - frameTime * ship1.getVelocity().x);
+				turretMissiles1[i].setX(turretMissiles1[i].getX() - frameTime * ship1.getVelocity().x);
+				turretMissiles2[i].setX(turretMissiles2[i].getX() - frameTime * ship1.getVelocity().x);
+				turretMissiles3[i].setX(turretMissiles3[i].getX() - frameTime * ship1.getVelocity().x);
+				turretMissiles4[i].setX(turretMissiles4[i].getX() - frameTime * ship1.getVelocity().x);
+				turretMissiles5[i].setX(turretMissiles5[i].getX() - frameTime * ship1.getVelocity().x);
+				enemies[i].setX(enemies[i].getX() - frameTime * ship1.getVelocity().x);
+			}
+					for(int i = 0; i < 4; i++){
+						spawners[i].setX(spawners[i].getX() - frameTime * ship1.getVelocity().x);
+					}
+					core.setX(core.getX() - frameTime * ship1.getVelocity().x);
+			nebula.setX(nebula.getX() - frameTime * ship1.getVelocity().x);
 		}
-				for(int i = 0; i < 50; i++){
-			missiles[i].setX(missiles[i].getX() - frameTime * ship1.getVelocity().x);
-			turretMissiles1[i].setX(turretMissiles1[i].getX() - frameTime * ship1.getVelocity().x);
-			turretMissiles2[i].setX(turretMissiles2[i].getX() - frameTime * ship1.getVelocity().x);
-			turretMissiles3[i].setX(turretMissiles3[i].getX() - frameTime * ship1.getVelocity().x);
-			turretMissiles4[i].setX(turretMissiles4[i].getX() - frameTime * ship1.getVelocity().x);
-			turretMissiles5[i].setX(turretMissiles5[i].getX() - frameTime * ship1.getVelocity().x);
-			enemies[i].setX(enemies[i].getX() - frameTime * ship1.getVelocity().x);
-		}
-				for(int i = 0; i < 4; i++){
-					spawners[i].setX(spawners[i].getX() - frameTime * ship1.getVelocity().x);
-				}
-				core.setX(core.getX() - frameTime * ship1.getVelocity().x);
-		nebula.setX(nebula.getX() - frameTime * ship1.getVelocity().x);
 		
 	}	
 	
@@ -717,30 +738,36 @@ if (nebula.getX() <= 0 && ((ship1.getX()*ship1.getScale())) <= 10 && ((ship1.get
 		}
 		ship1.setX(ship1.getX() + frameTime * ship1.getVelocity().x);
 	}
-	if (nebula.getY() <= 0 && (ship1.getY() *ship1.getScale()) <= 10 && (ship1.getY())*ship1.getScale() <= 10  && nebula.getY()  >= (int)GAME_HEIGHT - (int)BACK_HEIGHT && ship1.getY() < BACK_HEIGHT)
+	if ((ship1.getY() ) <= 10 )
 	{
-		ship1.setVelocity(VECTOR2(ship1.getVelocity().x*-1,ship1.getVelocity().y*-1));
-		for(int i = 0; i < 5; i++)
+		if (nebula.getY() < 0 )
 		{
+			ship1.setVelocity(VECTOR2(ship1.getVelocity().x*-1,ship1.getVelocity().y*-1));
+			for(int i = 0; i < 5; i++)
+			{
 			
-			turretBases[i].setY(turretBases[i].getY() - frameTime * ship1.getVelocity().y);
+				turretBases[i].setY(turretBases[i].getY() - frameTime * ship1.getVelocity().y);
 			
-			baseTurrets[i].setY(baseTurrets[i].getY() - frameTime * ship1.getVelocity().y);
+				baseTurrets[i].setY(baseTurrets[i].getY() - frameTime * ship1.getVelocity().y);
+				burstTurrets[i].setY(burstTurrets[i].getY() - frameTime * ship1.getVelocity().y);
+				sniperTurrets[i].setY(sniperTurrets[i].getY() - frameTime * ship1.getVelocity().y);
+				triTurrets[i].setY(triTurrets[i].getY() - frameTime * ship1.getVelocity().y);
+			}
+			for(int i = 0; i < 50; i++){
+				missiles[i].setY(missiles[i].getY() - frameTime * ship1.getVelocity().y);
+				turretMissiles1[i].setY(turretMissiles1[i].getY() - frameTime * ship1.getVelocity().y);
+				turretMissiles2[i].setY(turretMissiles2[i].getY() - frameTime * ship1.getVelocity().y);
+				turretMissiles3[i].setY(turretMissiles3[i].getY() - frameTime * ship1.getVelocity().y);
+				turretMissiles4[i].setY(turretMissiles4[i].getY() - frameTime * ship1.getVelocity().y);
+				turretMissiles5[i].setY(turretMissiles5[i].getY() - frameTime * ship1.getVelocity().y);
+				enemies[i].setY(enemies[i].getY() - frameTime * ship1.getVelocity().y);
+			}
+			for(int i = 0; i < 4; i++){
+				spawners[i].setY(spawners[i].getY() - frameTime * ship1.getVelocity().y);
+			}
+			core.setY(core.getY() - frameTime * ship1.getVelocity().y);
+			nebula.setY(nebula.getY() - frameTime * ship1.getVelocity().y);
 		}
-		for(int i = 0; i < 50; i++){
-			missiles[i].setY(missiles[i].getY() - frameTime * ship1.getVelocity().y);
-			turretMissiles1[i].setY(turretMissiles1[i].getY() - frameTime * ship1.getVelocity().y);
-			turretMissiles2[i].setY(turretMissiles2[i].getY() - frameTime * ship1.getVelocity().y);
-			turretMissiles3[i].setY(turretMissiles3[i].getY() - frameTime * ship1.getVelocity().y);
-			turretMissiles4[i].setY(turretMissiles4[i].getY() - frameTime * ship1.getVelocity().y);
-			turretMissiles5[i].setY(turretMissiles5[i].getY() - frameTime * ship1.getVelocity().y);
-			enemies[i].setY(enemies[i].getY() - frameTime * ship1.getVelocity().y);
-		}
-		for(int i = 0; i < 4; i++){
-			spawners[i].setY(spawners[i].getY() - frameTime * ship1.getVelocity().y);
-		}
-		core.setY(core.getY() - frameTime * ship1.getVelocity().y);
-		nebula.setY(nebula.getY() - frameTime * ship1.getVelocity().y);
 		
 	}
 	
