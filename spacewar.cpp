@@ -370,6 +370,9 @@ void Spacewar::initialize(HWND hwnd)
 	info1.setY(440);
 	arrow.setX(385);
 	arrow.setY(440);
+	flip = false;
+	flipTimer = 0.5;
+	tranTimer = 4.0;
     return;
 }
 
@@ -1159,6 +1162,7 @@ if (nebula.getX() <= 0 && ((ship1.getX()*ship1.getScale())) <= 10 && ((ship1.get
 		}
 		break;
 	case LVL1:
+		nebula.setTextureManager(&nebulaTexture);
 		level1 = true;
 		level2 = false;
 		level3 = false;
@@ -1187,6 +1191,7 @@ if (nebula.getX() <= 0 && ((ship1.getX()*ship1.getScale())) <= 10 && ((ship1.get
 		gameState = GAMEPLAY;
 		break;
 	case LVL2:
+		nebula.setTextureManager(&nebulaTexture2);
 		level1 = false;
 		level2 = true;
 		level3 = false;
@@ -1216,11 +1221,54 @@ if (nebula.getX() <= 0 && ((ship1.getX()*ship1.getScale())) <= 10 && ((ship1.get
 		gameState = GAMEPLAY;
 		break;
 	case TRAN1:
-		gameState = LVL2;
+		tranTimer -= frameTime;
+		flipTimer -= frameTime;
+		if (flipTimer <=0)
+		{
+			flipTimer = 0.5;
+			if (flip)
+			{
+				nebula.setTextureManager(&nebulaTexture2);
+				flip = false;
+			}
+			else
+			{
+				flip = true;
+				nebula.setTextureManager(&nebulaTexture);
+
+			}
+		}
+		if (tranTimer <= 0)
+		{
+			tranTimer = 4.0;
+			gameState = LVL2;
+		}
 		break;
 	case TRAN2:
-		gameState = LVL3;
+		tranTimer -= frameTime;
+		flipTimer -= frameTime;
+		if (flipTimer <=0)
+		{
+			flipTimer = 0.5;
+			if (flip)
+			{
+				nebula.setTextureManager(&nebulaTexture3);
+				flip = false;
+			}
+			else
+			{
+				flip = true;
+				nebula.setTextureManager(&nebulaTexture2);
+
+			}
+		}
+		if (tranTimer <= 0)
+		{
+			tranTimer = 4.0;
+			gameState = LVL3;
+		}
 		break;
+		
 	case GAMEOVER:
 		if (input->isKeyDown(VK_RETURN))
 		{
@@ -1535,7 +1583,11 @@ void Spacewar::render()
 	if(roundStart) arrow.draw();
 	ship1.draw();
 	}
+	if (gameState == TRAN1 || TRAN2)
+	{
+		nebula.draw();
 
+	}
 	if (gameState == GAMEOVER)
 	{
 		nebula.draw();

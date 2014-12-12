@@ -116,7 +116,9 @@ private:
 	VECTOR2* forward;
 
 	GAME_STATES gameState;
-
+	bool flip;
+	float tranTimer;
+	float flipTimer;
 	bool fired;
 	bool turretFired1;
 	bool turretFired2;
