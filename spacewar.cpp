@@ -329,7 +329,7 @@ void Spacewar::initialize(HWND hwnd)
 	maxWaves = 12;
 	gameTimer = 0;
 	increaseTime = 2.0;
-	EhealthMax = 111;
+	EhealthMax = 1;
 	turretMax= 0.5;
 	roundStart = false;
     S1WaveMax =  20;
@@ -1583,7 +1583,7 @@ void Spacewar::render()
 	if(roundStart) arrow.draw();
 	ship1.draw();
 	}
-	if (gameState == TRAN1 || TRAN2)
+	if (gameState == TRAN1 || gameState == TRAN2)
 	{
 		nebula.draw();
 
