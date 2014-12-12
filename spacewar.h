@@ -47,6 +47,8 @@ private:
 	TextureManager turretBaseTexture;
 	TextureManager turretTextureOne;
 	TextureManager coreTexture;
+	TextureManager nebulaTexture2;
+	TextureManager nebulaTexture3;
 	TextureManager menuTexture;
 	TextureManager turretSelectionMgr;
 	TextureManager rulesMgr;

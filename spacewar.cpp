@@ -54,6 +54,10 @@ void Spacewar::initialize(HWND hwnd)
 		throw(GameError(gameErrorNS::FATAL_ERROR, "Error initializing menu texture"));
     if (!nebulaTexture.initialize(graphics,NEBULA_IMAGE))
         throw(GameError(gameErrorNS::FATAL_ERROR, "Error initializing nebula texture"));
+    if (!nebulaTexture2.initialize(graphics,NEBULA_IMAGE2))
+        throw(GameError(gameErrorNS::FATAL_ERROR, "Error initializing nebula texture2"));
+    if (!nebulaTexture3.initialize(graphics,NEBULA_IMAGE3))
+        throw(GameError(gameErrorNS::FATAL_ERROR, "Error initializing nebula texture3"));
 	if(!coreTexture.initialize(graphics,CORE_IMG))
 		throw(GameError(gameErrorNS::FATAL_ERROR, "Error initializing core texture"));
     // main game textures
@@ -97,8 +101,12 @@ void Spacewar::initialize(HWND hwnd)
 		throw(GameError(gameErrorNS::FATAL_ERROR, "Error initializing menu"));
 	if(!red.initialize(graphics,0,0,0,&redMgr))
 		throw(GameError(gameErrorNS::FATAL_ERROR, "Error initializing menu"));
-    if (!nebula.initialize(graphics,0,0,0,&nebulaTexture))
+    if (!nebula.initialize(graphics,0,0,3,&nebulaTexture))
         throw(GameError(gameErrorNS::FATAL_ERROR, "Error initializing nebula"));
+
+	nebula.setTextureManager(&nebulaTexture);
+
+
 	if (!armadilloTexture.initialize(graphics,ARMADILLO_IMAGE))
         throw(GameError(gameErrorNS::FATAL_ERROR, "Error initializing armadillo textures"));
 	if (!spiderTexture.initialize(graphics,SPIDER_IMAGE))
@@ -321,7 +329,7 @@ void Spacewar::initialize(HWND hwnd)
 	maxWaves = 12;
 	gameTimer = 0;
 	increaseTime = 2.0;
-	EhealthMax = 1;
+	EhealthMax = 111;
 	turretMax= 0.5;
 	roundStart = false;
     S1WaveMax =  20;
@@ -746,6 +754,8 @@ if (nebula.getX() <= 0 && ((ship1.getX()*ship1.getScale())) <= 10 && ((ship1.get
 		ship1.setY(ship1.getY() + frameTime * ship1.getVelocity().y);
 	}
 	///////////////////////////////////////////////////
+
+
 	if ((input->isKeyDown(VK_SPACE)) && !fired )
 	{
 		audio->playCue(FIRE);
@@ -854,6 +864,31 @@ if (nebula.getX() <= 0 && ((ship1.getX()*ship1.getScale())) <= 10 && ((ship1.get
 	if(core.getCoreHealth() == 0) health.setCurrentFrame(0);
 	
 	core.update(frameTime);
+
+	for(int i = 0; i < 150; i++){
+		for(int j = 0; i < 5; i++){
+			if(enemies[i].getCenterX() > baseTurrets[j].getX() && enemies[i].getCenterX() < (baseTurrets[j].getX() + baseTurrets[j].getWidth())
+				&& enemies[i].getCenterY() > baseTurrets[j].getY() && enemies[i].getCenterY() < (baseTurrets[j].getY() + baseTurrets[j].getHeight())){
+					enemies[i].setActive(false);
+					baseTurrets[j].setActive(false);
+			}
+			if(enemies[i].getCenterX() > burstTurrets[j].getX() && enemies[i].getCenterX() < (burstTurrets[j].getX() + burstTurrets[j].getWidth())
+				&& enemies[i].getCenterY() > burstTurrets[j].getY() && enemies[i].getCenterY() < (burstTurrets[j].getY() + burstTurrets[j].getHeight())){
+					enemies[i].setActive(false);
+					burstTurrets[j].setActive(false);
+			}
+			if(enemies[i].getCenterX() > sniperTurrets[j].getX() && enemies[i].getCenterX() < (sniperTurrets[j].getX() + sniperTurrets[j].getWidth())
+				&& enemies[i].getCenterY() > sniperTurrets[j].getY() && enemies[i].getCenterY() < (sniperTurrets[j].getY() + sniperTurrets[j].getHeight())){
+					enemies[i].setActive(false);
+					sniperTurrets[j].setActive(false);
+			}
+			if(enemies[i].getCenterX() > triTurrets[j].getX() && enemies[i].getCenterX() < (triTurrets[j].getX() + triTurrets[j].getWidth())
+				&& enemies[i].getCenterY() > triTurrets[j].getY() && enemies[i].getCenterY() < (triTurrets[j].getY() + triTurrets[j].getHeight())){
+					enemies[i].setActive(false);
+					triTurrets[j].setActive(false);
+			}
+		}
+	}
 	//TURRET MISSILES
 	
 	//TURRET MISSILES
@@ -1077,6 +1112,7 @@ if (nebula.getX() <= 0 && ((ship1.getX()*ship1.getScale())) <= 10 && ((ship1.get
 				if(input->isKeyDown(ESC_KEY)){
 					gameState = PAUSE;
 	}
+	
 	}
 	
 	break;
@@ -1126,7 +1162,6 @@ if (nebula.getX() <= 0 && ((ship1.getX()*ship1.getScale())) <= 10 && ((ship1.get
 		level1 = true;
 		level2 = false;
 		level3 = false;
-
 		turretBases[0].setX(500);
 		turretBases[0].setY(1000);
 		turretBases[1].setX(700);
@@ -1465,6 +1500,7 @@ void Spacewar::render()
 			 turretMissiles5[i].draw();
 		 }
 	}
+
 	if (!gamePlaying)
 	{
 		output->print(ss2.str(), 300,300);
