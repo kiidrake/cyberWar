@@ -14,7 +14,7 @@ BurstTurret::BurstTurret() : Entity()
     currentFrame = startFrame;              
     radius = 250;
     active = false;
-	damage = 1;
+	damage = 2;
 
 }
 

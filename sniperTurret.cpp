@@ -12,7 +12,7 @@ SniperTurret::SniperTurret() : Entity()
     velocity.x = 0;                             // velocity X
     velocity.y = 0;                             // velocity Y
     currentFrame = startFrame;              
-    radius = 250;
+    radius = 500;
     active = false;
 	damage = 1;
 

@@ -155,8 +155,13 @@
     <ClInclude Include="sniperTurret.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="triTurret.h">
+    <ClInclude Include="kloss.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <Text Include="HIGH_SCORE.txt">
+      <Filter>Resource Files</Filter>
+    </Text>
   </ItemGroup>
 </Project>

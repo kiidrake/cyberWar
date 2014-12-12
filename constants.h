@@ -72,6 +72,8 @@ const char BURST_TURRET_IMG[] = "pictures\\burst_turret_sheet.png";
 const char SNIPER_TURRET_IMG[] = "pictures\\sniper_turret_sheet.png";
 const char TRI_TURRET_IMG[] = "pictures\\tri_turret_sheet.png";
 const char PAUSE_IMG[] = "pictures\\pause.png";
+const char ENEMY2_IMG[] = "pictures\\enemy3_sheet.png";
+const char BOSS_IMG[] = "pictures\\enemy2.png";
 // audio files required by audio.cpp
 // WAVE_BANK must be location of .xwb file.
 const char WAVE_BANK[]  = "audio\\Win\\Wave Bank.xwb";
@@ -84,7 +86,7 @@ const char FIRE[] = "fire";
 const char DAMAGE[] = "damage";
 const char WIN[] = "win";
 const char LOSE[] = "lose";
-const char BACKGROUND[] = "background 2";
+const char BACKGROUND[] = "computer";
 
 // key mappings
 // In this game simple constants are used for key mappings. If variables were used

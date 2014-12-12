@@ -32,6 +32,10 @@ void Spacewar::initialize(HWND hwnd)
     // nebula texture
 	if(!pauseMgr.initialize(graphics,PAUSE_IMG))
 		throw(GameError(gameErrorNS::FATAL_ERROR, "Error initializing splash texture"));
+	if(!bossMgr.initialize(graphics,BOSS_IMG))
+		throw(GameError(gameErrorNS::FATAL_ERROR, "Error initializing boss texture"));
+	if(!enemy2Mgr.initialize(graphics,ENEMY2_IMG))
+		throw(GameError(gameErrorNS::FATAL_ERROR, "Error initializing enemy2 texture"));
 	if(!splashTexture.initialize(graphics,SPLASH_SCREEN))
 		throw(GameError(gameErrorNS::FATAL_ERROR, "Error initializing splash texture"));
 	if(!triMgr.initialize(graphics,TRI_TURRET_IMG))
@@ -142,72 +146,41 @@ void Spacewar::initialize(HWND hwnd)
     ship1.setY((GAME_HEIGHT/2)-32);
     ship1.setVelocity(VECTOR2(0,0)); // VECTOR2(X, Y)
 	ship1.setScale(ship1.getScale() );
-    // missile
-	for( int i =0; i < 50; i++)
+   
+		for( int i =0; i < 400; i++)
 	{
-		 if (!missiles[i].initialize(this, missileNS::WIDTH, missileNS::HEIGHT, missileNS::TEXTURE_COLS, &missileTexture))
-			throw(GameError(gameErrorNS::FATAL_ERROR, "Error initializing missile1"));
-		 missiles[i].setFrames(missileNS::SHIP1_START_FRAME, missileNS::SHIP1_END_FRAME);
-		 missiles[i].setCurrentFrame(missileNS::SHIP1_START_FRAME);
-		 missiles[i].setX(GAME_WIDTH/4);
-		 missiles[i].setY(GAME_HEIGHT/4);
-		 missiles[i].setVelocity(VECTOR2(missileNS::SPEED,-missileNS::SPEED)); // VECTOR2(X, Y)
-		 missiles[i].setScale(missiles[i].getScale() * 2);
-	}	
-		for( int i =0; i < 50; i++)
-	{
-		if (!turretMissiles1[i].initialize(this, missileNS::WIDTH, missileNS::HEIGHT, missileNS::TEXTURE_COLS, &missileTexture))
+		if (!BaseTurretMissiles[i].initialize(this, missileNS::WIDTH, missileNS::HEIGHT, missileNS::TEXTURE_COLS, &missileTexture))
 			throw(GameError(gameErrorNS::FATAL_ERROR, "Error initializing turret missile1"));
-		 turretMissiles1[i].setFrames(missileNS::SHIP1_START_FRAME, missileNS::SHIP1_END_FRAME);
-		 turretMissiles1[i].setCurrentFrame(missileNS::SHIP1_START_FRAME);
-		 turretMissiles1[i].setX(GAME_WIDTH/4);
-		 turretMissiles1[i].setY(GAME_HEIGHT/4);
-		 turretMissiles1[i].setVelocity(VECTOR2(missileNS::SPEED,-missileNS::SPEED)); // VECTOR2(X, Y)
-		 turretMissiles1[i].setScale(turretMissiles1[i].getScale() * 2);
+		 BaseTurretMissiles[i].setFrames(missileNS::SHIP1_START_FRAME, missileNS::SHIP1_END_FRAME);
+		 BaseTurretMissiles[i].setCurrentFrame(missileNS::SHIP1_START_FRAME);
+		 BaseTurretMissiles[i].setX(GAME_WIDTH/4);
+		 BaseTurretMissiles[i].setY(GAME_HEIGHT/4);
+		 BaseTurretMissiles[i].setVelocity(VECTOR2(missileNS::SPEED,-missileNS::SPEED)); // VECTOR2(X, Y)
+		 BaseTurretMissiles[i].setScale(BaseTurretMissiles[i].getScale() * 2);
 	}	
-				for( int i =0; i < 50; i++)
+	
+		for( int i =0; i < 200; i++)
 	{
-		if (!turretMissiles2[i].initialize(this, missileNS::WIDTH, missileNS::HEIGHT, missileNS::TEXTURE_COLS, &missileTexture))
+		if (!BurstTurretMissiles[i].initialize(this, missileNS::WIDTH, missileNS::HEIGHT, missileNS::TEXTURE_COLS, &missileTexture))
 			throw(GameError(gameErrorNS::FATAL_ERROR, "Error initializing turret missile1"));
-		 turretMissiles2[i].setFrames(missileNS::SHIP1_START_FRAME, missileNS::SHIP1_END_FRAME);
-		 turretMissiles2[i].setCurrentFrame(missileNS::SHIP1_START_FRAME);
-		 turretMissiles2[i].setX(GAME_WIDTH/4);
-		 turretMissiles2[i].setY(GAME_HEIGHT/4);
-		 turretMissiles2[i].setVelocity(VECTOR2(missileNS::SPEED,-missileNS::SPEED)); // VECTOR2(X, Y)
-		 turretMissiles2[i].setScale(turretMissiles2[i].getScale() * 2);
+		 BurstTurretMissiles[i].setFrames(missileNS::SHIP1_START_FRAME, missileNS::SHIP1_END_FRAME);
+		 BurstTurretMissiles[i].setCurrentFrame(missileNS::SHIP1_START_FRAME);
+		 BurstTurretMissiles[i].setX(GAME_WIDTH/4);
+		 BurstTurretMissiles[i].setY(GAME_HEIGHT/4);
+		 BurstTurretMissiles[i].setVelocity(VECTOR2(missileNS::SPEED,-missileNS::SPEED)); // VECTOR2(X, Y)
+		 BurstTurretMissiles[i].setScale(BurstTurretMissiles[i].getScale() * 2);
+		 
 	}	
-						for( int i =0; i < 50; i++)
+		for( int i =0; i < 200; i++)
 	{
-		if (!turretMissiles3[i].initialize(this, missileNS::WIDTH, missileNS::HEIGHT, missileNS::TEXTURE_COLS, &missileTexture))
+		if (!SniperTurretMissiles[i].initialize(this, missileNS::WIDTH, missileNS::HEIGHT, missileNS::TEXTURE_COLS, &missileTexture))
 			throw(GameError(gameErrorNS::FATAL_ERROR, "Error initializing turret missile1"));
-		 turretMissiles3[i].setFrames(missileNS::SHIP1_START_FRAME, missileNS::SHIP1_END_FRAME);
-		 turretMissiles3[i].setCurrentFrame(missileNS::SHIP1_START_FRAME);
-		 turretMissiles3[i].setX(GAME_WIDTH/4);
-		 turretMissiles3[i].setY(GAME_HEIGHT/4);
-		 turretMissiles3[i].setVelocity(VECTOR2(missileNS::SPEED,-missileNS::SPEED)); // VECTOR2(X, Y)
-		 turretMissiles3[i].setScale(turretMissiles3[i].getScale() * 2);
-	}	
-								for( int i =0; i < 50; i++)
-	{
-		if (!turretMissiles4[i].initialize(this, missileNS::WIDTH, missileNS::HEIGHT, missileNS::TEXTURE_COLS, &missileTexture))
-			throw(GameError(gameErrorNS::FATAL_ERROR, "Error initializing turret missile1"));
-		 turretMissiles4[i].setFrames(missileNS::SHIP1_START_FRAME, missileNS::SHIP1_END_FRAME);
-		 turretMissiles4[i].setCurrentFrame(missileNS::SHIP1_START_FRAME);
-		 turretMissiles4[i].setX(GAME_WIDTH/4);
-		 turretMissiles4[i].setY(GAME_HEIGHT/4);
-		 turretMissiles4[i].setVelocity(VECTOR2(missileNS::SPEED,-missileNS::SPEED)); // VECTOR2(X, Y)
-		 turretMissiles4[i].setScale(turretMissiles4[i].getScale() * 2);
-	}	
-										for( int i =0; i < 50; i++)
-	{
-		if (!turretMissiles1[i].initialize(this, missileNS::WIDTH, missileNS::HEIGHT, missileNS::TEXTURE_COLS, &missileTexture))
-			throw(GameError(gameErrorNS::FATAL_ERROR, "Error initializing turret missile1"));
-		 turretMissiles5[i].setFrames(missileNS::SHIP1_START_FRAME, missileNS::SHIP1_END_FRAME);
-		 turretMissiles5[i].setCurrentFrame(missileNS::SHIP1_START_FRAME);
-		 turretMissiles5[i].setX(GAME_WIDTH/4);
-		 turretMissiles5[i].setY(GAME_HEIGHT/4);
-		 turretMissiles5[i].setVelocity(VECTOR2(missileNS::SPEED,-missileNS::SPEED)); // VECTOR2(X, Y)
-		 turretMissiles5[i].setScale(turretMissiles5[i].getScale() * 2);
+		 SniperTurretMissiles[i].setFrames(missileNS::SHIP1_START_FRAME, missileNS::SHIP1_END_FRAME);
+		 SniperTurretMissiles[i].setCurrentFrame(missileNS::SHIP1_START_FRAME);
+		 SniperTurretMissiles[i].setX(GAME_WIDTH/4);
+		 SniperTurretMissiles[i].setY(GAME_HEIGHT/4);
+		 SniperTurretMissiles[i].setVelocity(VECTOR2(missileNS::SPEED*2,-missileNS::SPEED*2)); // VECTOR2(X, Y)
+		 SniperTurretMissiles[i].setScale(SniperTurretMissiles[i].getScale() * 2);
 	}	
 	for(int i = 0;i < 5; i++){
 		if (!baseTurrets[i].initialize(this, BaseTurretNS::WIDTH, BaseTurretNS::HEIGHT, BaseTurretNS::TEXTURE_COLS, &turretTextureOne))
@@ -251,14 +224,30 @@ void Spacewar::initialize(HWND hwnd)
 		 enemies[i].setY(GAME_HEIGHT/4);
 		 enemies[i].setVelocity(VECTOR2(coreEnemyNS::SPEED,-coreEnemyNS::SPEED)); // VECTOR2(X, Y)
 	}
+	for( int i =0; i < 50; i++)
+	{
+		if (!enemies2[i].initialize(this, coreEnemyNS::WIDTH, coreEnemyNS::HEIGHT, coreEnemyNS::TEXTURE_COLS, &enemy2Mgr))
+			throw(GameError(gameErrorNS::FATAL_ERROR, "Error initializing missile1"));
+		 enemies2[i].setFrames(coreEnemyNS::SHIP1_START_FRAME, coreEnemyNS::SHIP1_END_FRAME);
+		 enemies2[i].setCurrentFrame(coreEnemyNS::SHIP1_START_FRAME);
+		 enemies2[i].setX(GAME_WIDTH/4);
+		 enemies2[i].setY(GAME_HEIGHT/4);
+		 enemies2[i].setVelocity(VECTOR2(coreEnemyNS::SPEED,-coreEnemyNS::SPEED)); // VECTOR2(X, Y)
+	}
+
 	if(!core.initialize(this,CoreNS::WIDTH,CoreNS::HEIGHT,0,&coreTexture))
 		throw(GameError(gameErrorNS::FATAL_ERROR, "Error initializing core"));
+
 	core.setFrames(0,0);
     core.setCurrentFrame(0);
     core.setX(1500);
     core.setY(1100);                        
 	core.setActive(true);
 	core.setScale(core.getScale() *2);
+
+	if(!boss.initialize(this,CoreNS::WIDTH,CoreNS::HEIGHT,0,&bossMgr))
+		throw(GameError(gameErrorNS::FATAL_ERROR, "Error initializing core"));
+	
 
 	outString = "Score: ";
 	finalString = "Game Over \nFinalScore: ";
@@ -307,17 +296,18 @@ void Spacewar::initialize(HWND hwnd)
     gamePlaying = true;
 	score = 0;
 	colCounter = 0;
-	missileIndex= 0;
-	turretMissileIndex1 = 0;
-	turretMissileIndex2 = 0;
-	turretMissileIndex3 = 0;
-	turretMissileIndex4 = 0;
-	turretMissileIndex5 = 0;
-	turretTimer1 = 0.5;
-	turretTimer2 = 0.5;
-	turretTimer3 = 0.5;
-	turretTimer4 = 0.5;
-	turretTimer5 = 0.5;
+	
+	BaseTurretMissileIndex = 0;
+	SniperTurretMissileIndex = 0;
+	BurstTurretMissileIndex = 0;
+	for(int i = 0; i < 5; i++)
+	{
+	SniperTurretTimer[i] = 0.5;
+	
+	BaseTurretTimer[i] = 0.5;
+	BurstTurretTimer[i] = 0.5;
+	TriTurretTimer[i] = 0.5;
+	}
 	fired = false;
 	enemyIndex = 0;
 	S1PerWaveMax = 5;
@@ -330,7 +320,11 @@ void Spacewar::initialize(HWND hwnd)
 	gameTimer = 0;
 	increaseTime = 2.0;
 	EhealthMax = 1;
-	turretMax= 0.5;
+	E2healthMax = 3;
+	BaseTurretMax= 0.5;
+	SniperTurretMax= 0.5;
+	BurstTurretMax= 0.5;
+	TriTurretMax = 0.5;
 	roundStart = false;
     S1WaveMax =  20;
     S2WaveMax = 20;
@@ -353,12 +347,12 @@ void Spacewar::initialize(HWND hwnd)
 	S2PerWave = 5;
 	S3PerWave = 5;
 	S4PerWave = 5;
-	damageincrease = 1;
+	
 	healthincrease = 1;
 	roundsLeft = 3;
 	maxRounds = 3;
-	turretCost = 10;
-	upgradeCost = 5;
+	
+	
 	preGameTimer = 8.0;
 	pressed1 = false;
 	pressed2 = false;
@@ -397,7 +391,7 @@ void Spacewar::update()
 	}
 	tutTime = gameTimer;
 	//TURRET 1 CLICK & DRAG
-	if(input->getMouseX() > 282 && input->getMouseX() < 282+64 && input->getMouseY() < 520 && input->getMouseY() > 460 && input->getMouseLButton())
+	if(input->getMouseX() > 330 && input->getMouseX() < 330+32 && input->getMouseY() < 520 && input->getMouseY() > 460 && input->getMouseLButton())
 	{
 		 firstClick = true; 
 		for(int i = 0; i < 5; i++)
@@ -438,7 +432,7 @@ void Spacewar::update()
 	}
 
 	//TURRET 2 CLICK & DRAG
-	if(input->getMouseX() > 282+64 && input->getMouseX() < 282+128 && input->getMouseY() < 520 && input->getMouseY() > 460 && input->getMouseLButton())
+	if(input->getMouseX() > 330+32 && input->getMouseX() < 330+64 && input->getMouseY() < 520 && input->getMouseY() > 460 && input->getMouseLButton())
 	{
 		firstClick = true; 
 		for(int i = 0; i < 5; i++)
@@ -478,7 +472,7 @@ void Spacewar::update()
 		}
 	}
 	//TURRET 3 CLICK & DRAG
-	if(input->getMouseX() > 282+128 && input->getMouseX() < 282+256 && input->getMouseY() < 520 && input->getMouseY() > 460 && input->getMouseLButton()) 
+	if(input->getMouseX() > 330+64 && input->getMouseX() < 330 + 96 && input->getMouseY() < 520 && input->getMouseY() > 460 && input->getMouseLButton()) 
 	{
 		firstClick = true; 
 		for(int i = 0; i < 5; i++)
@@ -518,7 +512,7 @@ void Spacewar::update()
 		}
 	}
 	//TURRET 4 CLICK & DRAG
-	if(input->getMouseX() > 282+256 && input->getMouseX() < (282+64+256) && input->getMouseY() < 520 && input->getMouseY() > 460 && input->getMouseLButton()) 
+	if(input->getMouseX() > 330+96 && input->getMouseX() < 330+ 128 && input->getMouseY() < 520 && input->getMouseY() > 460 && input->getMouseLButton()) 
 	{
 		firstClick = true; 
 		for(int i = 0; i < 5; i++)
@@ -573,7 +567,11 @@ void Spacewar::update()
 	arrow.update(frameTime);
 	ship1.setX(input->getMouseX());
 	ship1.setY(input->getMouseY());
-
+	for(int i = 0; i < 5; i++){
+		if(triTurrets[i].getActive()){
+			triTurrets[i].update(frameTime);
+		}
+	}
 	if (ship1.getShipHealth() <= 0)
 	{
 		gamePlaying = false;																								
@@ -581,12 +579,14 @@ void Spacewar::update()
 	}
     
 	gameTimer += frameTime;
-	
-	turretTimer1 -= frameTime;
-	turretTimer2 -= frameTime;
-	turretTimer3 -= frameTime;
-	turretTimer4 -= frameTime;
-	turretTimer5 -= frameTime;
+	for (int i = 0; i < 5; i++)
+	{
+		BaseTurretTimer[i] -= frameTime;
+		SniperTurretTimer[i] -= frameTime;
+		BurstTurretTimer[i] -= frameTime;
+		TriTurretTimer[i] -= frameTime;
+		
+	}
 
 
 	//	for(int i = 0; i < 5; i++){
@@ -615,14 +615,17 @@ void Spacewar::update()
 		
 			}
 					for(int i = 0; i < 50; i++){
-				missiles[i].setX(missiles[i].getX() - frameTime * ship1.getVelocity().x);
-				turretMissiles1[i].setX(turretMissiles1[i].getX() - frameTime * ship1.getVelocity().x);
-				turretMissiles2[i].setX(turretMissiles2[i].getX() - frameTime * ship1.getVelocity().x);
-				turretMissiles3[i].setX(turretMissiles3[i].getX() - frameTime * ship1.getVelocity().x);
-				turretMissiles4[i].setX(turretMissiles4[i].getX() - frameTime * ship1.getVelocity().x);
-				turretMissiles5[i].setX(turretMissiles5[i].getX() - frameTime * ship1.getVelocity().x);
+				
+				BaseTurretMissiles[i].setX(BaseTurretMissiles[i].getX() - frameTime * ship1.getVelocity().x);
+				SniperTurretMissiles[i].setX(SniperTurretMissiles[i].getX() - frameTime * ship1.getVelocity().x);
+				BurstTurretMissiles[i].setX(BurstTurretMissiles[i].getX() - frameTime * ship1.getVelocity().x);
+				
 				enemies[i].setX(enemies[i].getX() - frameTime * ship1.getVelocity().x);
+				enemies2[i].setX(enemies2[i].getX() - frameTime * ship1.getVelocity().x);
+				
+
 			}
+					boss.setX(boss.getX() - frameTime * ship1.getVelocity().x);
 					for(int i = 0; i < 4; i++){
 						spawners[i].setX(spawners[i].getX() - frameTime * ship1.getVelocity().x);
 					}
@@ -661,14 +664,15 @@ void Spacewar::update()
 				triTurrets[i].setY(triTurrets[i].getY() - frameTime * ship1.getVelocity().y);
 			}
 			for(int i = 0; i < 50; i++){
-				missiles[i].setY(missiles[i].getY() - frameTime * ship1.getVelocity().y);
-				turretMissiles1[i].setY(turretMissiles1[i].getY() - frameTime * ship1.getVelocity().y);
-				turretMissiles2[i].setY(turretMissiles2[i].getY() - frameTime * ship1.getVelocity().y);
-				turretMissiles3[i].setY(turretMissiles3[i].getY() - frameTime * ship1.getVelocity().y);
-				turretMissiles4[i].setY(turretMissiles4[i].getY() - frameTime * ship1.getVelocity().y);
-				turretMissiles5[i].setY(turretMissiles5[i].getY() - frameTime * ship1.getVelocity().y);
+				
+				SniperTurretMissiles[i].setY(SniperTurretMissiles[i].getY() - frameTime * ship1.getVelocity().y);
+				BurstTurretMissiles[i].setY(BurstTurretMissiles[i].getY() - frameTime * ship1.getVelocity().y);
+				BaseTurretMissiles[i].setY(BaseTurretMissiles[i].getY() - frameTime * ship1.getVelocity().y);
+				
 				enemies[i].setY(enemies[i].getY() - frameTime * ship1.getVelocity().y);
+				enemies2[i].setY(enemies2[i].getY() - frameTime * ship1.getVelocity().y);
 			}
+			boss.setY(boss.getY() - frameTime * ship1.getVelocity().y);
 			for(int i = 0; i < 4; i++){
 				spawners[i].setY(spawners[i].getY() - frameTime * ship1.getVelocity().y);
 			}
@@ -709,14 +713,15 @@ if (ship1.getX() <= 10 )
 		
 			}
 					for(int i = 0; i < 50; i++){
-				missiles[i].setX(missiles[i].getX() - frameTime * ship1.getVelocity().x);
-				turretMissiles1[i].setX(turretMissiles1[i].getX() - frameTime * ship1.getVelocity().x);
-				turretMissiles2[i].setX(turretMissiles2[i].getX() - frameTime * ship1.getVelocity().x);
-				turretMissiles3[i].setX(turretMissiles3[i].getX() - frameTime * ship1.getVelocity().x);
-				turretMissiles4[i].setX(turretMissiles4[i].getX() - frameTime * ship1.getVelocity().x);
-				turretMissiles5[i].setX(turretMissiles5[i].getX() - frameTime * ship1.getVelocity().x);
+				
+				BaseTurretMissiles[i].setX(BaseTurretMissiles[i].getX() - frameTime * ship1.getVelocity().x);
+				SniperTurretMissiles[i].setX(SniperTurretMissiles[i].getX() - frameTime * ship1.getVelocity().x);
+				BurstTurretMissiles[i].setX(BurstTurretMissiles[i].getX() - frameTime * ship1.getVelocity().x);
+				
 				enemies[i].setX(enemies[i].getX() - frameTime * ship1.getVelocity().x);
+				enemies2[i].setX(enemies2[i].getX() - frameTime * ship1.getVelocity().x);
 			}
+					boss.setX(boss.getX() - frameTime * ship1.getVelocity().x);
 					for(int i = 0; i < 4; i++){
 						spawners[i].setX(spawners[i].getX() - frameTime * ship1.getVelocity().x);
 					}
@@ -754,14 +759,15 @@ if (ship1.getX() <= 10 )
 				triTurrets[i].setY(triTurrets[i].getY() - frameTime * ship1.getVelocity().y);
 			}
 			for(int i = 0; i < 50; i++){
-				missiles[i].setY(missiles[i].getY() - frameTime * ship1.getVelocity().y);
-				turretMissiles1[i].setY(turretMissiles1[i].getY() - frameTime * ship1.getVelocity().y);
-				turretMissiles2[i].setY(turretMissiles2[i].getY() - frameTime * ship1.getVelocity().y);
-				turretMissiles3[i].setY(turretMissiles3[i].getY() - frameTime * ship1.getVelocity().y);
-				turretMissiles4[i].setY(turretMissiles4[i].getY() - frameTime * ship1.getVelocity().y);
-				turretMissiles5[i].setY(turretMissiles5[i].getY() - frameTime * ship1.getVelocity().y);
+				
+				BaseTurretMissiles[i].setY(BaseTurretMissiles[i].getY() - frameTime * ship1.getVelocity().y);
+				SniperTurretMissiles[i].setY(SniperTurretMissiles[i].getY() - frameTime * ship1.getVelocity().y);
+				BurstTurretMissiles[i].setY(BurstTurretMissiles[i].getY() - frameTime * ship1.getVelocity().y);
+				
 				enemies[i].setY(enemies[i].getY() - frameTime * ship1.getVelocity().y);
+				enemies2[i].setY(enemies2[i].getY() - frameTime * ship1.getVelocity().y);
 			}
+			boss.setY(boss.getY() - frameTime * ship1.getVelocity().y);
 			for(int i = 0; i < 4; i++){
 				spawners[i].setY(spawners[i].getY() - frameTime * ship1.getVelocity().y);
 			}
@@ -786,96 +792,38 @@ if (ship1.getX() <= 10 )
 	///////////////////////////////////////////////////
 
 
-	if ((input->isKeyDown(VK_SPACE)) && !fired )
-	{
-		audio->playCue(FIRE);
-		//missiles[missileIndex].setDegrees(angle);
-	 missiles[missileIndex].setX(ship1.getX());
-	 missiles[missileIndex].setY(ship1.getY());
-	 VECTOR2 fVec(input->getMouseX() - ship1.getX(), input->getMouseY() - ship1.getY());
-	 D3DXVec2Normalize(&fVec, &fVec); 
-	 missiles[missileIndex].setVelocity(fVec);
 	
-	 missiles[missileIndex].activate();
-	 missileIndex++;
-	 
-	 fired = true;
-	} 
-	else if ((input->isKeyDown(VK_SPACE)) && fired )
-	{
-    
-	} 
-	else
-	{
-		fired = false;
-	}
 
-	for( int i =0; i < 50; i++)
+	
+		for( int i =0; i < 400; i++) 
 	{
 	
 	  
-	  missiles[i].update(frameTime);
-	}
-
-	if (missileIndex >=50)
-	{
-		missileIndex = 0;
-	}
-		for( int i =0; i < 50; i++) 
-	{
-	
-	  
-		turretMissiles1[i].update(frameTime);
+		BaseTurretMissiles[i].update(frameTime);
 	}
 	
-	if (turretMissileIndex1 >=50)
+	if (BaseTurretMissileIndex >=400)
 	{
-		turretMissileIndex1 = 0;
+		BaseTurretMissileIndex = 0;
 	}
-	for( int i =0; i < 50; i++)
+	for( int i =0; i < 200; i++)
 	{
 				
-		
-		turretMissiles2[i].update(frameTime); 
+		BurstTurretMissiles[i].update(frameTime);
+		SniperTurretMissiles[i].update(frameTime); 
 	}
 	
-	if (turretMissileIndex2 >=50)
+	if (BurstTurretMissileIndex >=200)
 	{
-		turretMissileIndex2 = 0;
-	}
-	for( int i =0; i < 50; i++)
-	{
-	
-	  
-		turretMissiles3[i].update(frameTime);
+		BurstTurretMissileIndex = 0;
 	}
 	
-	if (turretMissileIndex3 >=50)
-	{
-		turretMissileIndex3 = 0;
-	}
-	for( int i =0; i < 50; i++)
-	{
 	
-	  
-		turretMissiles4[i].update(frameTime);
+	if (SniperTurretMissileIndex >=200)
+	{
+		SniperTurretMissileIndex = 0;
 	}
 	
-	if (turretMissileIndex4 >=50)
-	{
-		turretMissileIndex4 = 0;
-	}
-	for( int i =0; i < 50; i++)
-	{
-	
-	  
-		turretMissiles5[i].update(frameTime);
-	}
-	
-	if (turretMissileIndex5 >=50)
-	{
-		turretMissileIndex5 = 0;
-	}
 			if(input->isKeyDown(VK_LSHIFT)){
 		core.setCoreHealthe(10000);
 	}
@@ -919,6 +867,56 @@ if (ship1.getX() <= 10 )
 			}
 		}
 	}
+
+
+	for(int i = 0; i < 150; i++){
+		for(int j = 0; i < 5; i++){
+			if(enemies2[i].getCenterX() > baseTurrets[j].getX() && enemies2[i].getCenterX() < (baseTurrets[j].getX() + baseTurrets[j].getWidth())
+				&& enemies2[i].getCenterY() > baseTurrets[j].getY() && enemies2[i].getCenterY() < (baseTurrets[j].getY() + baseTurrets[j].getHeight())){
+					enemies2[i].setActive(false);
+					baseTurrets[j].setActive(false);
+			}
+			if(enemies2[i].getCenterX() > burstTurrets[j].getX() && enemies2[i].getCenterX() < (burstTurrets[j].getX() + burstTurrets[j].getWidth())
+				&& enemies2[i].getCenterY() > burstTurrets[j].getY() && enemies2[i].getCenterY() < (burstTurrets[j].getY() + burstTurrets[j].getHeight())){
+					enemies2[i].setActive(false);
+					burstTurrets[j].setActive(false);
+			}
+			if(enemies2[i].getCenterX() > sniperTurrets[j].getX() && enemies2[i].getCenterX() < (sniperTurrets[j].getX() + sniperTurrets[j].getWidth())
+				&& enemies2[i].getCenterY() > sniperTurrets[j].getY() && enemies2[i].getCenterY() < (sniperTurrets[j].getY() + sniperTurrets[j].getHeight())){
+					enemies2[i].setActive(false);
+					sniperTurrets[j].setActive(false);
+			}
+			if(enemies2[i].getCenterX() > triTurrets[j].getX() && enemies2[i].getCenterX() < (triTurrets[j].getX() + triTurrets[j].getWidth())
+				&& enemies2[i].getCenterY() > triTurrets[j].getY() && enemies2[i].getCenterY() < (triTurrets[j].getY() + triTurrets[j].getHeight())){
+					enemies2[i].setActive(false);
+					triTurrets[j].setActive(false);
+			}
+		}
+	}
+	for(int i = 0; i < 150; i++){
+		for(int j = 0; i < 5; i++){
+			if(boss.getCenterX() > baseTurrets[j].getX() && boss.getCenterX() < (baseTurrets[j].getX() + baseTurrets[j].getWidth())
+				&& boss.getCenterY() > baseTurrets[j].getY() && boss.getCenterY() < (baseTurrets[j].getY() + baseTurrets[j].getHeight())){
+					
+					baseTurrets[j].setActive(false);
+			}
+			if(boss.getCenterX() > burstTurrets[j].getX() && boss.getCenterX() < (burstTurrets[j].getX() + burstTurrets[j].getWidth())
+				&& boss.getCenterY() > burstTurrets[j].getY() && boss.getCenterY() < (burstTurrets[j].getY() + burstTurrets[j].getHeight())){
+					
+					burstTurrets[j].setActive(false);
+			}
+			if(boss.getCenterX() > sniperTurrets[j].getX() && boss.getCenterX() < (sniperTurrets[j].getX() + sniperTurrets[j].getWidth())
+				&& boss.getCenterY() > sniperTurrets[j].getY() && boss.getCenterY() < (sniperTurrets[j].getY() + sniperTurrets[j].getHeight())){
+					
+					sniperTurrets[j].setActive(false);
+			}
+			if(boss.getCenterX() > triTurrets[j].getX() && boss.getCenterX() < (triTurrets[j].getX() + triTurrets[j].getWidth())
+				&& boss.getCenterY() > triTurrets[j].getY() && boss.getCenterY() < (triTurrets[j].getY() + triTurrets[j].getHeight())){
+					
+					triTurrets[j].setActive(false);
+			}
+		}
+	}
 	//TURRET MISSILES
 	
 	//TURRET MISSILES
@@ -937,7 +935,23 @@ if (ship1.getX() <= 10 )
 			turretPoints+= 1;
 
 		}
+		if (enemies2[i].getEnemyHealth() <= 0)
+		{
+			enemies2[i].setActive(false);
+			enemies2[i].setEnemyHealth(E2healthMax);
+			score += 200;
+			turretPoints+= 1;
+
+		}
 	}
+	if (boss.getEnemyHealth() <= 0)
+		{
+			boss.setActive(false);
+			boss.setEnemyHealth(15);
+			score += 2000;
+			turretPoints+= 1;
+
+		}
 	if (core.getCoreHealth() <= 0)
 	{
 		core.setActive(false);
@@ -956,18 +970,31 @@ if (ship1.getX() <= 10 )
 			S1InWaveTimer -= frameTime;
 			if (S1InWaveTimer <= 0)
 			{
+				if (level3 && roundsLeft == 1 && wavesLeft == 1)
+				{
+					boss.setX(spawners[0].getCenterX());
+					boss.setY(spawners[0].getCenterY());
+					boss.setPattern(RIGHT,DOWN,LEFT,TRACK);
+					boss.setPatternTime(5,5,5,30);
+					boss.activate();
+				}
 				enemies[enemyIndex].setX(spawners[0].getCenterX());
 				enemies[enemyIndex].setY(spawners[0].getCenterY());
-				if (!level2)
+				enemies2[enemyIndex].setX(spawners[0].getCenterX());
+				enemies2[enemyIndex].setY(spawners[0].getCenterY());
+				if (level1)
 				{
 					enemies[enemyIndex].setPattern(RIGHT,DOWN,DOWNRIGHT,TRACK);
+					enemies[enemyIndex].setPatternTime(3,2,2.5,30);
+					enemies[enemyIndex].activate();
 				}
-				else if (level2)
+				else if (!level1)
 				{
-					enemies[enemyIndex].setPattern(RIGHT,DOWN,LEFT,TRACK);
+					enemies2[enemyIndex].setPattern(RIGHT,DOWN,LEFT,TRACK);
+					enemies2[enemyIndex].setPatternTime(3,2,2.5,30);
+					enemies2[enemyIndex].activate();
 				}
-				enemies[enemyIndex].setPatternTime(3,2,2.5,30);
-			    enemies[enemyIndex].activate();
+				
 				enemyIndex++;
 				if (enemyIndex >=50)
 				{
@@ -993,16 +1020,21 @@ if (ship1.getX() <= 10 )
 			{
 				enemies[enemyIndex].setX(spawners[1].getCenterX());
 				enemies[enemyIndex].setY(spawners[1].getCenterY());
-				if (!level2)
+				enemies2[enemyIndex].setX(spawners[1].getCenterX());
+				enemies2[enemyIndex].setY(spawners[1].getCenterY());
+				if (level1)
 				{
 					enemies[enemyIndex].setPattern(RIGHT,UP,DOWNRIGHT,TRACK);
-				}
-				else if (level2)
-				{
-					enemies[enemyIndex].setPattern(UPRIGHT,DOWN,DOWNRIGHT,TRACK);
-				}
-				enemies[enemyIndex].setPatternTime(2,3,2.5,30);
+					enemies[enemyIndex].setPatternTime(2,3,2.5,30);
 			    enemies[enemyIndex].activate();
+				}
+				else if (!level1)
+				{
+					enemies2[enemyIndex].setPattern(UPRIGHT,DOWN,DOWNRIGHT,TRACK);
+					enemies2[enemyIndex].setPatternTime(2,3,2.5,30);
+			    enemies2[enemyIndex].activate();
+				}
+				
 				enemyIndex++;
 				if (enemyIndex >=50)
 				{
@@ -1028,16 +1060,21 @@ if (ship1.getX() <= 10 )
 			{
 				enemies[enemyIndex].setX(spawners[2].getCenterX());
 				enemies[enemyIndex].setY(spawners[2].getCenterY());
-				if (!level2)
+				enemies2[enemyIndex].setX(spawners[2].getCenterX());
+				enemies2[enemyIndex].setY(spawners[2].getCenterY());
+				if (level1)
 				{
 					enemies[enemyIndex].setPattern(RIGHT,DOWN,DOWNRIGHT,TRACK);
+					enemies[enemyIndex].setPatternTime(2,3,2.5,30);
+					 enemies[enemyIndex].activate();
 				}
-				else if (level2)
+				else if (!level1)
 				{
-					enemies[enemyIndex].setPattern(UP,LEFT,RIGHT,TRACK);
+					enemies2[enemyIndex].setPattern(UP,LEFT,RIGHT,TRACK);
+					enemies2[enemyIndex].setPatternTime(2,3,2.5,30);
+			        enemies2[enemyIndex].activate();
 				}
-				enemies[enemyIndex].setPatternTime(2,3,2.5,30);
-			    enemies[enemyIndex].activate();
+				
 				enemyIndex++;
 				if (enemyIndex >=50)
 				{
@@ -1061,17 +1098,22 @@ if (ship1.getX() <= 10 )
 			{
 				enemies[enemyIndex].setX(spawners[3].getCenterX());
 				enemies[enemyIndex].setY(spawners[3].getCenterY());
+				enemies2[enemyIndex].setX(spawners[3].getCenterX());
+				enemies2[enemyIndex].setY(spawners[3].getCenterY());
 				
-				if (!level2)
+				if (level1)
 				{
 					enemies[enemyIndex].setPattern(DOWN,LEFT,DOWNRIGHT,TRACK);
+					enemies[enemyIndex].setPatternTime(2,3,2.5,30);
+					enemies[enemyIndex].activate();
 				}
-				else if (level2)
+				else if (!level1)
 				{
-					enemies[enemyIndex].setPattern(UPLEFT,DOWN,DOWNLEFT,TRACK);
+					enemies2[enemyIndex].setPattern(UPLEFT,DOWN,DOWNLEFT,TRACK);
+					enemies2[enemyIndex].setPatternTime(2,3,2.5,30);
+					enemies2[enemyIndex].activate();
 				}
-				enemies[enemyIndex].setPatternTime(2,3,2.5,30);
-			    enemies[enemyIndex].activate();
+				
 				enemyIndex++;
 				if (enemyIndex >=50)
 				{
@@ -1099,7 +1141,11 @@ if (ship1.getX() <= 10 )
 			for(int i = 0; i < 50; i++){
 			enemies[i].setActive(false);
 			enemies[i].setEnemyHealth(EhealthMax);
+			enemies2[i].setActive(false);
+			enemies2[i].setEnemyHealth(E2healthMax);
 			}
+			boss.setActive(false);
+			boss.setEnemyHealth(15);
 			S1PerWaveMax += 1;
 			S2PerWaveMax += 1;
 			S3PerWaveMax += 1;
@@ -1138,7 +1184,9 @@ if (ship1.getX() <= 10 )
 		}
 			for(int i = 0; i < 50; i++){
 		enemies[i].update(frameTime);
+		enemies2[i].update(frameTime);
 	}
+			boss.update(frameTime);
 				if(input->isKeyDown(ESC_KEY)){
 					gameState = PAUSE;
 	}
@@ -1154,11 +1202,13 @@ if (ship1.getX() <= 10 )
 		{
 			enemies[i].setActive(false);
 			enemies[i].setEnemyHealth(1);
+			enemies2[i].setActive(false);
+			enemies2[i].setEnemyHealth(2);
 		}
 		for (int i = 0; i < 5; i++)
 		{
 			baseTurrets[i].setActive(false);
-			baseTurrets[i].setDamage(1);
+			
 		}
 		nebula.setX(0);
 		nebula.setY(0);
@@ -1176,6 +1226,7 @@ if (ship1.getX() <= 10 )
 		gameTimer = 0;
 		wavesLeft = 12;
 		EhealthMax = 1;
+		E2healthMax = 2;
 		if(input->isKeyDown(0x52)){
 			gameState = RULES;
 		}
@@ -1187,22 +1238,50 @@ if (ship1.getX() <= 10 )
 			
 			gameState = LVL2;
 		}
+		if(input->isKeyDown(0x33)){
+			
+			gameState = LVL3;
+		}
+              if(input->isKeyDown(0x4C)){
+                     char x = ' ';
+                     in_saveGame_Level.open("SAVE_GAME_LEVEL.txt");
+                     while(!in_saveGame_Level.eof()){
+                           in_saveGame_Level >> x;
+                     }
+                     in_saveGame_Level.close();
+                     if(x == '1') gameState = LVL1;
+                     else if(x == '2') gameState = LVL2;
+                     else if(x == '3') gameState = LVL3;
+
+                     int y;
+                     in_saveGame_Score.open("SAVE_GAME_SCORE.txt");
+                     while(!in_saveGame_Score.eof()){
+                           in_saveGame_Score >> y;
+                     }
+                     in_saveGame_Score.close();
+                     score = y;
+              }
+
 		break;
 	case LVL1:
+		turretPoints = 10;
+		EhealthMax = 1;
+		E2healthMax = 2;
+		for (int i = 0; i <5;i++)
+		{
+			baseTurrets[i].setActive(false);
+			triTurrets[i].setActive(false);
+			burstTurrets[i].setActive(false);
+			sniperTurrets[i].setActive(false);
+		}
+		
 		nebula.setTextureManager(&nebulaTexture);
+		nebula.setX(0);
+		nebula.setY(0);
 		level1 = true;
 		level2 = false;
 		level3 = false;
-		turretBases[0].setX(500);
-		turretBases[0].setY(1000);
-		turretBases[1].setX(700);
-		turretBases[1].setY(700);
-		turretBases[2].setX(900);
-		turretBases[2].setY(500);
-		turretBases[3].setX(1100);
-		turretBases[3].setY(300);
-		turretBases[4].setX(1300);
-		turretBases[4].setY(100);
+		
 	
 		spawners[0].setX(100);
 		spawners[0].setY(200);
@@ -1218,21 +1297,29 @@ if (ship1.getX() <= 10 )
 		gameState = GAMEPLAY;
 		break;
 	case LVL2:
+		turretPoints = 20;
+		EhealthMax = 1;
+		E2healthMax = 2;
+		for (int i = 0; i <50;i++)
+		{
+			enemies[i].setEnemyHealth(EhealthMax);
+			enemies[i].setEnemyHealth(E2healthMax);
+		}
+		for (int i = 0; i <5;i++)
+		{
+			baseTurrets[i].setActive(false);
+			triTurrets[i].setActive(false);
+			burstTurrets[i].setActive(false);
+			sniperTurrets[i].setActive(false);
+		}
 		nebula.setTextureManager(&nebulaTexture2);
+		nebula.setX(0);
+		nebula.setY(0);
 		level1 = false;
 		level2 = true;
 		level3 = false;
 
-		turretBases[0].setX(1000);
-		turretBases[0].setY(800);
-		turretBases[1].setX(500);
-		turretBases[1].setY(800);
-		turretBases[2].setX(400);
-		turretBases[2].setY(500);
-		turretBases[3].setX(800);
-		turretBases[3].setY(300);
-		turretBases[4].setX(1200);
-		turretBases[4].setY(500);
+		
 	
 		spawners[0].setX(BACK_WIDTH/2 - 32);
 		spawners[0].setY(100);
@@ -1242,6 +1329,44 @@ if (ship1.getX() <= 10 )
 		spawners[2].setY(BACK_HEIGHT - 100 - 32);
 		spawners[3].setX(BACK_WIDTH - 100 - 32);
 		spawners[3].setY(BACK_HEIGHT/2 - 32);
+
+		core.setX(BACK_WIDTH/2 - 32);
+		core.setY(BACK_HEIGHT/2 - 32);
+		gameState = GAMEPLAY;
+		break;
+	case LVL3:
+		EhealthMax = 1;
+		E2healthMax = 2;
+		for (int i = 0; i <50;i++)
+		{
+			enemies[i].setEnemyHealth(EhealthMax);
+			enemies[i].setEnemyHealth(E2healthMax);
+		}
+		turretPoints = 20;
+		for (int i = 0; i <5;i++)
+		{
+			baseTurrets[i].setActive(false);
+			triTurrets[i].setActive(false);
+			burstTurrets[i].setActive(false);
+			sniperTurrets[i].setActive(false);
+		}
+		nebula.setTextureManager(&nebulaTexture2);
+		nebula.setX(0);
+		nebula.setY(0);
+		level1 = false;
+		level2 = false;
+		level3 = true;
+
+		
+	
+		spawners[0].setX(100);
+		spawners[0].setY(200);
+		spawners[1].setX(100);
+		spawners[1].setY(264);
+		spawners[2].setX(164);
+		spawners[2].setY(200);
+		spawners[3].setX(164);
+		spawners[3].setY(264);
 
 		core.setX(BACK_WIDTH/2 - 32);
 		core.setY(BACK_HEIGHT/2 - 32);
@@ -1297,7 +1422,19 @@ if (ship1.getX() <= 10 )
 		break;
 		
 	case GAMEOVER:
-		if (input->isKeyDown(VK_RETURN))
+              in_highScore.open("HIGH_SCORE.txt");
+              int z;
+              while(!in_highScore.eof()){
+                     in_highScore >> z;
+              }
+              in_highScore.close();
+              if(score > z){
+                     highScore.open("HIGH_SCORE.txt");
+                     highScore << score;
+                     finalString = "Game Over \nYOU GOT THE HIGH SCORE!: ";
+              }
+              else {}
+	if (input->isKeyDown(VK_RETURN))
 		{
 			gameState = MENU;
 
@@ -1318,6 +1455,28 @@ if (ship1.getX() <= 10 )
 		if(input->isKeyDown(VK_ESCAPE)){
 			exitGame();
 		}
+		if(input->isKeyDown(0x53)){
+                     saveGame_Score.open("SAVE_GAME_SCORE.txt");
+                     saveGame_Score << score;
+                     saveGame_Score.close();
+                     if(level1 && !level2 && !level3){
+                           saveGame_Level.open("SAVE_GAME_LEVEL.txt");
+                           saveGame_Level << "1";
+                           saveGame_Level.close();
+                     }
+                     else if(!level1 && level2 && !level3){
+                           saveGame_Level.open("SAVE_GAME_LEVEL.txt");
+                           saveGame_Level << "2";
+                           saveGame_Level.close();
+                     }
+                     else if(!level1 && !level2 && level3){
+                           saveGame_Level.open("SAVE_GAME_LEVEL.txt");
+                           saveGame_Level << "3";
+                           saveGame_Level.close();
+                     }
+                     saveGame_Level.close();  
+                     gameState = GAMEPLAY;
+		}
 	}
 
 
@@ -1330,7 +1489,9 @@ void Spacewar::ai()
 {
 	for(int i = 0; i < 50; i++){
 		enemies[i].ai(frameTime,core);
+		enemies2[i].ai(frameTime,core);
 	}
+	boss.ai(frameTime,core);
 }
 
 //=============================================================================
@@ -1347,177 +1508,544 @@ void Spacewar::collisions()
 		  enemies[i].setActive(false);
 	  }
   }
+   if(core.collidesWith(boss,collisionVector)){
+		  core.setCoreHealthe(core.getCoreHealth() - 10);
+		  red.setVisible(true);
+		  boss.setActive(false);
+	  }
+   for(int i = 0; i < 50; i++){
+	  if(core.collidesWith(enemies2[i],collisionVector)){
+		  core.setCoreHealthe(core.getCoreHealth() - 1);
+		  red.setVisible(true);
+		  enemies2[i].setActive(false);
+	  }
+  }
 
-	for(int i = 0; i < 50; i ++){
+	
+	for(int i = 0; i < 400; i ++){
 		for(int j = 0; j < 50; j++){
-			if(missiles[i].collidesWith(enemies[j],collisionVector)){
-				enemies[j]. setEnemyHealth(enemies[j].getEnemyHealth() - 1);
-				missiles[i].setActive(false);
-			}
-	}
-	}
-	for(int i = 0; i < 50; i ++){
-		for(int j = 0; j < 50; j++){
-			if(turretMissiles1[i].collidesWith(enemies[j],collisionVector)){
+			if(BaseTurretMissiles[i].collidesWith(enemies[j],collisionVector)){
 				enemies[j]. setEnemyHealth(enemies[j].getEnemyHealth() - baseTurrets[0].getDamage());
-				turretMissiles1[i].setActive(false);
+				BaseTurretMissiles[i].setActive(false);
 			}
 	}
 	}
-	for(int i = 0; i < 50; i ++){
+	for(int i = 0; i < 400; i ++){
+		
+			if(BaseTurretMissiles[i].collidesWith(boss,collisionVector)){
+				boss. setEnemyHealth(boss.getEnemyHealth() - baseTurrets[0].getDamage());
+				BaseTurretMissiles[i].setActive(false);
+			}
+	
+	}
+	for(int i = 0; i < 400; i ++){
 		for(int j = 0; j < 50; j++){
-			if(turretMissiles2[i].collidesWith(enemies[j],collisionVector)){
-				enemies[j]. setEnemyHealth(enemies[j].getEnemyHealth() - baseTurrets[1].getDamage());
-				turretMissiles2[i].setActive(false);
+			if(BaseTurretMissiles[i].collidesWith(enemies2[j],collisionVector)){
+				enemies2[j]. setEnemyHealth(enemies2[j].getEnemyHealth() - baseTurrets[0].getDamage());
+				BaseTurretMissiles[i].setActive(false);
 			}
 	}
 	}
-	for(int i = 0; i < 50; i ++){
+	for(int i = 0; i < 200; i ++){
 		for(int j = 0; j < 50; j++){
-			if(turretMissiles3[i].collidesWith(enemies[j],collisionVector)){
-				enemies[j]. setEnemyHealth(enemies[j].getEnemyHealth() - baseTurrets[2].getDamage());
-				turretMissiles3[i].setActive(false);
+			if(SniperTurretMissiles[i].collidesWith(enemies[j],collisionVector)){
+				enemies[j]. setEnemyHealth(enemies[j].getEnemyHealth() - sniperTurrets[0].getDamage());
+				SniperTurretMissiles[i].setActive(false);
 			}
 	}
 	}
-	for(int i = 0; i < 50; i ++){
+	for(int i = 0; i < 200; i ++){
 		for(int j = 0; j < 50; j++){
-			if(turretMissiles4[i].collidesWith(enemies[j],collisionVector)){
-				enemies[j]. setEnemyHealth(enemies[j].getEnemyHealth() - baseTurrets[3].getDamage());
-				turretMissiles4[i].setActive(false);
+			if(SniperTurretMissiles[i].collidesWith(enemies2[j],collisionVector)){
+				enemies2[j]. setEnemyHealth(enemies2[j].getEnemyHealth() - sniperTurrets[0].getDamage());
+				SniperTurretMissiles[i].setActive(false);
 			}
 	}
 	}
-	for(int i = 0; i < 50; i ++){
+	for(int i = 0; i < 200; i ++){
+		
+			if(SniperTurretMissiles[i].collidesWith(boss,collisionVector)){
+				boss. setEnemyHealth(boss.getEnemyHealth() - sniperTurrets[0].getDamage());
+				SniperTurretMissiles[i].setActive(false);
+			}
+	
+	}
+	for(int i = 0; i < 200; i ++){
 		for(int j = 0; j < 50; j++){
-			if(turretMissiles5[i].collidesWith(enemies[j],collisionVector)){
-				enemies[j]. setEnemyHealth(enemies[j].getEnemyHealth() - baseTurrets[4].getDamage());
-				turretMissiles5[i].setActive(false);
+			if(BurstTurretMissiles[i].collidesWith(enemies[j],collisionVector)){
+				enemies[j]. setEnemyHealth(enemies[j].getEnemyHealth() - burstTurrets[0].getDamage());
+				BurstTurretMissiles[i].setActive(false);
 			}
 	}
+	}
+	for(int i = 0; i < 200; i ++){
+		for(int j = 0; j < 50; j++){
+			if(BurstTurretMissiles[i].collidesWith(enemies2[j],collisionVector)){
+				enemies2[j]. setEnemyHealth(enemies2[j].getEnemyHealth() - burstTurrets[0].getDamage());
+				BurstTurretMissiles[i].setActive(false);
+			}
+	}
+	}
+	for(int i = 0; i < 200; i ++){
+		
+			if(BurstTurretMissiles[i].collidesWith(boss,collisionVector)){
+				boss. setEnemyHealth(boss.getEnemyHealth() - burstTurrets[0].getDamage());
+				BurstTurretMissiles[i].setActive(false);
+			}
+	
 	}
 	for(int i = 0; i < 50; i++){
-	if (baseTurrets[0].collidesWith(enemies[i],collisionVector) && turretTimer1 <= 0 )
-	{
-		turretAngle1 = atan2(enemies[i].getCenterY() - baseTurrets[0].getCenterY(), enemies[i].getCenterX() - baseTurrets[0].getCenterX());
-		turretAngle1 *= (180/PI);
-		baseTurrets[0].setDegrees(90 + turretAngle1);
-		audio->playCue(FIRE);
-		turretMissiles1[turretMissileIndex1].setDegrees(angle);
-		turretMissiles1[turretMissileIndex1].setX(baseTurrets[0].getX());
-		turretMissiles1[turretMissileIndex1].setY(baseTurrets[0].getY());
-		VECTOR2 fVec(enemies[i].getCenterX() - baseTurrets[0].getCenterX(), enemies[i].getCenterY() - baseTurrets[0].getCenterY());
-	 D3DXVec2Normalize(&fVec, &fVec); 
-	 turretMissiles1[turretMissileIndex1].setVelocity(fVec);
-	 turretMissiles1[turretMissileIndex1].activate();
-	 turretMissileIndex1++;
-	 turretTimer1 = turretMax;
+		for(int j = 0; j < 5; j++){
+			if (baseTurrets[j].collidesWith(enemies[i],collisionVector) && BaseTurretTimer[j] <= 0 )
+		{
+			BaseTurretAngle[j] = atan2(enemies[i].getCenterY() - baseTurrets[j].getCenterY(), enemies[i].getCenterX() - baseTurrets[j].getCenterX());
+			BaseTurretAngle[j] *= (180/PI);
+			baseTurrets[j].setDegrees(90 + BaseTurretAngle[j]);
+			audio->playCue(FIRE);
+			BaseTurretMissiles[BaseTurretMissileIndex].setDegrees(angle);
+			BaseTurretMissiles[BaseTurretMissileIndex].setX(baseTurrets[j].getX());
+			BaseTurretMissiles[BaseTurretMissileIndex].setY(baseTurrets[j].getY());
+			VECTOR2 fVec(enemies[i].getCenterX() - baseTurrets[j].getCenterX(), enemies[i].getCenterY() - baseTurrets[j].getCenterY());
+			 D3DXVec2Normalize(&fVec, &fVec); 
+			 BaseTurretMissiles[BaseTurretMissileIndex].setVelocity(fVec);
+			 BaseTurretMissiles[BaseTurretMissileIndex].activate();
+			 BaseTurretMissileIndex++;
+			 BaseTurretTimer[j] = BaseTurretMax;
+			 if (BaseTurretMissileIndex >=400)
+				{
+					BaseTurretMissileIndex = 0;
+				}
 	 
 	 
 			
-	} 
+		} 
 		
 
-		
+		}
 	
 	}
-		for(int i = 0; i < 50; i++){
-				if (baseTurrets[1].collidesWith(enemies[i],collisionVector) && turretTimer2 <= 0 )
-	{
-		turretAngle2 = atan2(enemies[i].getCenterY() - baseTurrets[1].getCenterY(), enemies[i].getCenterX() - baseTurrets[1].getCenterX());
-		turretAngle2 *= (180/PI);
-		baseTurrets[1].setDegrees(90 + turretAngle2);
 
-		audio->playCue(FIRE);
-		turretMissiles2[turretMissileIndex2].setDegrees(angle);
-		turretMissiles2[turretMissileIndex2].setX(baseTurrets[1].getX());
-		turretMissiles2[turretMissileIndex2].setY(baseTurrets[1].getY());
-		VECTOR2 fVec(enemies[i].getCenterX() - baseTurrets[1].getCenterX(), enemies[i].getCenterY() - baseTurrets[1].getCenterY());
-	 D3DXVec2Normalize(&fVec, &fVec); 
-	 turretMissiles2[turretMissileIndex2].setVelocity(fVec);
-	 turretMissiles2[turretMissileIndex2].activate();
-	 turretMissileIndex2++;
-	 turretTimer2 = turretMax;
+	
+		for(int j = 0; j < 5; j++){
+			if (baseTurrets[j].collidesWith(boss,collisionVector) && BaseTurretTimer[j] <= 0 )
+		{
+			BaseTurretAngle[j] = atan2(boss.getCenterY() - baseTurrets[j].getCenterY(), boss.getCenterX() - baseTurrets[j].getCenterX());
+			BaseTurretAngle[j] *= (180/PI);
+			baseTurrets[j].setDegrees(90 + BaseTurretAngle[j]);
+			audio->playCue(FIRE);
+			BaseTurretMissiles[BaseTurretMissileIndex].setDegrees(angle);
+			BaseTurretMissiles[BaseTurretMissileIndex].setX(baseTurrets[j].getX());
+			BaseTurretMissiles[BaseTurretMissileIndex].setY(baseTurrets[j].getY());
+			VECTOR2 fVec(boss.getCenterX() - baseTurrets[j].getCenterX(), boss.getCenterY() - baseTurrets[j].getCenterY());
+			 D3DXVec2Normalize(&fVec, &fVec); 
+			 BaseTurretMissiles[BaseTurretMissileIndex].setVelocity(fVec);
+			 BaseTurretMissiles[BaseTurretMissileIndex].activate();
+			 BaseTurretMissileIndex++;
+			 BaseTurretTimer[j] = BaseTurretMax;
+			 if (BaseTurretMissileIndex >=400)
+				{
+					BaseTurretMissileIndex = 0;
+				}
+	 
 	 
 			
-	} 
+		} 
+		
+
+		}
+	
+	
+	for(int i = 0; i < 50; i++){
+		for(int j = 0; j < 5; j++){
+			if (baseTurrets[j].collidesWith(enemies2[i],collisionVector) && BaseTurretTimer[j] <= 0 )
+		{
+			BaseTurretAngle[j] = atan2(enemies2[i].getCenterY() - baseTurrets[j].getCenterY(), enemies2[i].getCenterX() - baseTurrets[j].getCenterX());
+			BaseTurretAngle[j] *= (180/PI);
+			baseTurrets[j].setDegrees(90 + BaseTurretAngle[j]);
+			audio->playCue(FIRE);
+			BaseTurretMissiles[BaseTurretMissileIndex].setDegrees(angle);
+			BaseTurretMissiles[BaseTurretMissileIndex].setX(baseTurrets[j].getX());
+			BaseTurretMissiles[BaseTurretMissileIndex].setY(baseTurrets[j].getY());
+			VECTOR2 fVec(enemies2[i].getCenterX() - baseTurrets[j].getCenterX(), enemies2[i].getCenterY() - baseTurrets[j].getCenterY());
+			 D3DXVec2Normalize(&fVec, &fVec); 
+			 BaseTurretMissiles[BaseTurretMissileIndex].setVelocity(fVec);
+			 BaseTurretMissiles[BaseTurretMissileIndex].activate();
+			 BaseTurretMissileIndex++;
+			 BaseTurretTimer[j] = BaseTurretMax;
+			 if (BaseTurretMissileIndex >=400)
+				{
+					BaseTurretMissileIndex = 0;
+				}
+	 
+	 
+			
+		} 
+		
+
+		}
+	
+	}
+
+
+
+
+	for(int i = 0; i < 50; i++){
+		for(int j = 0; j < 5; j++){
+			if (sniperTurrets[j].collidesWith(enemies[i],collisionVector) && SniperTurretTimer[j] <= 0 )
+		{
+			SniperTurretAngle[j] = atan2(enemies[i].getCenterY() - sniperTurrets[j].getCenterY(), enemies[i].getCenterX() - sniperTurrets[j].getCenterX());
+			SniperTurretAngle[j] *= (180/PI);
+			sniperTurrets[j].setDegrees(90 + SniperTurretAngle[j]);
+			audio->playCue(FIRE);
+			SniperTurretMissiles[SniperTurretMissileIndex].setDegrees(angle);
+			SniperTurretMissiles[SniperTurretMissileIndex].setX(sniperTurrets[j].getX());
+			SniperTurretMissiles[SniperTurretMissileIndex].setY(sniperTurrets[j].getY());
+			VECTOR2 fVec(enemies[i].getCenterX() - sniperTurrets[j].getCenterX(), enemies[i].getCenterY() - sniperTurrets[j].getCenterY());
+			 D3DXVec2Normalize(&fVec, &fVec); 
+			 SniperTurretMissiles[SniperTurretMissileIndex].setVelocity(fVec);
+			 SniperTurretMissiles[SniperTurretMissileIndex].activate();
+			 SniperTurretMissileIndex++;
+			 SniperTurretTimer[j] = SniperTurretMax;
+			 if (SniperTurretMissileIndex >= 200)
+				{
+					SniperTurretMissileIndex = 0;
+				}
+	 
+	 
+			
+		} 
+		
+
+		}
+	
+	}
+
+
+	
+		for(int j = 0; j < 5; j++){
+			if (sniperTurrets[j].collidesWith(boss,collisionVector) && SniperTurretTimer[j] <= 0 )
+		{
+			SniperTurretAngle[j] = atan2(boss.getCenterY() - sniperTurrets[j].getCenterY(), boss.getCenterX() - sniperTurrets[j].getCenterX());
+			SniperTurretAngle[j] *= (180/PI);
+			sniperTurrets[j].setDegrees(90 + SniperTurretAngle[j]);
+			audio->playCue(FIRE);
+			SniperTurretMissiles[SniperTurretMissileIndex].setDegrees(angle);
+			SniperTurretMissiles[SniperTurretMissileIndex].setX(sniperTurrets[j].getX());
+			SniperTurretMissiles[SniperTurretMissileIndex].setY(sniperTurrets[j].getY());
+			VECTOR2 fVec(boss.getCenterX() - sniperTurrets[j].getCenterX(), boss.getCenterY() - sniperTurrets[j].getCenterY());
+			 D3DXVec2Normalize(&fVec, &fVec); 
+			 SniperTurretMissiles[SniperTurretMissileIndex].setVelocity(fVec);
+			 SniperTurretMissiles[SniperTurretMissileIndex].activate();
+			 SniperTurretMissileIndex++;
+			 SniperTurretTimer[j] = SniperTurretMax;
+			 if (SniperTurretMissileIndex >= 200)
+				{
+					SniperTurretMissileIndex = 0;
+				}
+	 
+	 
+			
+		} 
+		
+
+		}
+	
+	
+	for(int i = 0; i < 50; i++){
+		for(int j = 0; j < 5; j++){
+			if (sniperTurrets[j].collidesWith(enemies2[i],collisionVector) && SniperTurretTimer[j] <= 0 )
+		{
+			SniperTurretAngle[j] = atan2(enemies2[i].getCenterY() - sniperTurrets[j].getCenterY(), enemies2[i].getCenterX() - sniperTurrets[j].getCenterX());
+			SniperTurretAngle[j] *= (180/PI);
+			sniperTurrets[0].setDegrees(90 + SniperTurretAngle[j]);
+			audio->playCue(FIRE);
+			SniperTurretMissiles[SniperTurretMissileIndex].setDegrees(angle);
+			SniperTurretMissiles[SniperTurretMissileIndex].setX(sniperTurrets[j].getX());
+			SniperTurretMissiles[SniperTurretMissileIndex].setY(sniperTurrets[j].getY());
+			VECTOR2 fVec(enemies2[i].getCenterX() - sniperTurrets[j].getCenterX(), enemies2[i].getCenterY() - sniperTurrets[j].getCenterY());
+			 D3DXVec2Normalize(&fVec, &fVec); 
+			 SniperTurretMissiles[SniperTurretMissileIndex].setVelocity(fVec);
+			 SniperTurretMissiles[SniperTurretMissileIndex].activate();
+			 SniperTurretMissileIndex++;
+			 SniperTurretTimer[j] = SniperTurretMax;
+			 if (SniperTurretMissileIndex >= 200)
+				{
+					SniperTurretMissileIndex = 0;
+				}
+	 
+	 
+			
+		} 
+		
+
+		}
+	
+	}
+
+	for(int i = 0; i < 50; i++){
+		for(int j = 0; j < 5; j++){
+			if (burstTurrets[j].collidesWith(enemies[i],collisionVector) && BurstTurretTimer[j] <= 0 )
+		{
+			BurstTurretAngle[j] = atan2(enemies[i].getCenterY() - burstTurrets[j].getCenterY(), enemies[i].getCenterX() - burstTurrets[j].getCenterX());
+			BurstTurretAngle[j] *= (180/PI);
+			burstTurrets[j].setDegrees(90 + BurstTurretAngle[j]);
+			audio->playCue(FIRE);
+			BurstTurretMissiles[BurstTurretMissileIndex].setDegrees(angle);
+			BurstTurretMissiles[BurstTurretMissileIndex].setX(burstTurrets[j].getX());
+			BurstTurretMissiles[BurstTurretMissileIndex].setY(burstTurrets[j].getY());
+			VECTOR2 fVec(enemies[i].getCenterX() - burstTurrets[j].getCenterX(), enemies[i].getCenterY() - burstTurrets[j].getCenterY());
+			 D3DXVec2Normalize(&fVec, &fVec); 
+			 BurstTurretMissiles[BurstTurretMissileIndex].setVelocity(fVec);
+			 BurstTurretMissiles[BurstTurretMissileIndex].activate();
+			 BurstTurretMissileIndex++;
+			 BurstTurretTimer[j] = BurstTurretMax;
+			 if (BurstTurretMissileIndex >= 200)
+				{
+					BurstTurretMissileIndex = 0;
+				}
+	 
+	 
+			
+		} 
+		
+
+		}
+	
+	}
+
+	
+		for(int j = 0; j < 5; j++){
+			if (burstTurrets[j].collidesWith(boss,collisionVector) && BurstTurretTimer[j] <= 0 )
+		{
+			BurstTurretAngle[j] = atan2(boss.getCenterY() - burstTurrets[j].getCenterY(), boss.getCenterX() - burstTurrets[j].getCenterX());
+			BurstTurretAngle[j] *= (180/PI);
+			burstTurrets[j].setDegrees(90 + BurstTurretAngle[j]);
+			audio->playCue(FIRE);
+			BurstTurretMissiles[BurstTurretMissileIndex].setDegrees(angle);
+			BurstTurretMissiles[BurstTurretMissileIndex].setX(burstTurrets[j].getX());
+			BurstTurretMissiles[BurstTurretMissileIndex].setY(burstTurrets[j].getY());
+			VECTOR2 fVec(boss.getCenterX() - burstTurrets[j].getCenterX(), boss.getCenterY() - burstTurrets[j].getCenterY());
+			 D3DXVec2Normalize(&fVec, &fVec); 
+			 BurstTurretMissiles[BurstTurretMissileIndex].setVelocity(fVec);
+			 BurstTurretMissiles[BurstTurretMissileIndex].activate();
+			 BurstTurretMissileIndex++;
+			 BurstTurretTimer[j] = BurstTurretMax;
+			 if (BurstTurretMissileIndex >= 200)
+				{
+					BurstTurretMissileIndex = 0;
+				}
+	 
+	 
+			
+		} 
+		
+
+		}
+	
+	
+	for(int i = 0; i < 50; i++){
+		for(int j = 0; j < 5; j++){
+			if (burstTurrets[j].collidesWith(enemies2[i],collisionVector) && BurstTurretTimer[j] <= 0 )
+		{
+			BurstTurretAngle[j] = atan2(enemies2[i].getCenterY() - burstTurrets[j].getCenterY(), enemies2[i].getCenterX() - burstTurrets[j].getCenterX());
+			BurstTurretAngle[j] *= (180/PI);
+			burstTurrets[j].setDegrees(90 + BurstTurretAngle[j]);
+			audio->playCue(FIRE);
+			BurstTurretMissiles[BurstTurretMissileIndex].setDegrees(angle);
+			BurstTurretMissiles[BurstTurretMissileIndex].setX(burstTurrets[j].getX());
+			BurstTurretMissiles[BurstTurretMissileIndex].setY(burstTurrets[j].getY());
+			VECTOR2 fVec(enemies2[i].getCenterX() - burstTurrets[j].getCenterX(), enemies2[i].getCenterY() - burstTurrets[j].getCenterY());
+			 D3DXVec2Normalize(&fVec, &fVec); 
+			 BurstTurretMissiles[BurstTurretMissileIndex].setVelocity(fVec);
+			 BurstTurretMissiles[BurstTurretMissileIndex].activate();
+			 BurstTurretMissileIndex++;
+			 BurstTurretTimer[j] = BurstTurretMax;
+			 if (BurstTurretMissileIndex >= 200)
+				{
+					BurstTurretMissileIndex = 0;
+				}
+	 
+	 
+			
+		} 
+		
+
+		}
+	
+	}
+		
+	for(int i = 0; i < 50; i++){
+		for(int j = 0; j < 5; j++){
+			if (triTurrets[j].collidesWith(enemies[i],collisionVector) && TriTurretTimer[j] <= 0 )
+		{
+			TriTurretAngle[j] = atan2(enemies[i].getCenterY() - triTurrets[j].getCenterY(), enemies[i].getCenterX() - triTurrets[j].getCenterX());
+			TriTurretAngle[j] *= (180/PI);
+			triTurrets[j].setDegrees(90 + TriTurretAngle[j]);
+			audio->playCue(FIRE);
+			BaseTurretMissiles[BaseTurretMissileIndex].setDegrees(angle);
+			BaseTurretMissiles[BaseTurretMissileIndex].setX(triTurrets[j].getX());
+			BaseTurretMissiles[BaseTurretMissileIndex].setY(triTurrets[j].getY());
+			VECTOR2 fVec(enemies[i].getCenterX() - triTurrets[j].getCenterX(), enemies[i].getCenterY() - triTurrets[j].getCenterY());
+			 D3DXVec2Normalize(&fVec, &fVec); 
+			 BaseTurretMissiles[BaseTurretMissileIndex].setVelocity(fVec);
+			 BaseTurretMissiles[BaseTurretMissileIndex].activate();
+			 BaseTurretMissileIndex++;
+
+			 if (BaseTurretMissileIndex >=400)
+				{
+					BaseTurretMissileIndex = 0;
+				}
+
+			 BaseTurretMissiles[BaseTurretMissileIndex].setDegrees(angle);
+			 BaseTurretMissiles[BaseTurretMissileIndex].setX(triTurrets[j].getX() +10);
+			 BaseTurretMissiles[BaseTurretMissileIndex].setY(triTurrets[j].getY());
+			 BaseTurretMissiles[BaseTurretMissileIndex].setVelocity(fVec);
+			 BaseTurretMissiles[BaseTurretMissileIndex].activate();
+			 BaseTurretMissileIndex++;
+			  if (BaseTurretMissileIndex >=400)
+				{
+					BaseTurretMissileIndex = 0;
+				}
+
+			 BaseTurretMissiles[BaseTurretMissileIndex].setDegrees(angle);
+			 BaseTurretMissiles[BaseTurretMissileIndex].setX(triTurrets[j].getX() -10);
+			 BaseTurretMissiles[BaseTurretMissileIndex].setY(triTurrets[j].getY());
+			 BaseTurretMissiles[BaseTurretMissileIndex].setVelocity(fVec);
+			 BaseTurretMissiles[BaseTurretMissileIndex].activate();
+			 BaseTurretMissileIndex++;
+			 if (BaseTurretMissileIndex >=400)
+				{
+					BaseTurretMissileIndex = 0;
+				}
+
+			 TriTurretTimer[j] = TriTurretMax;
+	 
+	 
+			
+		} 
+		
+
+		}
+	
+	}
+
+	
+		for(int j = 0; j < 5; j++){
+			if (triTurrets[j].collidesWith(boss,collisionVector) && TriTurretTimer[j] <= 0 )
+		{
+			TriTurretAngle[j] = atan2(boss.getCenterY() - triTurrets[j].getCenterY(), boss.getCenterX() - triTurrets[j].getCenterX());
+			TriTurretAngle[j] *= (180/PI);
+			triTurrets[j].setDegrees(90 + TriTurretAngle[j]);
+			audio->playCue(FIRE);
+			BaseTurretMissiles[BaseTurretMissileIndex].setDegrees(angle);
+			BaseTurretMissiles[BaseTurretMissileIndex].setX(triTurrets[j].getX());
+			BaseTurretMissiles[BaseTurretMissileIndex].setY(triTurrets[j].getY());
+			VECTOR2 fVec(boss.getCenterX() - triTurrets[j].getCenterX(), boss.getCenterY() - triTurrets[j].getCenterY());
+			 D3DXVec2Normalize(&fVec, &fVec); 
+			 BaseTurretMissiles[BaseTurretMissileIndex].setVelocity(fVec);
+			 BaseTurretMissiles[BaseTurretMissileIndex].activate();
+			 BaseTurretMissileIndex++;
+
+			 if (BaseTurretMissileIndex >=400)
+				{
+					BaseTurretMissileIndex = 0;
+				}
+
+			 BaseTurretMissiles[BaseTurretMissileIndex].setDegrees(angle);
+			 BaseTurretMissiles[BaseTurretMissileIndex].setX(triTurrets[j].getX() +10);
+			 BaseTurretMissiles[BaseTurretMissileIndex].setY(triTurrets[j].getY());
+			 BaseTurretMissiles[BaseTurretMissileIndex].setVelocity(fVec);
+			 BaseTurretMissiles[BaseTurretMissileIndex].activate();
+			 BaseTurretMissileIndex++;
+			  if (BaseTurretMissileIndex >=400)
+				{
+					BaseTurretMissileIndex = 0;
+				}
+
+			 BaseTurretMissiles[BaseTurretMissileIndex].setDegrees(angle);
+			 BaseTurretMissiles[BaseTurretMissileIndex].setX(triTurrets[j].getX() -10);
+			 BaseTurretMissiles[BaseTurretMissileIndex].setY(triTurrets[j].getY());
+			 BaseTurretMissiles[BaseTurretMissileIndex].setVelocity(fVec);
+			 BaseTurretMissiles[BaseTurretMissileIndex].activate();
+			 BaseTurretMissileIndex++;
+			 if (BaseTurretMissileIndex >=400)
+				{
+					BaseTurretMissileIndex = 0;
+				}
+
+			 TriTurretTimer[j] = TriTurretMax;
+	 
+	 
+			
+		} 
+		
+
+		}
+	
+	
+
+	for(int i = 0; i < 50; i++){
+		for(int j = 0; j < 5; j++){
+			if (triTurrets[0].collidesWith(enemies2[i],collisionVector) && TriTurretTimer[j] <= 0 )
+		{
+			TriTurretAngle[j] = atan2(enemies2[i].getCenterY() - triTurrets[0].getCenterY(), enemies2[i].getCenterX() - triTurrets[0].getCenterX());
+			TriTurretAngle[j] *= (180/PI);
+			triTurrets[0].setDegrees(90 + TriTurretAngle[j]);
+			audio->playCue(FIRE);
+			BaseTurretMissiles[BaseTurretMissileIndex].setDegrees(angle);
+			BaseTurretMissiles[BaseTurretMissileIndex].setX(triTurrets[0].getX());
+			BaseTurretMissiles[BaseTurretMissileIndex].setY(triTurrets[0].getY());
+			VECTOR2 fVec(enemies2[i].getCenterX() - triTurrets[0].getCenterX(), enemies2[i].getCenterY() - triTurrets[0].getCenterY());
+			 D3DXVec2Normalize(&fVec, &fVec); 
+			 BaseTurretMissiles[BaseTurretMissileIndex].setVelocity(fVec);
+			 BaseTurretMissiles[BaseTurretMissileIndex].activate();
+			 BaseTurretMissileIndex++;
+
+			  if (BaseTurretMissileIndex >=400)
+				{
+					BaseTurretMissileIndex = 0;
+				}
+
+			 BaseTurretMissiles[BaseTurretMissileIndex].setDegrees(angle);
+			 BaseTurretMissiles[BaseTurretMissileIndex].setX(triTurrets[0].getX() +10);
+			 BaseTurretMissiles[BaseTurretMissileIndex].setY(triTurrets[0].getY());
+			 BaseTurretMissiles[BaseTurretMissileIndex].setVelocity(fVec);
+			 BaseTurretMissiles[BaseTurretMissileIndex].activate();
+			 BaseTurretMissileIndex++;
+			  if (BaseTurretMissileIndex >=400)
+				{
+					BaseTurretMissileIndex = 0;
+				}
+
+			 BaseTurretMissiles[BaseTurretMissileIndex].setDegrees(angle);
+			 BaseTurretMissiles[BaseTurretMissileIndex].setX(triTurrets[0].getX() +10);
+			 BaseTurretMissiles[BaseTurretMissileIndex].setY(triTurrets[0].getY());
+			 BaseTurretMissiles[BaseTurretMissileIndex].setVelocity(fVec);
+			 BaseTurretMissiles[BaseTurretMissileIndex].activate();
+			 BaseTurretMissileIndex++;
+			 if (BaseTurretMissileIndex >=400)
+				{
+					BaseTurretMissileIndex = 0;
+				}
+
+
+
+			 TriTurretTimer[j] = TriTurretMax;
+	 
+	 
+			
+		} 
+		
+
+		}
+	
+	}
+		
 		
 
 		
 	
-		}
-		for(int i = 0; i < 50; i++){
-				if (baseTurrets[2].collidesWith(enemies[i],collisionVector) && turretTimer3 <= 0 )
-	{
-		turretAngle3 = atan2(enemies[i].getCenterY() - baseTurrets[2].getCenterY(), enemies[i].getCenterX() - baseTurrets[2].getCenterX());
-		turretAngle3 *= (180/PI);
-		baseTurrets[2].setDegrees(90 + turretAngle3);
-		audio->playCue(FIRE);
-		turretMissiles3[turretMissileIndex3].setDegrees(angle);
-		turretMissiles3[turretMissileIndex3].setX(baseTurrets[2].getX());
-		turretMissiles3[turretMissileIndex3].setY(baseTurrets[2].getY());
-		VECTOR2 fVec(enemies[i].getCenterX() - baseTurrets[2].getCenterX(), enemies[i].getCenterY() - baseTurrets[2].getCenterY());
-	 D3DXVec2Normalize(&fVec, &fVec); 
-	 turretMissiles3[turretMissileIndex3].setVelocity(fVec);
-	 turretMissiles3[turretMissileIndex3].activate();
-	 turretMissileIndex3++;
-	 turretTimer3 = turretMax;
-	 
-			
-	} 
 		
-
-		
-	
-		}
-		for(int i = 0; i < 50; i++){
-			if (baseTurrets[3].collidesWith(enemies[i],collisionVector) && turretTimer4 <= 0 )
-	{
-		turretAngle4 = atan2(enemies[i].getCenterY() - baseTurrets[3].getCenterY(), enemies[i].getCenterX() - baseTurrets[3].getCenterX());
-		turretAngle4 *= (180/PI);
-		baseTurrets[3].setDegrees(90 + turretAngle4);		
-		audio->playCue(FIRE);
-		turretMissiles4[turretMissileIndex4].setDegrees(angle);
-		turretMissiles4[turretMissileIndex4].setX(baseTurrets[3].getX());
-		turretMissiles4[turretMissileIndex4].setY(baseTurrets[3].getY());
-		VECTOR2 fVec(enemies[i].getCenterX() - baseTurrets[3].getCenterX(), enemies[i].getCenterY() - baseTurrets[3].getCenterY());	
-		D3DXVec2Normalize(&fVec, &fVec); 
-	 turretMissiles4[turretMissileIndex4].setVelocity(fVec);
-	 turretMissiles4[turretMissileIndex4].activate();
-	 turretMissileIndex4++;
-	 turretTimer4 = turretMax;
-	 
-			
-	} 
-		
-
-		
-	
-		}
-		for(int i = 0; i < 50; i++){
-			if (baseTurrets[4].collidesWith(enemies[i],collisionVector) && turretTimer5 <= 0 )
-	{
-		turretAngle5 = atan2(enemies[i].getCenterY() - baseTurrets[4].getCenterY(), enemies[i].getCenterX() - baseTurrets[4].getCenterX());
-		turretAngle5 *= (180/PI);
-		baseTurrets[4].setDegrees(90 + turretAngle5);
-		audio->playCue(FIRE);
-		turretMissiles5[turretMissileIndex5].setDegrees(angle);
-		turretMissiles5[turretMissileIndex5].setX(baseTurrets[4].getX());
-		turretMissiles5[turretMissileIndex5].setY(baseTurrets[4].getY());
-		VECTOR2 fVec(enemies[i].getCenterX() - baseTurrets[4].getCenterX(), enemies[i].getCenterY() - baseTurrets[4].getCenterY());
-	 D3DXVec2Normalize(&fVec, &fVec); 
-	 turretMissiles5[turretMissileIndex5].setVelocity(fVec);
-	 turretMissiles5[turretMissileIndex5].activate();
-	 turretMissileIndex5++;
-	 turretTimer5 = turretMax;
-	 
-			
-	} 
-		
-
-		
-	
-		}
 	
 }
 
@@ -1531,7 +2059,8 @@ void Spacewar::render()
 	std::stringstream ss2;
 	std::stringstream ss3;
 	std::stringstream ss4;
-
+	std::stringstream ss5;
+	ss5 << input->getMouseX();
 	ss << score;
 	ss2 << finalString;
 	ss2 << score;
@@ -1548,31 +2077,20 @@ void Spacewar::render()
 	if(gameState == GAMEPLAY){
 	nebula.draw();                          // add the orion nebula to the scene
 	health.draw(); 
-	for( int i =0; i < 50; i++)
+	for( int i =0; i < 400; i++)
 	{
-	  
-		  
-		 if (missiles[i].getActive())
-		{
-			missiles[i].draw();
-		}
-		 if(turretMissiles1[i].getActive()){
-			 turretMissiles1[i].draw();
+		
+		 if(BaseTurretMissiles[i].getActive()){
+			 BaseTurretMissiles[i].draw();
 		 }
-		 if(turretMissiles2[i].getActive()){
-			 turretMissiles2[i].draw();
+	}
+	for( int i =0; i < 200; i++)
+	{
+		 if(BurstTurretMissiles[i].getActive()){
+			 BurstTurretMissiles[i].draw();
 		 }
-		 if(turretMissiles2[i].getActive()){
-			 turretMissiles2[i].draw();
-		 }
-		 if(turretMissiles3[i].getActive()){
-			 turretMissiles3[i].draw();
-		 }
-		 if(turretMissiles4[i].getActive()){
-			 turretMissiles4[i].draw();
-		 }
-		 if(turretMissiles5[i].getActive()){
-			 turretMissiles5[i].draw();
+		 if(SniperTurretMissiles[i].getActive()){
+			 SniperTurretMissiles[i].draw();
 		 }
 	}
 
@@ -1582,13 +2100,12 @@ void Spacewar::render()
 	}
 	for(int i = 0; i < 5; i++) {
 		if(baseTurrets[i].getActive()) baseTurrets[i].draw();
+		if(triTurrets[i].getActive()) triTurrets[i].draw();
+		if(burstTurrets[i].getActive()) burstTurrets[i].draw();
+		if(sniperTurrets[i].getActive()) sniperTurrets[i].draw();
+
 	}
-		for(int i = 0; i < 5; i++) {
-			if(burstTurrets[i].getActive()) burstTurrets[i].draw();
-	}
-		for(int i = 0; i < 5; i++) {
-			if(sniperTurrets[i].getActive()) sniperTurrets[i].draw();
-	}
+		
 	for(int i = 0; i < 4; i++) {
 		spawners[i].draw();
 	}
@@ -1596,7 +2113,13 @@ void Spacewar::render()
 		if(enemies[i].getActive()){
 			enemies[i].draw();
 		}
+		if(enemies2[i].getActive()){
+			enemies2[i].draw();
+		}
 	}
+	if(boss.getActive()){
+			boss.draw();
+		}
 
 		if (!roundStart)
 	{
@@ -1606,6 +2129,7 @@ void Spacewar::render()
 	if(core.getActive()) core.draw();
 	turret_selection.draw();
 	output->print(ss.str(), 250,510);
+	//output->print(ss5.str(), 450,510);
 	output->print(ss3.str(), 650,510);
 	if(roundStart) arrow.draw();
 	ship1.draw();

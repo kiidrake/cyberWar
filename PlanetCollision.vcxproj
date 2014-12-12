@@ -134,8 +134,11 @@
     <ClInclude Include="spider.h" />
     <ClInclude Include="textDX.h" />
     <ClInclude Include="textureManager.h" />
-    <ClInclude Include="triTurret.h" />
+    <ClInclude Include="kloss.h" />
     <ClInclude Include="walsh.h" />
+  </ItemGroup>
+  <ItemGroup>
+    <Text Include="HIGH_SCORE.txt" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

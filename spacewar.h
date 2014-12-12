@@ -11,7 +11,7 @@
 #include "textureManager.h"
 #include "image.h";
 #include "sniperTurret.h"
-#include "triTurret.h"
+#include "kloss.h"
 #include "baseTurret.h"
 #include "enemySpawner.h"
 #include "coreEnemy.h"
@@ -24,8 +24,10 @@
 #include "textDX.h"
 #include "core.h"
 #include "walsh.h"
+#include <fstream>
 #include <sstream>
 #include <string>
+#include <istream>
 
 //=============================================================================
 // This class is the core of the game
@@ -51,6 +53,8 @@ private:
 	TextureManager nebulaTexture3;
 	TextureManager menuTexture;
 	TextureManager turretSelectionMgr;
+	TextureManager bossMgr;
+	TextureManager enemy2Mgr;
 	TextureManager rulesMgr;
 	TextureManager beginMgr;
 	TextureManager info1mgr;
@@ -71,7 +75,7 @@ private:
 	Core core;
 	Health begin;
     Ship    ship1;           // spaceships
-	Missile missiles[50];
+	
 	BaseTurret baseTurrets[5];
 	BurstTurret burstTurrets[5];
 	Image spawners[4];
@@ -82,6 +86,7 @@ private:
 	int wavesLeft;
 	int maxWaves;
 	int enemyIndex;
+	int enemy2Index;
 	int roundsLeft;
 	int maxRounds;
 	bool pressed1;
@@ -90,27 +95,26 @@ private:
 	bool pressed4;
 	bool pressed5;
 	coreEnemy enemies[150];
-	Missile turretMissiles1[50];
-	Missile turretMissiles2[50];
-	Missile turretMissiles3[50];
-	Missile turretMissiles4[50];
-	Missile turretMissiles5[50];
+	coreEnemy enemies2[150];
+	coreEnemy boss;
+	Missile BaseTurretMissiles[400];
+	Missile SniperTurretMissiles[200];
+	Missile BurstTurretMissiles[200];
+	
 	Health health;
     Image   nebula;         // backdrop image
 	Image turretBases[5];
 	Image turret_selection;
 	int colCounter;
-	int missileIndex;
-	int turretMissileIndex1;
-	int turretMissileIndex2;
-	int turretMissileIndex3;
-	int turretMissileIndex4;
-	int turretMissileIndex5;
-	float turretTimer1;
-	float turretTimer2;
-	float turretTimer3;
-	float turretTimer4;
-	float turretTimer5;
+	
+	int BaseTurretMissileIndex;
+	int SniperTurretMissileIndex;
+	int BurstTurretMissileIndex;
+	
+	float BaseTurretTimer[5];
+	float BurstTurretTimer[5];
+	float SniperTurretTimer[5];
+	float TriTurretTimer[5];
 	int spawnLoc;
 	VECTOR2* fireVector;
 	VECTOR2* forward;
@@ -130,12 +134,23 @@ private:
 	bool level1;
 	bool level2;
 	bool level3;
-	int turretAngle1;
-	int turretAngle2;
-	int turretAngle3;
-	int turretAngle4;
-	int turretAngle5;
+	int BaseTurretAngle[5];
+	int TriTurretAngle[5];
+	int BurstTurretAngle[5];
+	int SniperTurretAngle[5];
+	   std::ofstream saveGame_Score;
+       std::ofstream saveGame_Level;
+       std::ofstream highScore;
+       std::ifstream in_saveGame_Score;
+       std::ifstream in_saveGame_Level;
+       std::ifstream in_highScore;
+
 	int EhealthMax;
+	int E2healthMax;
+	float BaseTurretMax;
+	float SniperTurretMax;
+	float BurstTurretMax;
+	float TriTurretMax;
 	float turretMax;
 	bool roundStart;
 	float S1WaveMax;
